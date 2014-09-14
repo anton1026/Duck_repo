@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B8A226F19C51D9500EBAC94 /* GameWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8A226E19C51D9500EBAC94 /* GameWorld.m */; };
+		6B8A227219C521D500EBAC94 /* GameLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8A227119C521D500EBAC94 /* GameLevel.m */; };
+		6B8A227519C5376D00EBAC94 /* CBirds.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8A227419C5376D00EBAC94 /* CBirds.m */; };
+		6B8A227819C537A300EBAC94 /* COrel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B8A227719C537A300EBAC94 /* COrel.m */; };
 		6BA68EB519C3A06C005C6B2B /* MenuLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA68EB419C3A06C005C6B2B /* MenuLayer.m */; };
 		6BA68EC519C414E1005C6B2B /* SetupLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA68EC019C414E1005C6B2B /* SetupLayer.m */; };
 		6BA68EC619C414E1005C6B2B /* Thumb.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA68EC219C414E1005C6B2B /* Thumb.m */; };
@@ -287,9 +291,18 @@
 		6BD00D3919C4475F006BFD9A /* BackgroundItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD00D3819C4475F006BFD9A /* BackgroundItem.m */; };
 		6BD00D3C19C4772E006BFD9A /* SelectLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD00D3B19C4772E006BFD9A /* SelectLayer.m */; };
 		6BD00D3E19C49FE8006BFD9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BD00D3D19C49FE8006BFD9A /* Images.xcassets */; };
+		6BD00D4119C5085B006BFD9A /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD00D4019C5085B006BFD9A /* GameLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B8A226D19C51D9500EBAC94 /* GameWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameWorld.h; sourceTree = "<group>"; };
+		6B8A226E19C51D9500EBAC94 /* GameWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameWorld.m; sourceTree = "<group>"; };
+		6B8A227019C521D500EBAC94 /* GameLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLevel.h; sourceTree = "<group>"; };
+		6B8A227119C521D500EBAC94 /* GameLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLevel.m; sourceTree = "<group>"; };
+		6B8A227319C5376D00EBAC94 /* CBirds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBirds.h; sourceTree = "<group>"; };
+		6B8A227419C5376D00EBAC94 /* CBirds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBirds.m; sourceTree = "<group>"; };
+		6B8A227619C537A300EBAC94 /* COrel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COrel.h; sourceTree = "<group>"; };
+		6B8A227719C537A300EBAC94 /* COrel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COrel.m; sourceTree = "<group>"; };
 		6BA68EB319C3A06C005C6B2B /* MenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuLayer.h; sourceTree = "<group>"; };
 		6BA68EB419C3A06C005C6B2B /* MenuLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuLayer.m; sourceTree = "<group>"; };
 		6BA68EBF19C414E1005C6B2B /* SetupLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupLayer.h; sourceTree = "<group>"; };
@@ -726,6 +739,8 @@
 		6BD00D3A19C4772D006BFD9A /* SelectLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectLayer.h; sourceTree = "<group>"; };
 		6BD00D3B19C4772E006BFD9A /* SelectLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectLayer.m; sourceTree = "<group>"; };
 		6BD00D3D19C49FE8006BFD9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6BD00D3F19C5085B006BFD9A /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
+		6BD00D4019C5085B006BFD9A /* GameLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -799,6 +814,10 @@
 				6BAB9F8719C29F7800376BB6 /* AppDelegate.h */,
 				6BAB9F8819C29F7800376BB6 /* AppDelegate.m */,
 				6BA68EC819C414EB005C6B2B /* GDataXML */,
+				6B8A227319C5376D00EBAC94 /* CBirds.h */,
+				6B8A227419C5376D00EBAC94 /* CBirds.m */,
+				6B8A227619C537A300EBAC94 /* COrel.h */,
+				6B8A227719C537A300EBAC94 /* COrel.m */,
 				6BABA0BB19C2A59700376BB6 /* Global.h */,
 				6BABA0BC19C2A59700376BB6 /* Global.m */,
 				6BAB9F9519C2A10B00376BB6 /* WelcomeLayer.h */,
@@ -809,6 +828,12 @@
 				6BD00D3B19C4772E006BFD9A /* SelectLayer.m */,
 				6BA68EBF19C414E1005C6B2B /* SetupLayer.h */,
 				6BA68EC019C414E1005C6B2B /* SetupLayer.m */,
+				6BD00D3F19C5085B006BFD9A /* GameLayer.h */,
+				6BD00D4019C5085B006BFD9A /* GameLayer.m */,
+				6B8A226D19C51D9500EBAC94 /* GameWorld.h */,
+				6B8A226E19C51D9500EBAC94 /* GameWorld.m */,
+				6B8A227019C521D500EBAC94 /* GameLevel.h */,
+				6B8A227119C521D500EBAC94 /* GameLevel.m */,
 				6BA68EC119C414E1005C6B2B /* Thumb.h */,
 				6BA68EC219C414E1005C6B2B /* Thumb.m */,
 				6BA68EC319C414E1005C6B2B /* TutorialLevel.h */,
@@ -817,8 +842,8 @@
 				6BAB9F8B19C29F7800376BB6 /* HelloWorldLayer.m */,
 				6BAB9F8D19C29F7800376BB6 /* IntroLayer.h */,
 				6BAB9F8E19C29F7800376BB6 /* IntroLayer.m */,
-				6BD00D3719C4475F006BFD9A /* BackgroundItem.h */,
 				6BD00D3819C4475F006BFD9A /* BackgroundItem.m */,
+				6BD00D3719C4475F006BFD9A /* BackgroundItem.h */,
 				6BAB9DF719C29F7500376BB6 /* Resources */,
 				6BAB9E0F19C29F7600376BB6 /* libs */,
 				6BD00D3D19C49FE8006BFD9A /* Images.xcassets */,
@@ -1215,13 +1240,13 @@
 				6BAB9F9E19C2A2C800376BB6 /* h1.plist */,
 				6BAB9F9F19C2A2C800376BB6 /* h1.png */,
 				6BAB9FA019C2A2C800376BB6 /* h2.plist */,
+				6BAB9FA719C2A2C800376BB6 /* h5.png */,
 				6BAB9FA119C2A2C800376BB6 /* h2.png */,
 				6BAB9FA219C2A2C800376BB6 /* h3.plist */,
 				6BAB9FA319C2A2C800376BB6 /* h3.png */,
 				6BAB9FA419C2A2C800376BB6 /* h4.plist */,
 				6BAB9FA519C2A2C800376BB6 /* h4.png */,
 				6BAB9FA619C2A2C800376BB6 /* h5.plist */,
-				6BAB9FA719C2A2C800376BB6 /* h5.png */,
 				6BAB9FA819C2A2C800376BB6 /* h6.plist */,
 				6BAB9FA919C2A2C800376BB6 /* h6.png */,
 				6BAB9FAA19C2A2C800376BB6 /* h7.plist */,
@@ -1652,6 +1677,7 @@
 				6BAB9E6219C29F7600376BB6 /* ccGLStateCache.m in Sources */,
 				6BAB9F3419C29F7800376BB6 /* TransformUtils.m in Sources */,
 				6BAB9E8119C29F7700376BB6 /* CCNode+Debug.m in Sources */,
+				6B8A227519C5376D00EBAC94 /* CBirds.m in Sources */,
 				6BAB9E5C19C29F7600376BB6 /* ccFPSImages.m in Sources */,
 				6BAB9EE219C29F7700376BB6 /* CCTMXXMLParser.m in Sources */,
 				6BA68EC519C414E1005C6B2B /* SetupLayer.m in Sources */,
@@ -1697,6 +1723,8 @@
 				6BAB9F7719C29F7800376BB6 /* quaternion.c in Sources */,
 				6BAB9EC419C29F7700376BB6 /* CCSpriteFrame.m in Sources */,
 				6BAB9E3119C29F7600376BB6 /* CCActionProgressTimer.m in Sources */,
+				6B8A227819C537A300EBAC94 /* COrel.m in Sources */,
+				6B8A227219C521D500EBAC94 /* GameLevel.m in Sources */,
 				6BAB9E1319C29F7600376BB6 /* CCAction.m in Sources */,
 				6BAB9F4B19C29F7800376BB6 /* CocosDenshion.m in Sources */,
 				6BAB9ED019C29F7700376BB6 /* CCTextureCache.m in Sources */,
@@ -1712,7 +1740,9 @@
 				6BAB9F0419C29F7700376BB6 /* CCTouchHandler.m in Sources */,
 				6BAB9E7E19C29F7700376BB6 /* CCMotionStreak.m in Sources */,
 				6BAB9EFD19C29F7700376BB6 /* CCGLView.m in Sources */,
+				6BD00D4119C5085B006BFD9A /* GameLayer.m in Sources */,
 				6BAB9F2A19C29F7700376BB6 /* CGPointExtension.m in Sources */,
+				6B8A226F19C51D9500EBAC94 /* GameWorld.m in Sources */,
 				6BD00D3C19C4772E006BFD9A /* SelectLayer.m in Sources */,
 				6BAB9E2E19C29F7600376BB6 /* CCActionPageTurn3D.m in Sources */,
 				6BAB9F7F19C29F7800376BB6 /* vec3.c in Sources */,

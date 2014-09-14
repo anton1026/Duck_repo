@@ -2,7 +2,7 @@
 //  SelectLayer.h
 //  Duck
 //
-//  Created by Denis A on 9/13/14.
+//  Created by Anton on 9/13/14.
 //  Copyright (c) 2014 Anton. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  SelectLayer.m
 //  Duck
 //
-//  Created by Denis A on 9/13/14.
+//  Created by Anton on 9/13/14.
 //  Copyright (c) 2014 Anton. All rights reserved.
 //
 
@@ -10,6 +10,9 @@
 #import "SimpleAudioEngine.h"
 #import "Global.h"
 #import "MenuLayer.h"
+
+#define Cancel_X (IS_IPAD ? 40 : 40)
+#define Cancel_Y (IS_IPAD ? 720 : 750)
 
 @implementation SelectLayer
 {
@@ -39,7 +42,7 @@
    	    CGSize size = [[CCDirector sharedDirector] winSize];
         
         [self setScaleX:g_fx*g_fx1];
-     //   [self setScaleY:g_fy*g_fy1];
+        [self setScaleY:g_fy*g_fy1];
         [self setPosition: ccp(0,0)];
       	
         m_menuSprite = [CCSprite spriteWithFile:@"selectmenu.png"];
@@ -50,9 +53,9 @@
         
         CCSpriteFrame *cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"menu.png"];
         m_Cancel  = [CCSprite spriteWithSpriteFrame:cframe];
-        [self addChild:m_Cancel z:1];
-        [m_Cancel setScale: 0.4f*g_fx*g_fy];
-        [m_Cancel setPosition: ccp(40*g_fx,720*g_fy)];
+        [self addChild:m_Cancel z:2];
+        [m_Cancel setScale: 0.4f];
+        [m_Cancel setPosition: ccp(Cancel_X*g_fx,Cancel_Y*g_fy)];
         [m_Cancel setOpacity:180];
         
         
@@ -64,7 +67,7 @@
        
         m_selectSprite =[CCSprite spriteWithSpriteFrame:cframe1];
         [m_selectSprite setPosition:ccp((1024 / 2 + 20)*g_fx, (768/2 + 234)*g_fy)];
-        [m_selectSprite setScaleY:1.05f];
+      //  [m_selectSprite setScaleY:1.05f];
         [self addChild:m_selectSprite z:2];
         
         
@@ -88,17 +91,22 @@
     x =location.x/g_fx;
     y =location.y/g_fy;
     if (x>0 && x<150 && y>650){
+        //return
         [[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
         [[CCDirector sharedDirector] replaceScene:[CCTransitionFlipX transitionWithDuration:0.5 scene:MenuLayer.scene]];
         
-    }else if(x > 225 && x < 780 && y > 0 && y < 115){
-        //option
+    }else if (x > 130 && x < 230 && y > 530 && y < 650){
+        //Level Down
+        if(current_level >0)
+             current_level--;
         
-    }else if (x > 225 && x < 770 && y > 500 && y < 580){
-        // Tutorial
+    }else if (x > 760 && x < 900 && y > 530 && y < 650){
+        // Level Up
+        if(current_level<9)
+            current_level++;
         
-    }else if (x > 320 && x < 700 && y > 580 && y < 755){
-        // Game
+    }else if (x > 270 && x < 750 && y > 550 && y < 660){
+        // Game Start
     }
 }
 
