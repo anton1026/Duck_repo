@@ -11,15 +11,11 @@
 @interface CBirds : NSObject
 {
     CCNode *m_rootNode;
-//	 Random 	m_random;
-	int m_init_cnt;
-    
-	NSMutableArray *sprites;
-
-	CCAnimate *anim_action;
-	NSMutableArray *move_actions;
-
+    int m_init_cnt;
 }
+@property (nonatomic,retain) NSMutableArray *sprites;
+@property (nonatomic,retain) CCAnimate *anim_action;
+@property (nonatomic,retain) NSMutableArray *move_actions;
 
 -(id) initWithNode : (CCNode *) rootNode;
 -(void) InitBirds;

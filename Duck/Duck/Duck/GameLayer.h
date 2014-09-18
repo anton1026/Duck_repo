@@ -7,17 +7,32 @@
 //
 
 #import "cocos2d.h"
-#import "GameWorld.h"
+
+//#import "GameWorld.h"
+
 #import "GameLevel.h"
 #import "CBirds.h"
 #import "COrel.h"
+#import "Numbers.h"
+#import "Global.h"
 
+#define  HUNTER_HEIGHT  162
+#define  HUNTER_SPEED   100
+#define  MIN_INTERVAL_STAY  7000
+#define  MAX_DELAY_STAY     7000
+#define  OriginX  512
+#define  OriginY  384
+#define  SkyScaleX  3
+#define  SkyScaleY  1
 
+//----------------------------------------------------------------//
 
 @interface GameLayer : CCLayer
 {
     
-	GameWorld *m_gameWorld;
+  
+   
+	//GameWorld *m_gameWorld;
     
     
     Boolean bPaused;
@@ -45,7 +60,7 @@
     
 	int m_duckLives;
 	CCSprite *m_duckLiveHead;
-	//private Numbers m_duckLivesSprite;
+	Numbers  *m_duckLivesSprite;
     
 	CCSprite *m_duckheadSprite;
 	CCAction *m_duckheadAction;
@@ -57,8 +72,8 @@
 	CCAnimation *m_huntkillAnimation;
 	CCAction *m_huntkillAction;
     
-//	CCSpriteSheet *m_hunterSheet1;
-  
+	CCSpriteBatchNode *m_hunterSheet1;
+
   	CCAnimation *m_hunterAnimation1;
 	CCAnimation *m_hunterPulaAnimation1;
     
@@ -79,7 +94,7 @@
     NSMutableArray *m_backgrounds;
     NSMutableArray *m_flowers;
     
-	//private Background m_skyBox;
+	Background *m_skyBox;
     
     GameLevel *m_CurLevel;
     
@@ -89,7 +104,7 @@
 	CCAnimate *m_duckStrelActionUpFast;
 	CCAnimate *m_duckStrelActionVbokFast;
     
-//	CCSpriteSheet *m_BackgroundSprites;
+	CCSpriteBatchNode *m_BackgroundSprites;
   
     
     
@@ -101,7 +116,7 @@
     
 	Boolean m_bEnd;
     
-//	private Numbers m_numHuntersSprite;
+    Numbers *m_numHuntersSprite;
 	CCSprite *m_hunterHead;
 	CCSprite *m_bonusIcon;
     
@@ -134,7 +149,11 @@
 }
 +(CCScene *) scene;
 +(GameLayer*) getInstance;
--(id) initWithLevel :(int) level_ind;
+//-(id) initWithLevel :(int) level_ind;
+
 -(void) ChangeLevel:(int) level;
+-(void) BuildWorld;
+-(void) LoadHunterData :(int) type;
+-(void) SetDuckPos :(float) x posY:(float) y;
 
 @end

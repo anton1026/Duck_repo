@@ -16,14 +16,14 @@
 //	private Random 	m_random;
     
 	
-	CCSprite *sprite;
-	CCAnimate *anim_action, *anim_attack;
-    
-	CCMoveTo *move_action;
-	Boolean b_attack, b_attack_anim;
 	CCRepeatForever *repeat_action;
     
 }
+@property (nonatomic, retain) CCSprite *sprite;
+@property (nonatomic, retain) CCAnimate *anim_action, *anim_attack;
+@property (nonatomic, retain) CCMoveTo *move_action;
+@property  Boolean b_attack, b_attack_anim;
+
 
 -(id) initWithNode : (CCNode *) rootNode;
 -(void) initOrel;

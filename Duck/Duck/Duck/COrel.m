@@ -18,9 +18,9 @@
 
 //    m_random = random;
     
-    anim_action = nil;
-    b_attack = false;
-    b_attack_anim = false;
+    _anim_action = nil;
+    _b_attack = false;
+    _b_attack_anim = false;
 }
 -(void) initOrel
 {
@@ -74,13 +74,13 @@
     [AttackAnimation  addSpriteFrame:frame];
 
     
-    anim_attack =[CCAnimate actionWithAnimation:AttackAnimation];
+    _anim_attack =[CCAnimate actionWithAnimation:AttackAnimation];
     
     
     frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_000.png"];
-    sprite = [CCSprite spriteWithSpriteFrame:frame];
+    _sprite = [CCSprite spriteWithSpriteFrame:frame];
     
-    [m_rootNode addChild :sprite z: 500];
+    [m_rootNode addChild :_sprite z: 500];
     
     
 //    CCRepeatForever *repeat_action = [CCRepeatForever actionWithAction:anim_action];
@@ -94,41 +94,41 @@
       //sprite.addAnimation(AttackAnimation);
     
     
-    [sprite setScale:0.9f];
+    [_sprite setScale:0.9f];
     
-    anim_action = [CCAnimate actionWithAnimation:OrelAnimation];
+    _anim_action = [CCAnimate actionWithAnimation:OrelAnimation];
     
-    repeat_action = [CCRepeatForever actionWithAction:anim_action];
-    [sprite runAction:repeat_action];
+    repeat_action = [CCRepeatForever actionWithAction:_anim_action];
+    [_sprite runAction:repeat_action];
     
-    move_action =  [CCMoveTo actionWithDuration:1.0f position: ccp(1.0f, 1.0f)];
+    _move_action =  [CCMoveTo actionWithDuration:1.0f position: ccp(1.0f, 1.0f)];
    
     [self SetInitState];
 }
 
 -(void) Shedule
 {
-    if ( b_attack_anim )
+    if ( _b_attack_anim )
     {
-        if ( [anim_attack isDone] )
+        if ( [_anim_attack isDone] )
         {
-            [sprite stopAction:anim_attack];
-            [sprite runAction :repeat_action];
+            [_sprite stopAction:_anim_attack];
+            [_sprite runAction :repeat_action];
             
-            b_attack = false;
-            b_attack_anim = false;
+            _b_attack = false;
+            _b_attack_anim = false;
             
             [self SetInitState];
         }
     }
     else
     {
-        if ([move_action isDone])
+        if ([_move_action isDone])
         {
-            if ( b_attack )
+            if ( _b_attack )
             {
-                [sprite runAction :anim_attack];
-                b_attack_anim = true;
+                [_sprite runAction :_anim_attack];
+                _b_attack_anim = true;
             }
             else
                 [self SetInitState];
@@ -155,38 +155,38 @@
     int init_high1 = random()%220 + 500;
     int init_high2 = random()%220 + 500;
     
-    [sprite setVisible :true];
+    [_sprite setVisible :true];
     
     if (init_pos < 0)
-        [sprite setFlipX: false];
+        [_sprite setFlipX: false];
     else
-        [sprite setFlipX: true];
+        [_sprite setFlipX: true];
     
-    [sprite setPosition :ccp(init_pos, init_high1 + random()%80)];
+    [_sprite setPosition :ccp(init_pos, init_high1 + random()%80)];
     
     CGPoint end_point = CGPointMake (end_pos - 0*40, init_high2+random()%80);
     
-    float bird_dist = ccpDistance([sprite position], end_point);
+    float bird_dist = ccpDistance([_sprite position], end_point);
     
     
-    [move_action setDuration : (bird_dist / 120.0f)];
-    [move_action setEndPoint :end_point];
-    [sprite runAction:move_action];
+    [_move_action setDuration : (bird_dist / 120.0f)];
+    [_move_action setEndPoint :end_point];
+    [_sprite runAction:_move_action];
    
 
 }
 
 -(CGPoint) GetPos
 {
-    return [sprite position];
+    return [_sprite position];
 }
 
 -(int) GetDir
 {
-    if ( b_attack )
+    if (_b_attack )
         return 0;
     
-    if ( sprite.flipX )
+    if ( _sprite.flipX )
         return -1;
     else
         return 1;
@@ -200,35 +200,35 @@
     
     CGPoint end_point = CGPointMake(duckPos.x + sdvig_x, duckPos.y + sdvig_y);
     
-    float bird_dist = ccpDistance([sprite position],  end_point);
+    float bird_dist = ccpDistance([_sprite position],  end_point);
 
-    [sprite stopAction:repeat_action];
-    [sprite stopAction:move_action];
+    [_sprite stopAction:repeat_action];
+    [_sprite stopAction:_move_action];
     CCSpriteFrame *tempFrame = [[CCSpriteFrameCache sharedSpriteFrameCache ] spriteFrameByName:@"aa_002.png"];
 
-    [sprite setTextureRect:[tempFrame rect]  rotated:[tempFrame rotated] untrimmedSize:[tempFrame rect].size];
+    [_sprite setTextureRect:[tempFrame rect]  rotated:[tempFrame rotated] untrimmedSize:[tempFrame rect].size];
     
     
     
-    [move_action setDuration :(bird_dist / 500.0f)];
-    [move_action setEndPoint:end_point];
-    [sprite runAction :move_action];
-    b_attack = true;
+    [_move_action setDuration :(bird_dist / 500.0f)];
+    [_move_action setEndPoint:end_point];
+    [_sprite runAction :_move_action];
+    _b_attack = true;
 }
 
 -(void) Fire
 {
-    if ( b_attack )
+    if ( _b_attack )
     {
-        [sprite stopAction:move_action];
-        [sprite runAction :anim_attack];
-        b_attack_anim = true;
+        [_sprite stopAction:_move_action];
+        [_sprite runAction :_anim_attack];
+        _b_attack_anim = true;
     }
 }
 
 -(CGRect) GetRect
 {
-    return [sprite boundingBox] ;
+    return [_sprite boundingBox] ;
 }
 
 @end

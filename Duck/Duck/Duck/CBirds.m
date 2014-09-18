@@ -16,9 +16,9 @@
     if(self =[super init]){
         m_rootNode = rootNode;
         //   m_random = random;
-        sprites = [[NSMutableArray alloc] init];
-        move_actions = [[NSMutableArray alloc]init];
-        anim_action = nil;
+        _sprites = [[NSMutableArray alloc] init];
+        _move_actions = [[NSMutableArray alloc]init];
+        _anim_action = nil;
         m_init_cnt = 0;
         
     }
@@ -55,7 +55,7 @@
         
         
         
-        [sprites addObject:sprite];
+        [_sprites addObject:sprite];
         
         
         [m_rootNode addChild: sprite z: 500];
@@ -69,7 +69,7 @@
         [sprite runAction:repeat_action];
         
         CCMoveTo *move_act =  [CCMoveTo actionWithDuration:1.0f position:ccp(1.0f,1.0f)];
-        [move_actions addObject:move_act];
+        [_move_actions addObject:move_act];
         
     }
 }
@@ -79,7 +79,7 @@
     Boolean bAllDone = true;
     for (int i = 0; i < m_init_cnt; i++)
     {
-        if (![[move_actions objectAtIndex:i] isDone])
+        if (![[_move_actions objectAtIndex:i] isDone])
         {
             bAllDone = false;
         }
@@ -111,36 +111,36 @@
     
     for (int i = m_init_cnt; i < 5; i++)
     {
-        [[sprites objectAtIndex:i] setVisible:false];
+        [[_sprites objectAtIndex:i] setVisible:false];
 
     }
     
     for (int i = 0; i < m_init_cnt; i++)
     {
-        [[sprites objectAtIndex:i] setVisible:true];
+        [[_sprites objectAtIndex:i] setVisible:true];
     
         if (init_pos < 0)
-            [[sprites objectAtIndex:i] setFlipX:true];
+            [[_sprites objectAtIndex:i] setFlipX:true];
 
         else
-            [[sprites objectAtIndex:i] setFlipY:false];
+            [[_sprites objectAtIndex:i] setFlipY:false];
 
-        [[sprites objectAtIndex:i] setPosition:ccp(init_pos - i*40, init_high1+ random() %80)];
+        [[_sprites objectAtIndex:i] setPosition:ccp(init_pos - i*40, init_high1+ random() %80)];
         
 
         CGPoint end_point = CGPointMake(end_pos - i*40, init_high2+ random()%80);
         
-        float bird_dist = ccpDistance([[sprites objectAtIndex:i] position], end_point);
+        float bird_dist = ccpDistance([[_sprites objectAtIndex:i] position], end_point);
        
         
 
 //        --------------------------------------------------
-        [[move_actions objectAtIndex:i] setDuration: (bird_dist/100.0f)];
+        [[_move_actions objectAtIndex:i] setDuration: (bird_dist/100.0f)];
         
         
-        [[move_actions objectAtIndex:i] setEndPoint:end_point];
+        [[_move_actions objectAtIndex:i] setEndPoint:end_point];
         
-        [[sprites objectAtIndex:i] runAction: [move_actions objectAtIndex:i]];
+        [[_sprites objectAtIndex:i] runAction: [_move_actions objectAtIndex:i]];
 
     }
 }
