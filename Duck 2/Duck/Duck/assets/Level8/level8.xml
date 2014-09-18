@@ -1,0 +1,779 @@
+<?xml version="1.0"?>
+<Level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Level_01" Visible="true">
+    <Layers>
+        <Layer Name="Background" Visible="true">
+            <Items>
+                <Item xsi:type="TextureItem" Name="Texture_0069" Visible="true">
+                    <Position>
+                        <X>0</X>
+                        <Y>0</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>fon2.png</texture_filename>
+                    <asset_name>fon2</asset_name>
+                    <Origin>
+                        <X>512</X>
+                        <Y>384</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0070" Visible="true">
+                    <Position>
+                        <X>-1024</X>
+                        <Y>0</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>fon1.png</texture_filename>
+                    <asset_name>fon1</asset_name>
+                    <Origin>
+                        <X>512</X>
+                        <Y>384</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0071" Visible="true">
+                    <Position>
+                        <X>1024</X>
+                        <Y>0</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>fon3.png</texture_filename>
+                    <asset_name>fon3</asset_name>
+                    <Origin>
+                        <X>512</X>
+                        <Y>384</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0072" Visible="true">
+                    <Position>
+                        <X>-541</X>
+                        <Y>23</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>lodka-c.png</texture_filename>
+                    <asset_name>lodka-c</asset_name>
+                    <Origin>
+                        <X>109</X>
+                        <Y>158</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0073" Visible="true">
+                    <Position>
+                        <X>101</X>
+                        <Y>116</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>pirs-c.png</texture_filename>
+                    <asset_name>pirs-c</asset_name>
+                    <Origin>
+                        <X>503</X>
+                        <Y>74</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0074" Visible="true">
+                    <Position>
+                        <X>-1386</X>
+                        <Y>62</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>4</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>korobka-l.png</texture_filename>
+                    <asset_name>korobka-l</asset_name>
+                    <Origin>
+                        <X>143</X>
+                        <Y>130</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0075" Visible="true">
+                    <Position>
+                        <X>73</X>
+                        <Y>-40</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>4</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>korobka-c.png</texture_filename>
+                    <asset_name>korobka-c</asset_name>
+                    <Origin>
+                        <X>426</X>
+                        <Y>173</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0076" Visible="true">
+                    <Position>
+                        <X>1226</X>
+                        <Y>26</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>4</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>korobka-p.png</texture_filename>
+                    <asset_name>korobka-p</asset_name>
+                    <Origin>
+                        <X>302</X>
+                        <Y>177</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0077" Visible="true">
+                    <Position>
+                        <X>-1150</X>
+                        <Y>-107</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>5</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>sakura-l.png</texture_filename>
+                    <asset_name>sakura-l</asset_name>
+                    <Origin>
+                        <X>388</X>
+                        <Y>271</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0078" Visible="true">
+                    <Position>
+                        <X>1279</X>
+                        <Y>-110</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>5</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>sakura-p.png</texture_filename>
+                    <asset_name>sakura-p</asset_name>
+                    <Origin>
+                        <X>260</X>
+                        <Y>181</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0079" Visible="true">
+                    <Position>
+                        <X>0</X>
+                        <Y>335</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>20</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>cvety2.png</texture_filename>
+                    <asset_name>cvety2</asset_name>
+                    <Origin>
+                        <X>512</X>
+                        <Y>50</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0080" Visible="true">
+                    <Position>
+                        <X>-1024</X>
+                        <Y>335</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>20</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>cvety1.png</texture_filename>
+                    <asset_name>cvety1</asset_name>
+                    <Origin>
+                        <X>512</X>
+                        <Y>50</Y>
+                    </Origin>
+                </Item>
+                <Item xsi:type="TextureItem" Name="Texture_0081" Visible="true">
+                    <Position>
+                        <X>1024</X>
+                        <Y>335</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>20</string>
+                        </Property>
+                    </CustomProperties>
+                    <Rotation>0</Rotation>
+                    <Scale>
+                        <X>1</X>
+                        <Y>1</Y>
+                    </Scale>
+                    <TintColor>
+                        <R>255</R>
+                        <G>255</G>
+                        <B>255</B>
+                        <A>255</A>
+                        <PackedValue>4294967295</PackedValue>
+                    </TintColor>
+                    <FlipHorizontally>false</FlipHorizontally>
+                    <FlipVertically>false</FlipVertically>
+                    <texture_filename>cvety3.png</texture_filename>
+                    <asset_name>cvety3</asset_name>
+                    <Origin>
+                        <X>512</X>
+                        <Y>50</Y>
+                    </Origin>
+                </Item>
+            </Items>
+            <ScrollSpeed>
+                <X>1</X>
+                <Y>1</Y>
+            </ScrollSpeed>
+        </Layer>
+        <Layer Name="Hunters" Visible="true">
+            <Items>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0056" Visible="true">
+                    <Position>
+                        <X>-253</X>
+                        <Y>99</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>3</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                        <Property Name="Lives" Type="string" Description="">
+                            <string>6</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>708</Width>
+                    <Height>34</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0057" Visible="true">
+                    <Position>
+                        <X>-1512</X>
+                        <Y>165</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>3</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                        <Property Name="Lives" Type="string" Description="">
+                            <string>4</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>512</Width>
+                    <Height>27</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0058" Visible="true">
+                    <Position>
+                        <X>1016</X>
+                        <Y>163</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>3</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                        <Property Name="Lives" Type="string" Description="">
+                            <string>5</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>511</Width>
+                    <Height>31</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0082" Visible="true">
+                    <Position>
+                        <X>-1263</X>
+                        <Y>123</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>2</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>226</Width>
+                    <Height>20</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0083" Visible="true">
+                    <Position>
+                        <X>-165</X>
+                        <Y>80</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>2</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>0.95</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>324</Width>
+                    <Height>16</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0084" Visible="true">
+                    <Position>
+                        <X>1027</X>
+                        <Y>123</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>2</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>0.95</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>240</Width>
+                    <Height>27</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0085" Visible="true">
+                    <Position>
+                        <X>497</X>
+                        <Y>-50</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>0.7</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>213</Width>
+                    <Height>13</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0090" Visible="true">
+                    <Position>
+                        <X>-894</X>
+                        <Y>-43</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>0.7</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>202</Width>
+                    <Height>18</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+            </Items>
+            <ScrollSpeed>
+                <X>1</X>
+                <Y>1</Y>
+            </ScrollSpeed>
+        </Layer>
+        <Layer Name="Bonus" Visible="false">
+            <Items>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0053" Visible="true">
+                    <Position>
+                        <X>-731</X>
+                        <Y>-8</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>3</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>30</Width>
+                    <Height>27</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0054" Visible="true">
+                    <Position>
+                        <X>593</X>
+                        <Y>-16</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>3</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>40</Width>
+                    <Height>30</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0086" Visible="true">
+                    <Position>
+                        <X>-1205</X>
+                        <Y>-23</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>28</Width>
+                    <Height>20</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0087" Visible="true">
+                    <Position>
+                        <X>-940</X>
+                        <Y>-18</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>28</Width>
+                    <Height>20</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0088" Visible="true">
+                    <Position>
+                        <X>-160</X>
+                        <Y>-33</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>25</Width>
+                    <Height>23</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+                <Item xsi:type="RectangleItem" Name="Rectangle_0089" Visible="true">
+                    <Position>
+                        <X>930</X>
+                        <Y>-33</Y>
+                    </Position>
+                    <CustomProperties>
+                        <Property Name="Zorder" Type="string" Description="">
+                            <string>1</string>
+                        </Property>
+                    </CustomProperties>
+                    <Width>20</Width>
+                    <Height>20</Height>
+                    <FillColor>
+                        <R>192</R>
+                        <G>0</G>
+                        <B>192</B>
+                        <A>145</A>
+                        <PackedValue>2445279424</PackedValue>
+                    </FillColor>
+                </Item>
+            </Items>
+            <ScrollSpeed>
+                <X>1</X>
+                <Y>1</Y>
+            </ScrollSpeed>
+        </Layer>
+    </Layers>
+    <CustomProperties />
+    <EditorRelated>
+        <NextItemNumber>90</NextItemNumber>
+        <ContentRootFolder>D:\Work\Ducks\Level8</ContentRootFolder>
+        <CameraPosition>
+            <X>-58.33345</X>
+            <Y>0</Y>
+        </CameraPosition>
+        <Version>1.3.0.0</Version>
+    </EditorRelated>
+</Level>
