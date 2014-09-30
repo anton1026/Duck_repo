@@ -10,13 +10,13 @@
 
 @implementation Flower
 
-//-(id)init
-//{
-//    if(self =[super init]){
-//        _sprite =nil;
-//        _action =nil;
-//    }
-//    return self;
-//}
+-(id)init
+{
+    if(self =[super init]){
+        _sprite =nil;
+        _action =nil;
+    }
+    return self;
+}
 
 @end

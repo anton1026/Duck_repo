@@ -3,7 +3,9 @@
 //  Duck
 //
 //  Created by Anton on 9/14/14.
+
 //  Copyright (c) 2014 Anton. All rights reserved.
+
 //
 
 #import "GameLayer.h"
@@ -12,6 +14,14 @@
 #import  <Foundation/Foundation.h>
 #import "SelectLayer.h"
 
+#define  HUNTER_HEIGHT  162
+#define  HUNTER_SPEED   100
+#define  MIN_INTERVAL_STAY  7000
+#define  MAX_DELAY_STAY     7000
+#define  OriginX  512
+#define  OriginY  384
+#define  SkyScaleX  3
+#define  SkyScaleY  1
 
 @implementation GameLayer
 
@@ -41,7 +51,13 @@ static GameLayer *m_gameLayer;
         
         m_gameLayer =self;
         
+      
+        
         [self setTouchEnabled:true];
+        [self setAccelerometerEnabled:true];
+        
+        [[UIAccelerometer sharedAccelerometer]setDelegate: self];
+        
 		// ask director for the window size
  		CGSize size = [[CCDirector sharedDirector] winSize];
         
@@ -70,22 +86,29 @@ static GameLayer *m_gameLayer;
 		m_freeInd = [[NSMutableArray alloc]init];
         
         
-        m_rootNode = [[CCNode alloc]init];
+      [m_apples addObject:[[Apple_Object alloc]init]];
+      [m_apples addObject:[[Apple_Object alloc]init]];
+      [m_apples addObject:[[Apple_Object alloc]init]];
         
-        [self setScale: g_fx*g_fy];
-        [self setPosition: ccp(-(1024 - size.width) / 2.0f
-                              * g_fx, -(768 - size.height) / 2.0f* g_fx)];
+      m_rootNode = [[CCNode alloc]init];
+        
+        
+        [self setScaleX: g_fx];
+        [self setScaleY: g_fy];
+        
+        [self setPosition: ccp(-(1024 - size.width) / 2.0f*g_fx
+                              , -(768 - size.height) / 2.0f*g_fy)];
   	    [self addChild:m_rootNode];
         
-        CCSpriteFrame *cframe = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"];
-//---------------------------------------------------------------------------------------
-        
-     	m_duckSheet = [CCSprite spriteWithTexture: [cframe texture]]  ;
-       
-		[m_rootNode addChild:m_duckSheet z:7];
         
 
+        CCSpriteFrame *cframe = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"];
+      	m_duckSheet = [CCSpriteBatchNode batchNodeWithTexture:[cframe texture]];
         
+        //  m_duckSheet =[CCSpriteBatchNode  batchNodeWithFile:@"duck_stay.png"];
+        [m_rootNode addChild:m_duckSheet z:7];
+        
+
 
 		// save parameters needed for ccAccelerometrChange
         
@@ -96,94 +119,102 @@ static GameLayer *m_gameLayer;
         
 
         rotatedDuckStay = [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rotated];
-        
+     
         rotatedDuckMove = [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rotated];
         
 
 
 		// create the animation
         
- 		//m_duckStrelAnimationUp = [[CCAnimation  alloc] init];
+ 		
         NSMutableArray *frames = [[NSMutableArray alloc]init];
+        m_duckStrelAnimationUp = [[CCAnimation alloc]init];
         for(int i = 1; i <19  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_strel%d.png",i]]];
         }
-        m_duckStrelAnimationUp  = [CCAnimation animationWithFrames:frames delay:0.05f];
+        m_duckStrelAnimationUp  = [CCAnimation animationWithSpriteFrames:frames delay:0.05f];
+        m_duckStrelAnimationUpFast  = [CCAnimation animationWithSpriteFrames:frames delay:0.025f];
         
-        m_duckStrelAnimationUpFast  = [CCAnimation animationWithFrames:frames delay:0.025f];
-        
-        
+        [frames removeAllObjects];
+        m_duckStrelAnimationVbok = [[CCAnimation alloc]init];
         for(int i = 1; i <19  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"strelaet_pramo%d.png",i]]];
         }
-        m_duckStrelAnimationVbok  = [CCAnimation animationWithFrames:frames delay:0.05f];
-        
-        m_duckStrelAnimationVbokFast  = [CCAnimation animationWithFrames:frames delay:0.025f];
+        m_duckStrelAnimationVbok  = [CCAnimation animationWithSpriteFrames:frames delay:0.05f];
+        m_duckStrelAnimationVbokFast  = [CCAnimation animationWithSpriteFrames:frames delay:0.025f];
 		
         
 		m_duckStrelActionUp = [CCAnimate actionWithAnimation: m_duckStrelAnimationUp];
 		m_duckStrelActionVbok =[CCAnimate actionWithAnimation:m_duckStrelAnimationVbok];
-        
-        
-		m_duckStrelActionUpFast =[CCAnimate actionWithAnimation:m_duckStrelAnimationUpFast];
+     	m_duckStrelActionUpFast =[CCAnimate actionWithAnimation:m_duckStrelAnimationUpFast];
         m_duckStrelActionVbokFast = [CCAnimate actionWithAnimation:m_duckStrelAnimationVbokFast];
        
-        
+        [frames removeAllObjects];
         for(int i = 1; i <4  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_dyn1_%d.png",i]]];
         }
-        m_duckDyn1 = [CCAnimation animationWithFrames:frames delay:0.25f];
+        m_duckDyn1 = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
 
-        
+       [frames removeAllObjects];
         for(int i = 1; i <4  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_dyn2_%d.png",i]]];
         }
-        m_duckDyn2 = [CCAnimation animationWithFrames:frames delay:0.25f];
-
+        
+        m_duckDyn2 = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
+       [frames removeAllObjects];
         for(int i = 0; i <4  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_kill1_%d.png",i % 2+1]]];
         }
-        m_duckKill1 = [CCAnimation animationWithFrames:frames delay:0.15f];
-
+        m_duckKill1 = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+        
+       [frames removeAllObjects];
         for(int i = 0; i <4  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_kill2_%d.png",i % 2+1]]];
         }
-        m_duckKill2 = [CCAnimation animationWithFrames:frames delay:0.15f];
+        m_duckKill2 = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
 
         
         
         
 		// create duck lives sprites
+        
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_head.png"];
         
 		m_duckLiveHead =[CCSprite spriteWithSpriteFrame:cframe];
-		[m_rootNode addChild:m_duckLiveHead z: 100];
-//        
-//		m_duckLives = 9;
-//		m_duckLivesSprite = [[Numbers alloc]init];
-//     	[m_rootNode addChild: m_duckLivesSprite z: 10];
-//
-//		[m_duckLivesSprite setScale:0.7f];
-//		[m_duckLivesSprite SetNum :m_duckLives];
-//		[m_duckLivesSprite setVisible:true];
-//        
-//	   m_numHuntersSprite = [[Numbers alloc]init];
-//        [m_rootNode addChild :m_numHuntersSprite z: 10];
-//       [m_numHuntersSprite setScale :0.7f];
-//       [m_numHuntersSprite setVisible:true];
-//
-		// create flower animation
+        [m_duckLiveHead setScale:g_fx1];
+
+      	[m_rootNode addChild:m_duckLiveHead z: 100];
         
+        
+		m_duckLives = 9;
+		m_duckLivesSprite = [[Numbers alloc]init];
+     	[m_rootNode addChild: m_duckLivesSprite z: 10];
+
+		[m_duckLivesSprite setScale:0.7f*g_fx1];
+		[m_duckLivesSprite SetNum :m_duckLives];
+		[m_duckLivesSprite setVisible:true];
+        
+        
+        
+	    m_numHuntersSprite = [[Numbers alloc]init];
+        [m_rootNode addChild :m_numHuntersSprite z: 10];
+        [m_numHuntersSprite setScale :0.7f*g_fx1];
+        [m_numHuntersSprite setVisible:true];
+
+		// create flower animation
+        [frames removeAllObjects];
         for(int i = 1; i <10  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"ss_00%d.png",i]]];
         }
-        m_flowerAnim = [CCAnimation animationWithFrames:frames delay:0.1f];
+        m_flowerAnim = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
         
         
 		// create duck head sprite for popup
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_head.png"];
         
 	 	m_duckheadSprite = [CCSprite spriteWithSpriteFrame:cframe];
+        [m_duckheadSprite setScale:g_fx1];
+        
 		[m_rootNode addChild :m_duckheadSprite z:500];
      	[m_duckheadSprite setVisible :false];
         
@@ -191,23 +222,24 @@ static GameLayer *m_gameLayer;
         
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"bonus4.png"];
     	m_bonusheadSprite = [CCSprite spriteWithSpriteFrame:cframe];
-		[m_bonusheadSprite setScale :0.8f];
+		[m_bonusheadSprite setScale :0.8f*g_fx1];
         
 		[m_rootNode addChild :m_bonusheadSprite z:500];
  		[m_bonusheadSprite setVisible:false];
         
 		// apple sheet
+        
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"];
         
 		// m_appleSheet = CCSpriteSheet.spriteSheet(cframe.getTexture());
 		// m_rootNode.addChild(m_appleSheet, 7);
         
 		// create the animation
-        
+       [frames removeAllObjects];
         for(int i = 2; i <6  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"apple%d.png",i]]];
         }
-        m_appleAnimation = [CCAnimation animationWithFrames:frames delay:0.1f];
+        m_appleAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
 
         
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"];
@@ -224,32 +256,29 @@ static GameLayer *m_gameLayer;
             
 			apple.m_appleSprite = [CCSprite spriteWithSpriteFrame:cframe];
             
-			
+			[apple.m_appleSprite setScale:g_fx1];
 			[m_rootNode addChild:apple.m_appleSprite z:7];
+            
     		[apple.m_appleSprite setVisible:false];
 		}
         
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"shoot1.png"];
+  //---------------------test---------------
+        ShowButtons =1;
+        
         
 		m_shootSprite = [CCSprite spriteWithSpriteFrame: cframe];
-		if ( density > 1.1 )
-			[m_shootSprite setScale:2] ;
-		else
-			[m_shootSprite setScale:1.5f];
+	    [m_shootSprite setScale:1.5f*g_fx1];
         
 		[m_shootSprite setOpacity:160];
 		[m_rootNode addChild :m_shootSprite z:135];
 		[m_shootSprite setVisible: (ShowButtons == 1)];
         
 		m_shootSprite2 = [CCSprite spriteWithSpriteFrame:cframe];
-		if ( density > 1.1 )
-			[m_shootSprite2 setScale:2];
-		else
-			[m_shootSprite2 setScale:1.5f];
-		[m_shootSprite2 setOpacity:160];
+	    [m_shootSprite2 setScale:1.5f*g_fx1];
+        [m_shootSprite2 setOpacity:160];
  		[m_rootNode addChild:m_shootSprite2 z:135];
-        
-		[m_shootSprite2 setVisible:(ShowButtons == 1)];
+    	[m_shootSprite2 setVisible:(ShowButtons == 1)];
         
 		if (_isRus){
             m_shootLabel =[CCLabelTTF labelWithString:@"Forward"
@@ -298,12 +327,17 @@ static GameLayer *m_gameLayer;
         [m_shootLabel2 setVisible: (ShowButtons == 1)];
         
 		m_duckSprite = [CCSprite spriteWithTexture: [m_duckSheet texture] rect: CGRectMake(3 * 119.0f, 3 * 113.5f, 119.0f, 113.5f)];
-        
+        [m_duckSprite setScale:g_fx1 ];
         [m_duckSheet addChild :m_duckSprite z: 5];
-        [self SetDuckPos:1024.0f*3.0f/2.0f posY:768.0f/2.0/2.0f];
+        
+        
+        [self SetDuckPosX:1024.0f*3.0f/2.0f PosY:768.0f/2.0/2.0f];
         
         
 		// init birds
+        m_Birds =[[CBirds alloc]initWithNode:m_rootNode];
+        m_Orel =[[COrel alloc] initWithNode:m_rootNode];
+        
 		[m_Birds InitBirds];
 		[m_Orel initOrel];
         
@@ -312,14 +346,15 @@ static GameLayer *m_gameLayer;
 		m_cancelSprite = [CCSprite spriteWithSpriteFrame:cframe];
         
 		[m_rootNode addChild :m_cancelSprite z: 100];
-		[m_cancelSprite setScale :0.4f];
+		[m_cancelSprite setScale :0.4f*g_fx1];
         [m_cancelSprite setOpacity :180];
+        
         
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pause.png"];
       	m_pauseSprite = [CCSprite spriteWithSpriteFrame:cframe];
         
 		[m_rootNode addChild:m_pauseSprite z: 100];
-		[m_pauseSprite setScale :0.4f];
+		[m_pauseSprite setScale :0.4f*g_fx1];
 		[m_pauseSprite setOpacity :180];
         
 		if (_isRus){
@@ -338,17 +373,25 @@ static GameLayer *m_gameLayer;
 		[self addChild :m_labelWait z:200];
 		[m_labelWait setVisible:false];
         
+        
  	    cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"bonus4.png"];
+        
         m_bonusIcon = [CCSprite spriteWithSpriteFrame:cframe];
-		[m_rootNode addChild :m_bonusIcon z: 100];
-		[m_bonusIcon setScale :0.7f];
-		[m_bonusIcon setOpacity :200];
+        [m_rootNode addChild:   m_bonusIcon];
+        [m_bonusIcon setScale   :0.7f*g_fx1];
+        [m_bonusIcon setOpacity :200];
 		[m_bonusIcon setVisible :false];
         
         
 		m_visibleWidth = (float) size.width/g_fx;
         
-
+        
+        _isduckActionEnd =true;
+        _isPulaActionDone =true;
+        _isHunterActionDone =true;
+        _isBonusActionDone =true;
+        _isBonusLiveActionDone =true;
+        _ishunterkillActionDone=true;
 	    [self ChangeLevel:level_ind];
         
 		      
@@ -356,9 +399,8 @@ static GameLayer *m_gameLayer;
 		[m_numHuntersSprite SetNum:m_NumberHunters];
         
         
-        [self scheduleUpdate];
-        [self setTouchEnabled:true];
-        [self setAccelerometerEnabled:true];
+       [self scheduleUpdate];
+      
     }
 	
 	return self;
@@ -380,7 +422,7 @@ static GameLayer *m_gameLayer;
         
     } else if (level == 2) {
         
-        //m_CurLevel = MySettings.getInstance().levels.get(1);
+     
          m_CurLevel = Level_Lists[1];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level2.plist"];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level2_2.plist"];
@@ -390,7 +432,7 @@ static GameLayer *m_gameLayer;
         [self LoadHunterData:6];
 
     } else if (level == 3) {
-  //      m_CurLevel = MySettings.getInstance().levels.get(2);
+  
          m_CurLevel = Level_Lists[2];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level3.plist"];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level3_2.plist"];
@@ -401,7 +443,7 @@ static GameLayer *m_gameLayer;
         [self LoadHunterData:3];
     } else if (level == 4) {
         
-        //m_CurLevel = MySettings.getInstance().levels.get(3);
+     
          m_CurLevel = Level_Lists[3];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level4.plist"];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level4_2.plist"];
@@ -411,7 +453,7 @@ static GameLayer *m_gameLayer;
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level4_6.plist"];
         [self LoadHunterData:5];
     } else if (level == 5) {
-//        m_CurLevel = MySettings.getInstance().levels.get(4);
+
          m_CurLevel = Level_Lists[4];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level5.plist"];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level5_2.plist"];
@@ -422,7 +464,7 @@ static GameLayer *m_gameLayer;
         [self LoadHunterData:5];
 
     } else if (level == 6) {
-//        m_CurLevel = MySettings.getInstance().levels.get(5);
+
          m_CurLevel = Level_Lists[5];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level6.plist"];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level6_2.plist"];
@@ -435,7 +477,7 @@ static GameLayer *m_gameLayer;
   
     } else if (level == 7) {
         m_YMin = 60;
-  //      m_CurLevel = MySettings.getInstance().levels.get(6);
+ 
          m_CurLevel = Level_Lists[6];
         
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level7.plist"];
@@ -450,7 +492,7 @@ static GameLayer *m_gameLayer;
         m_YMin = 60;
         m_YMax = 140;
         
-       // m_CurLevel = MySettings.getInstance().levels.get(7);
+     
         
          m_CurLevel = Level_Lists[7];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level8.plist"];
@@ -462,7 +504,7 @@ static GameLayer *m_gameLayer;
         [self LoadHunterData:4];
 
     } else if (level == 9) {
-//        m_CurLevel = MySettings.getInstance().levels.get(8);
+
          m_CurLevel = Level_Lists[8];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level9.plist"];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level9_2.plist"];
@@ -475,7 +517,7 @@ static GameLayer *m_gameLayer;
     } else if (level == 10) {
         m_YMin = 60;
         m_YMax = 140;
-   //     m_CurLevel = MySettings.getInstance().levels.get(9);
+   
          m_CurLevel = Level_Lists[9];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level10.plist"];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level10_2.plist"];
@@ -489,9 +531,9 @@ static GameLayer *m_gameLayer;
     
     [self BuildWorld];
     
-    //m_NumberHunters = m_CurLevel.m_NumberHunters;
+    m_NumberHunters = m_CurLevel.m_NumberHunters;
    
-    [self  SetDuckPos:1024.0f * 3.0f / 2.0f posY: 768.0f / 2.0f / 2.0f];
+    [self  SetDuckPosX:1024.0f * 3.0f / 2.0f PosY: 768.0f / 2.0f / 2.0f];
 }
 
 -(void) UnloadCurrentLevel
@@ -685,17 +727,29 @@ static GameLayer *m_gameLayer;
     
     NSString *strHunter = [NSString stringWithFormat:@"hunter%d.png", type];
     
+    CCSpriteFrame *cframe = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strHunter];
+    m_hunterSheet1 = [CCSpriteBatchNode batchNodeWithTexture:[cframe texture]];
     
-    m_hunterSheet1 = [CCSpriteBatchNode  batchNodeWithTexture:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strHunter] texture]];
+  
+    ccTexParams params = {GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
     
+    [[m_hunterSheet1 texture] setTexParameters: &params];
+    [m_rootNode addChild :m_hunterSheet1  z:6];
+
 
     m_hunterHead = [CCSprite  spriteWithSpriteFrame: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strHunter]];
     
-    [m_hunterHead setTextureRect: CGRectMake(0 * 176.0f, 0 * 161.0f, 176.0f,
-                                              161.0f)];
+    [m_hunterHead setTextureRect: CGRectMake(0 * 176.0f, 0 * 161.0f, 176.0f/g_fx1,161.0f/g_fy1)];
     
     
-    [m_hunterHead setScale :0.4f];
+    
+//    CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(1* 176.0f/g_fx1, 1 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1)];
+//    
+//    m_hunterHead =[CCSprite spriteWithSpriteFrame:frame];
+    
+    
+    
+    [m_hunterHead setScale :0.4f*g_fx1];
     [m_hunterHead setVisible :true];
     [m_rootNode addChild :m_hunterHead z:100];
     
@@ -704,45 +758,45 @@ static GameLayer *m_gameLayer;
     for(int i = 1; i <6  ; i++) {
         [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"hunt_kill%d.png",i]]];
     }
-    m_huntkillAnimation  = [CCAnimation animationWithFrames:frames delay:0.15f];
+    m_huntkillAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
 
     
     
     
-    m_huntkillSprite = [CCSprite spriteWithSpriteFrame:    [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"hunt_kill1.png"]];
+    m_huntkillSprite = [CCSprite spriteWithSpriteFrame:
+                        [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"hunt_kill1.png"]];
+    
+    [m_huntkillSprite setScale:g_fx1];
     
     [m_rootNode addChild :m_huntkillSprite z: 500];
     [m_huntkillSprite setVisible :false];
     
     
-    ccTexParams params = {GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-    
-    [[m_hunterSheet1 texture] setTexParameters: &params];
-    
-    [m_rootNode addChild :m_hunterSheet1  z:6];
     
     // create the hunters animation
-
+    [frames removeAllObjects];
     for (int y = 0; y < 2; y++) {
         for (int x = 0; x < 5; x++) {
-            CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f, y * 161.0f, 176.0f, 161.0f) ];
+            CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f/g_fx1, y * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) ];
             [frames addObject: frame];
+
         }
     }
+    m_hunterAnimation1  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
     
-    m_hunterAnimation1  = [CCAnimation animationWithFrames:frames delay:0.15f];
-    
+    [frames removeAllObjects];
     for (int x = 0; x < 5; x++) {
         
-        CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f, 3 * 161.0f, 176.0f, 161.0f) ];
+        CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) ];
         [frames addObject: frame];
     }
-    m_hunterPulaAnimation1  = [CCAnimation animationWithFrames:frames delay:0.25f];
+    m_hunterPulaAnimation1  = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
 
 }
 
 -(void) BuildWorld
 {
+    //[self Init_Animation];
     // create background
     for (BackgroundItem *bi in m_CurLevel.m_BackgroundItems) {
         
@@ -750,7 +804,7 @@ static GameLayer *m_gameLayer;
         Background *b = [[Background alloc]init];
         
         if (bi.isSkyBox == 1) {
-            b.sprite  = [CCSprite spriteWithTexture:bi.texture_name];
+            b.sprite  = [CCSprite spriteWithFile:bi.texture_name];
         } else {
             
             CCSpriteFrame  *cframe = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:bi.texture_name];
@@ -774,14 +828,17 @@ static GameLayer *m_gameLayer;
                 
                 [b.sprite setPosition : ccp(bi.x + 1536, -(bi.y) + OriginY)];
                 
-                [b.sprite setScaleX :bi.scale_x ];
-                [b.sprite setScaleY :bi.scale_y ];
+                [b.sprite setScaleX :bi.scale_x*g_fx1 ];
+                [b.sprite setScaleY :bi.scale_y*g_fy1 ];
                 
                 
             } else {
                 [b.sprite setPosition:ccp(bi.x + 1536, -(bi.y) +OriginY)];
                 
-                [b.sprite setScaleX : (WIN_SIZE_X/g_fx/1024)];
+                
+                
+                [b.sprite setScaleX : (WIN_SIZE_X/g_fx/1024)*g_fx1];
+                [b.sprite setScaleY : (WIN_SIZE_Y/g_fy/1024)*g_fy1];
             }
             
             [m_backgrounds addObject:b];
@@ -808,8 +865,8 @@ static GameLayer *m_gameLayer;
         [b.bonus_shoot.sprite setPosition:ccp(xx,yy)];
         
         
-        [b.bonus_live.sprite setScale :0.5f];
-         [b.bonus_shoot.sprite setScale :0.4f];
+         [b.bonus_live.sprite setScale :0.5f*g_fx1];
+         [b.bonus_shoot.sprite setScale :0.4f*g_fx1];
         
      }
     
@@ -825,28 +882,34 @@ static GameLayer *m_gameLayer;
         
         h.sprite =[CCSprite spriteWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(0,0,253.8f,233.0f)];
         
-        
         h.numLives = [CCSprite spriteWithSpriteFrame: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"0.png"]];
         
         [h.numLives setScale :0.6f];
         [h.sprite addChild :h.numLives z:h.hi.z_order];
         
-        [h.numLives setPosition : ccp(90.0f, HUNTER_HEIGHT)];
+        [h.numLives setPosition : ccp(90.0f/g_fx1, HUNTER_HEIGHT/g_fx1)];
         
-        [h.numLives setOpacity:0] ;
+        [h.numLives setOpacity:0];
         
         h.spriteApple = [CCSprite spriteWithSpriteFrame: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"]];
         
+        
+        [h.spriteApple setPosition : ccp(50/g_fx1, HUNTER_HEIGHT/g_fx1)];
         [h.sprite addChild :h.spriteApple z: h.hi.z_order];
-        [h.spriteApple setPosition : ccp(50, HUNTER_HEIGHT)];
         [h.spriteApple setOpacity :0];
         
         
-        [m_rootNode addChild :h.sprite z: h.hi.z_order];
+        float temp_x, temp_y;
         
-        [h.sprite setPosition: ccp(h.hi.x + OriginX * SkyScaleX + rx, -(h.hi.y)
-                             + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
-        [h.sprite setScale :h.hi.scale];
+        temp_x =(h.hi.x + OriginX * SkyScaleX + rx)*g_fx;
+        temp_y = (-(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)*g_fy;
+        
+        [h.sprite setPosition: ccp(temp_x, temp_y)];
+        [h.sprite setScale :h.hi.scale*g_fx1];
+        int temp_z =h.hi.z_order;
+        
+        [m_rootNode addChild :h.sprite z: temp_z];
+        
         
         CCSpriteFrame *cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pula.png"];
 
@@ -860,14 +923,26 @@ static GameLayer *m_gameLayer;
             [h.m_pules addObject:temp];
         }
         
-        CCAnimate *hunterAction;
         
+        NSMutableArray *frames =[[NSMutableArray alloc]init];
+        [frames removeAllObjects];
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 5; x++) {
+                CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f/g_fx1, y * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) ];
+                [frames addObject: frame];
+                
+            }
+        }
+        
+        m_hunterAnimation1  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+        
+
         hunterAction = [CCAnimate actionWithAnimation:m_hunterAnimation1];
-        
         h.repeat = [CCRepeatForever actionWithAction:hunterAction];
         
         [h.sprite runAction:h.repeat];
-        h.move_action =[CCMoveTo actionWithDuration: h.hi.width / HUNTER_SPEED position:CGPointMake(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
+        
+        h.move_action =[CCMoveTo actionWithDuration: h.hi.width / HUNTER_SPEED position:ccp(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
         
         
         
@@ -878,7 +953,7 @@ static GameLayer *m_gameLayer;
             [h.sprite setFlipX:false];
             
             if ((h.hi.width - rx) != 0)
-                 h.move_action =[CCMoveTo actionWithDuration: (h.hi.width - rx) / HUNTER_SPEED position:CGPointMake(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
+                 h.move_action =[CCMoveTo actionWithDuration: (h.hi.width - rx) / HUNTER_SPEED position:ccp(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
             
                 
                 
@@ -887,24 +962,32 @@ static GameLayer *m_gameLayer;
             [h.sprite setFlipX:true];
             [h.move_action setTag:0];
             if (rx != 0){
-                h.move_action =[CCMoveTo actionWithDuration: rx / HUNTER_SPEED position:CGPointMake(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
+                h.move_action =[CCMoveTo actionWithDuration: rx / HUNTER_SPEED position:ccp(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
         
             }else{
-                h.move_action =[CCMoveTo actionWithDuration: h.hi.width / HUNTER_SPEED position:CGPointMake(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
+                h.move_action =[CCMoveTo actionWithDuration: h.hi.width / HUNTER_SPEED position:ccp(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
                 
                 
             }
         }
         
         [h.sprite runAction :h.move_action];
+      
+        [frames removeAllObjects];
+        for (int x = 0; x < 5; x++) {
+            
+            CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) ];
+            [frames addObject: frame];
+        }
+        m_hunterPulaAnimation1  = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
         
         h.strelba_action = [CCAnimate actionWithAnimation:m_hunterPulaAnimation1];
         
         h.state = 0; // walking state
         //--------------------------------------------------------------
-//        h.timetostay = SystemClock.uptimeMillis() + MIN_INTERVAL_STAY + random.nextInt(MAX_DELAY_STAY);
+        h.timetostay = [[NSDate date] timeIntervalSince1970]*1000 + MIN_INTERVAL_STAY + random()%(MAX_DELAY_STAY);
         
-//        h.timetopula = SystemClock.uptimeMillis() + 8000  + random.nextInt(10000);
+        h.timetopula = [[NSDate date] timeIntervalSince1970]*1000  + 8000  + random()%10000;
         
   
         [h SetLives:m_CurLevel.m_HunterLives];
@@ -931,7 +1014,7 @@ static GameLayer *m_gameLayer;
         float yy = -(fi.y - fi.height * 2) + OriginY;
         
         [f.sprite setPosition :ccp(xx, yy)];
-        [f.sprite setScale:1.1f];
+        [f.sprite setScale:1.1f*g_fx1];
         f.action = [CCAnimate actionWithAnimation:m_flowerAnim];
         [m_flowers addObject:f];
         
@@ -948,33 +1031,129 @@ static GameLayer *m_gameLayer;
     
     // ==================================== Set bomba and bonus start times ==============================================
          
-//    m_BombaTime = SystemClock.uptimeMillis() + m_CurLevel.m_MinDelayBomb + random.nextInt(m_CurLevel.m_MaxAddDelayBomb);
-//    m_BonusTime = SystemClock.uptimeMillis() + m_CurLevel.m_MinDelayBomb + random.nextInt(m_CurLevel.m_MaxAddDelayBomb);
-//    m_LiveTime = SystemClock.uptimeMillis() + m_CurLevel.m_MinDelayLives + random.nextInt(m_CurLevel.m_MaxAddDelayLives);
+    m_BombaTime = [[NSDate date] timeIntervalSince1970]*1000  + m_CurLevel.m_MinDelayBomb + random()%(m_CurLevel.m_MaxAddDelayBomb);
+    m_BonusTime =[[NSDate date] timeIntervalSince1970]*1000  + m_CurLevel.m_MinDelayBomb + random()%(m_CurLevel.m_MaxAddDelayBomb);
+    m_LiveTime = [[NSDate date] timeIntervalSince1970]*1000  + m_CurLevel.m_MinDelayLives + random()%(m_CurLevel.m_MaxAddDelayLives);
     
-//    startgametime = SystemClock.uptimeMillis();
+    startgametime = [[NSDate date] timeIntervalSince1970]*1000;
 
 }
--(void) SetDuckPos :(float) x posY:(float) y
+-(void) Init_Animation
 {
-     m_duckPos.x = x;
-     m_duckPos.y = y;
+ //-------------------------------duck animation --------------------------------------------
+    NSMutableArray *frames = [[NSMutableArray alloc]init];
+    m_duckStrelAnimationUp = [[CCAnimation alloc]init];
+    for(int i = 1; i <19  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_strel%d.png",i]]];
+    }
     
-    if (m_duckPos.y > m_YMax)
-        m_duckPos.y = m_YMax;
-    if (m_duckPos.y < m_YMin)
-        m_duckPos.y = m_YMin;
-             
-    if (m_duckPos.x < 60)
-        m_duckPos.x = 60;
-    if (m_duckPos.x > 1024 * 3 - 20)
-        m_duckPos.x = 1024 * 3 - 20;
-}
+    m_duckStrelAnimationUp  = [CCAnimation animationWithSpriteFrames:frames delay:0.05f];
+    m_duckStrelAnimationUpFast  = [CCAnimation animationWithSpriteFrames:frames delay:0.025f];
+    
+    [frames removeAllObjects];
+    m_duckStrelAnimationVbok = [[CCAnimation alloc]init];
+    for(int i = 1; i <19  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"strelaet_pramo%d.png",i]]];
+    }
+    m_duckStrelAnimationVbok  = [CCAnimation animationWithSpriteFrames:frames delay:0.05f];
+    m_duckStrelAnimationVbokFast  = [CCAnimation animationWithSpriteFrames:frames delay:0.025f];
+    
+    
+    m_duckStrelActionUp = [CCAnimate actionWithAnimation: m_duckStrelAnimationUp];
+    m_duckStrelActionVbok =[CCAnimate actionWithAnimation:m_duckStrelAnimationVbok];
+    m_duckStrelActionUpFast =[CCAnimate actionWithAnimation:m_duckStrelAnimationUpFast];
+    m_duckStrelActionVbokFast = [CCAnimate actionWithAnimation:m_duckStrelAnimationVbokFast];
+    
+    [frames removeAllObjects];
+    for(int i = 1; i <4  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_dyn1_%d.png",i]]];
+    }
+    m_duckDyn1 = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
+    
+    [frames removeAllObjects];
+    for(int i = 1; i <4  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_dyn2_%d.png",i]]];
+    }
+    
+    m_duckDyn2 = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
+    [frames removeAllObjects];
+    for(int i = 0; i <4  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_kill1_%d.png",i % 2+1]]];
+    }
+    m_duckKill1 = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+    
+    [frames removeAllObjects];
+    for(int i = 0; i <4  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_kill2_%d.png",i % 2+1]]];
+    }
+    m_duckKill2 = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+    
+    m_duckKill1Action = [CCAnimate actionWithAnimation: m_duckKill2];
+    m_duckKill2Action = [CCAnimate actionWithAnimation: m_duckKill2];
+//---------------------------------apple animation------------------------------------------------
+//    [frames removeAllObjects];
+//    for(int i = 2; i <6  ; i++) {
+//        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"apple%d.png",i]]];
+//    }
+//    m_appleAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
+//    
+//    
+//    CCSpriteFrame *cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"];
+//    
+//    for (Apple_Object *apple in m_apples)
+//    {
+//        
+//        apple.m_appleActionAnim = [CCAnimate actionWithAnimation:m_appleAnimation];
+//        
+//        [apple.m_appleActionAnim setTag :0];
+//        
+//        apple.m_appleActionMove = [CCMoveTo actionWithDuration:2.0f position: CGPointMake(1.0f, 1.0f)];
+//        [apple.m_appleActionMove setTag:0];
+//        
+//        apple.m_appleSprite = [CCSprite spriteWithSpriteFrame:cframe];
+//        
+//        [apple.m_appleSprite setScale:g_fx1];
+//        [m_rootNode addChild:apple.m_appleSprite z:7];
+//        
+//        [apple.m_appleSprite setVisible:false];
+//    }
+//    
+//--------------------------------------hunter animation ---------------------------------------------
+    // create the hunters animation
+    [frames removeAllObjects];
+    for (int y = 0; y < 2; y++) {
+        for (int x = 0; x < 5; x++) {
+            CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f/g_fx1, y * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) ];
+            [frames addObject: frame];
+            
+        }
+    }
+    m_hunterAnimation1  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+    
+    [frames removeAllObjects];
+    for (int x = 0; x < 5; x++) {
+        
+        CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) ];
+        [frames addObject: frame];
+    }
+    m_hunterPulaAnimation1  = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
+    
 
+
+    
+}
 -(void) update :(ccTime) dt
 {
-    [m_duckSprite setPosition: ccp(m_duckPos.x, m_duckPos.y)];
-             
+//    static Boolean flag =false;
+//    if(flag == false){
+//        flag =true;
+//        [self Init_Animation];
+//    }
+    
+    [self Init_Animation];
+
+    [m_duckSprite setPosition: m_duckPos];
+   
     float x = 1024 / 2 - m_duckPos.x;
     float add = (m_visibleWidth - 1024) / 2;
     
@@ -982,29 +1161,30 @@ static GameLayer *m_gameLayer;
           x = -add;
     if (x < (-(1024 * 3 - (1024 + add))))
           x = -(1024 * 3 - (1024 + add));
+    
     [m_rootNode setPosition: ccp(x, 0)];
     [m_cancelSprite setPosition :ccp(-x + 35 - add, 730)];
-    [m_pauseSprite  setPosition :ccp(-x + 750 - add, 730)];
+    [m_pauseSprite  setPosition :ccp(-x + 550 - add, 730)];
              
     if ([m_shootSprite visible])
     {
         [m_shootSprite setPosition : ccp(-x + 100 - add, 130)];
-        [m_shootSprite2 setPosition: ccp(-x + 1190 - add, 130)];
+        [m_shootSprite2 setPosition: ccp(-x + 924 - add, 130)];
                  
         [m_shootLabel  setPosition  :ccp(-x + 100 - add, 40)];
-        [m_shootLabel2 setPosition :ccp(-x + 1190 - add, 40)];
+        [m_shootLabel2 setPosition :ccp(-x  + 924 - add, 40)];
     }
              
     if (m_skyBox != nil)
     {
-        [m_skyBox setPosition :CGPointMake(-x + 1024 / 2, 768 / 2)];
+        [m_skyBox.sprite setPosition :CGPointMake(-x + 1024 / 2, 768 / 2)];
     }
     
     [m_duckLivesSprite setPosition:CGPointMake(-x + 940 + add, 730)];
-    [m_duckLiveHead setPosition: CGPointMake(-x + 980 - 70 + add, 730)];
+    [m_duckLiveHead setPosition: CGPointMake(-x + 950 - 70 + add, 730)];
              
-    [m_hunterHead setPosition: CGPointMake(-x + 980 - 260 + add, 735)];
-    [m_numHuntersSprite setPosition: CGPointMake(-x + 980 - 230 + add, 730)];
+    [m_hunterHead setPosition: CGPointMake(-x + 985 - 260 + add, 735)];
+    [m_numHuntersSprite setPosition: CGPointMake(-x + 965 - 230 + add, 730)];
              
     [m_bonusIcon setPosition: CGPointMake(-x + 980 - 370 + add, 730)];
              
@@ -1018,12 +1198,12 @@ static GameLayer *m_gameLayer;
            || ( [m_Orel GetDir] == -1 && pt_orel.x > m_duckPos.x && (pt_orel.x - m_duckPos.x) < 512))
     {
                      
-      //  if (SystemClock.uptimeMillis() >= m_OrelWaitAttack) {
+        if ([[NSDate date] timeIntervalSince1970]*1000 >= m_OrelWaitAttack) {
                    [m_Orel Attack :m_duckPos];
-      //  }
+        }
         
     } else {
-          //       m_OrelWaitAttack = SystemClock.uptimeMillis() + 500 + random.nextInt(3000);
+        m_OrelWaitAttack =[[NSDate date] timeIntervalSince1970]*1000 + 500 + random()%3000;
         
     }
              
@@ -1036,35 +1216,38 @@ static GameLayer *m_gameLayer;
         
         [m_Orel Fire];
         
-        if (m_duckStrelAction != nil && [m_duckStrelAction isDone]) {
-                   [m_duckSprite runAction :m_duckKill2Action];
+        if (m_duckStrelAction != nil && _isduckActionEnd) {
+            
+                  [m_duckSprite runAction :m_duckKill2Action];
                    m_duckStrelAction = m_duckKill2Action;
         } else {
 
-            [m_duckSprite runAction :m_duckKill1Action];
-            m_duckStrelAction = m_duckKill1Action;
+             [m_duckSprite runAction :m_duckKill1Action];
+              m_duckStrelAction = m_duckKill1Action;
          }
         [self KillOrLiveDuck :-1];
          m_Orel.b_attack = false;
      }
              
      if (m_bEnd) {
-                 return;
+           return;
      }
              
-     // all hunters killed?
-      Boolean bAllHuntersKilled = (m_NumberHunters == 0);
     
-      [m_numHuntersSprite SetNum :m_NumberHunters];
+    
+    // all hunters killed?
+    Boolean bAllHuntersKilled = (m_NumberHunters == 0);
+    
+    [m_numHuntersSprite SetNum :m_NumberHunters];
              
       // end game, if all hunters killed
-     if (bAllHuntersKilled) {
-             m_bEnd = true;
+    if (bAllHuntersKilled) {
+           m_bEnd = true;
                  
     //             MySettings.getInstance().openLevels = MySettings.getInstance().currentLevel + 2;
             
-                 if ( openLevels > 9 )
-                     openLevels = 9;
+           if ( openLevels > 10 )
+                 openLevels = 10;
   //-------------------------------------------------------------------------------------
 //                 CCScene scene = CCScene.node();
 //                 YouWinLayer winLayer = new YouWinLayer();
@@ -1074,12 +1257,17 @@ static GameLayer *m_gameLayer;
 //                                                          CCShrinkGrowTransition.transition(1.0f, scene));
          
          
-                 return;
-             }
+               return;
+           }
              
-             // end game, if lives 0
-             if (m_duckLives <= 0) {
+          // end game, if lives 0
+          if (m_duckLives <= 0) {
                  m_bEnd = true;
+                 
+                 [[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
+                 [[CCDirector sharedDirector] replaceScene:[CCTransitionShrinkGrow transitionWithDuration:0.5 scene:SelectLayer.scene
+                                                            ]];
+
                  
 //                 CCScene scene = CCScene.node();
 //                 scene.addChild(new SelectLayer());
@@ -1088,17 +1276,17 @@ static GameLayer *m_gameLayer;
 //                 return;
              }
              
-
+    [self updateFlowers:dt];
     [self updateHunters:dt offx:x];
-    [self updateFlowers :dt];
-             
+    
+    
      // êîíòðîëü âûõîäà ÿáëîêà çà ãðàíèöû ýêðàíà
     for (Apple_Object *apple in m_apples)
     {
         
       if (apple.m_appleActionMove!= nil)
       {
-          CGPoint pt = apple.m_appleSprite.position;
+          CGPoint pt = [apple.m_appleSprite position];
          if ((pt.x + x) < -300) {
                         [apple.m_appleSprite stopAllActions];
                         [apple.m_appleSprite setVisible :false];
@@ -1125,18 +1313,21 @@ static GameLayer *m_gameLayer;
      }
              
              // Dispatch apples moves
-    [self    updateApples: dt];
-    [self    updateBombs: dt];
+    [self updateApples:dt];
+    [self updateBombs :dt];
+    
+     // dispatch bonuses
+    [self updateBonuses:dt];
+    
+    
 
-             
-             // dispatch bonuses
-    [self    updateBonuses:dt];
+
              
     if (m_cmd == 0) {
              m_cmd = 1;
      } else if (m_cmd == 1) {
           m_cmd = -1;
-        // [[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
+         //[[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
         // [[CCDirector sharedDirector] replaceScene:[CCTransitionShrinkGrow transitionWithDuration:0.5 scene:SelectLayer.scene]];
          
 //             CCScene scene = CCScene.node();
@@ -1147,7 +1338,17 @@ static GameLayer *m_gameLayer;
              
              // if animation kill hunter end, then hide sprite
      if (m_huntkillAction != nil)
-             if ([m_huntkillAction isDone]) {
+             if (_ishunterkillActionDone) {
+                 
+                 NSMutableArray *frames = [[NSMutableArray alloc]init];
+                 for(int i = 1; i <6  ; i++) {
+                     [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"hunt_kill%d.png",i]]];
+                 }
+                 m_huntkillAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+                 
+                 m_huntkillAction = [CCAnimate actionWithAnimation:m_huntkillAnimation];
+                 
+                 [m_huntkillAction stop];
                  [m_huntkillSprite setVisible:false];
                  
                  [m_huntkillSprite setTextureRect:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"hunt_kill1.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"hunt_kill1.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"hunt_kill1.png"] rect].size];
@@ -1156,7 +1357,7 @@ static GameLayer *m_gameLayer;
     }
 }
          
--(void) updateFlowers :(ccTime)dt
+-(void) updateFlowers :(float)dt
 {
    for (Flower *f in m_flowers)
    {
@@ -1173,7 +1374,7 @@ static GameLayer *m_gameLayer;
                              && abs(m_duckPos.y - pt.y) < 160) {
                              // f.sprite.stopAction(f.action);
                              if (m_duckStrelAction != nil
-                                 && [m_duckStrelAction isDone]) {
+                                 && _isduckActionEnd ) {
                                  [m_duckSprite runAction :m_duckKill2Action];
                                  m_duckStrelAction = m_duckKill2Action;
                              } else {
@@ -1190,34 +1391,30 @@ static GameLayer *m_gameLayer;
        }
    }
 }
--(void) updateApples :(ccTime)dt
+-(void) updateApples :(float)dt
 {
+   
    if (m_iAttack != 0) {
-        //  if ((SystemClock.uptimeMillis() - m_AttackTime) > 10000) {
+          if (([[NSDate date] timeIntervalSince1970]*1000  - m_AttackTime) > 10000) {
               m_iAttack = 0;
               [m_bonusIcon setVisible:false];
-       //    }
+           }
    }
              
    for (Apple_Object *apple in m_apples)
    {
 
-        if ((apple.m_appleActionAnim != nil)
-            && ([apple.m_appleActionAnim isDone]) && ([apple.m_appleActionAnim tag]==1)){
+        if ((apple.m_appleActionAnim != nil)  && ([apple.m_appleActionAnim isDone] && ([apple.m_appleActionAnim tag]==1))){
             
                [apple.m_appleSprite stopAllActions];
                [apple.m_appleSprite setVisible:false];
                      
-            [apple.m_appleSprite setTextureRect:            [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"] rect].size];
+               [apple.m_appleSprite setTextureRect: [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"] rect].size];
             
                 [apple.m_appleActionAnim setTag:0];
                 [apple.m_appleActionMove setTag:0];
             
-        } else if (
-                   ([apple.m_appleSprite visible]  && (apple.m_appleActionAnim == nil))
-                   
-                   || ([apple.m_appleSprite visible] && (apple.m_appleActionAnim != nil)
-                   && ([apple.m_appleActionAnim tag]==0))) {
+        } else if (([apple.m_appleSprite visible]  && (apple.m_appleActionAnim == nil)) || ([apple.m_appleSprite visible] && (apple.m_appleActionAnim != nil) && ([apple.m_appleActionAnim tag]==0))) {
                                 
                 CGPoint pt =[apple.m_appleSprite position];
                                     
@@ -1252,91 +1449,120 @@ static GameLayer *m_gameLayer;
                                     
                 // check for bonus intersection
                 Boolean bBonusIntersect = false;
-                       
-        if (!bBombaIntersect) {
-           for (BonusBox *bb  in m_bonuses) {
-              if (bb.m_BonusState == 1) {
-                 if (bb.m_type == 1) {
-                      CGRect rc = CGRectMake( [bb.bonus_live.sprite position].x - [bb.bonus_live.sprite boundingBox].size.width/2,
+                if (!bBombaIntersect) {
+                    for (BonusBox *bb  in m_bonuses) {
+                       if (bb.m_BonusState == 1) {
+                            if (bb.m_type == 1) {
+                                CGRect rc = CGRectMake( [bb.bonus_live.sprite position].x - [bb.bonus_live.sprite boundingBox].size.width/2,
                                              [bb.bonus_live.sprite position].y - [bb.bonus_live.sprite boundingBox].size.height/2,
                                              [bb.bonus_live.sprite boundingBox].size.width,
                                              [bb.bonus_live.sprite boundingBox].size.height
                                              );
                       
                       
-                      if (CGRectContainsPoint(rc, pt)) {
-                          [apple.m_appleSprite stopAction:apple.m_appleActionMove];
-                          [apple.m_appleActionAnim setTag:1];
-                          [apple.m_appleSprite runAction: apple.m_appleActionAnim];
-                          [bb.bonus_live.sprite runAction :bb.bonus_live.action];
-                          bb.m_BonusState = 2;
-                          bBombaIntersect = true;
+                                if (CGRectContainsPoint(rc, pt)) {
+                                    [apple.m_appleSprite stopAction:apple.m_appleActionMove];
+                                    [apple.m_appleActionAnim setTag:1];
+                                    [apple.m_appleSprite runAction: apple.m_appleActionAnim];
+                                    
+                                    
+                                    NSMutableArray *frames = [[NSMutableArray alloc]init];
+                                    for(int i = 2; i <4  ; i++) {
+                                        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"box%d.png",i]]];
+                                    }
+                                    CCAnimation *BonusAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
+                                    bonusLiveaction = [CCAnimate actionWithAnimation:BonusAnimation];
+                                    
+                                    CCCallFuncN* actionForTargetMoveDidFinish3 = [CCCallFuncN actionWithTarget:self selector:@selector(targetBonusLiveFinished)];
+                                    _isBonusLiveActionDone =false;
+                                    
+                                    [bb.bonus_shoot.sprite runAction:[CCSequence actions:bonusLiveaction,actionForTargetMoveDidFinish3,nil]];
+                                    
+
+                                    
+                                  //  [bb.bonus_live.sprite runAction :bb.bonus_live.action];
+                                    
+                                    
+                                    bb.m_BonusState = 2;
+                                    bBombaIntersect = true;
                           
                       
-                          [m_duckheadSprite  setPosition:ccp([bb.bonus_live.sprite position].x,
+                                    [m_duckheadSprite  setPosition:ccp([bb.bonus_live.sprite position].x,
                                                              [bb.bonus_live.sprite position].y)];
                           
-                          [m_duckheadSprite setVisible: true];
-                          [m_duckheadSprite setOpacity:  255];
+                                    [m_duckheadSprite setVisible: true];
+                                    [m_duckheadSprite setOpacity:  255];
                           
                           
+                                    CCFiniteTimeAction *action1 = [CCJumpTo actionWithDuration:2 position:CGPointMake([bb.bonus_live.sprite position].x,[bb.bonus_live.sprite position].y +30) height:3 jumps:6];
                           
+                                    CCFiniteTimeAction *action2 = [CCFadeOut actionWithDuration:1];
+                                    m_duckheadAction = [CCSequence actions:action1,action2,nil];
                           
-                          CCFiniteTimeAction *action1 = [CCJumpTo actionWithDuration:2 position:CGPointMake([bb.bonus_live.sprite position].x,[bb.bonus_live.sprite position].y +30) height:3 jumps:6];
-                          
-                          CCFiniteTimeAction *action2 = [CCFadeOut actionWithDuration:1];
-                          m_duckheadAction = [CCSequence actions:action1,action2,nil];
-                          
-                          [m_duckheadSprite runAction:m_duckheadAction];
-                     }
-                 } else if (bb.m_type == 2) {
-                     CGRect rc = CGRectMake([bb.bonus_shoot.sprite position].x - [bb.bonus_shoot.sprite boundingBox].size.width/2,
+                                    [m_duckheadSprite runAction:m_duckheadAction];
+                                }
+                            } else if (bb.m_type == 2) {
+                                CGRect rc = CGRectMake([bb.bonus_shoot.sprite position].x - [bb.bonus_shoot.sprite boundingBox].size.width/2,
                                             [bb.bonus_shoot.sprite position].y - [bb.bonus_shoot.sprite boundingBox].size.height/2,
                                             [bb.bonus_shoot.sprite boundingBox].size.width,
                                             [bb.bonus_shoot.sprite boundingBox].size.height);
                      
-                      if (CGRectContainsPoint(rc, pt)) {
+                                if (CGRectContainsPoint(rc, pt)) {
                      
                                       // make shoot
-                             m_iAttack = random()%3 + 1;
-                           //  m_AttackTime = SystemClock.uptimeMillis();
-                             [m_bonusIcon setVisible :true];
+                                    m_iAttack = random()%3 + 1;
+                                    m_AttackTime = [[NSDate date] timeIntervalSince1970]*1000;
+                                    [m_bonusIcon setVisible :true];
                           
-                             [apple.m_appleSprite stopAction:apple.m_appleActionMove];
-                             [apple.m_appleActionAnim setTag:1];
-                             [apple.m_appleSprite runAction: apple.m_appleActionAnim];
-                             [bb.bonus_shoot.sprite runAction :bb.bonus_shoot.action];
-                             bb.m_BonusState = 2;
-                             bBonusIntersect = true;
+                                    [apple.m_appleSprite stopAction:apple.m_appleActionMove];
+                                    [apple.m_appleActionAnim setTag:1];
+                                    [apple.m_appleSprite runAction: apple.m_appleActionAnim];
                           
-                          [m_bonusheadSprite setPosition: CGPointMake([bb.bonus_shoot.sprite position].x, [bb.bonus_shoot.sprite position].y)];
+                                    
+                                    NSMutableArray *frames = [[NSMutableArray alloc]init];
+                                    CCAnimation *BonusAnimation =[[CCAnimation alloc]init];
+                                    for(int i = 1; i <4  ; i++) {
+                                        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"bonus%d.png",i]]];
+                                    }
+                                    BonusAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
+                                    bonusaction = [CCAnimate actionWithAnimation:BonusAnimation];
+                                    
+                                    
+                                    CCCallFuncN* actionForTargetMoveDidFinish3 = [CCCallFuncN actionWithTarget:self selector:@selector(targetBonusFinished)];
+                                    _isBonusActionDone =false;
+                                    [bb.bonus_shoot.sprite runAction:[CCSequence actions:bonusaction,actionForTargetMoveDidFinish3,nil]];
+                                  
+                                    bb.m_BonusState = 2;
+                                    bBonusIntersect = true;
                           
-                          [m_bonusheadSprite setVisible :true];
-                          [m_bonusheadSprite setOpacity :255];
+                                    [m_bonusheadSprite setPosition: CGPointMake([bb.bonus_shoot.sprite position].x, [bb.bonus_shoot.sprite position].y)];
                           
+                                    [m_bonusheadSprite setVisible :true];
+                                    [m_bonusheadSprite setOpacity :255];
+                                    CCFiniteTimeAction *action1 = [CCJumpTo actionWithDuration:2 position:CGPointMake([bb.bonus_shoot.sprite position].x,[bb.bonus_shoot.sprite position].y +30) height:3 jumps:6];
                           
+                                    CCFiniteTimeAction *action2 = [CCFadeOut actionWithDuration:1];
+                                    m_bonusheadAction = [CCSequence actions:action1,action2,nil];
                           
-                          CCFiniteTimeAction *action1 = [CCJumpTo actionWithDuration:2 position:CGPointMake([bb.bonus_shoot.sprite position].x,[bb.bonus_shoot.sprite position].y +30) height:3 jumps:6];
-                          
-                          CCFiniteTimeAction *action2 = [CCFadeOut actionWithDuration:1];
-                          m_bonusheadAction = [CCSequence actions:action1,action2,nil];
-                          
-                          [m_bonusheadSprite runAction:m_bonusheadAction];
-                      }
-                 }
-             }
-          }
-        }
+                                    [m_bonusheadSprite runAction:m_bonusheadAction];
+                                }
+                            }
+                       }
+                    }
+                }
                        
-        if ((!bBombaIntersect) && (!bBonusIntersect))
+               if ((!bBombaIntersect) && (!bBonusIntersect))
             
-            for (Hunter *h in m_hunters) {
-                 if (h.state == -1)
-                    continue;
-                    CGRect rc = CGRectMake( [h.sprite position].x- 30*h.hi.scale,
-                                           (768.0f - [h.sprite position].y)-40*h.hi.scale, 60*h.hi.scale,80*h.hi.scale);
-                
-                    if (CGRectContainsPoint(rc, pt)) {
+                   for (Hunter *h in m_hunters) {
+                       if (h.state == -1)
+                           continue;
+                       
+                       CGRect rc = CGRectMake( ([h.sprite position].x- 30*h.hi.scale),
+                                           ((768.0f - [h.sprite position].y)-0*h.hi.scale), 60*h.hi.scale,80*h.hi.scale);
+
+                       //CGRect rc =[h.sprite boundingBox];
+                       
+                       if (CGRectContainsPoint(rc, pt)) {
                         
                          [apple.m_appleSprite stopAction:apple.m_appleActionMove];
                          [apple.m_appleActionAnim setTag:1];
@@ -1348,11 +1574,11 @@ static GameLayer *m_gameLayer;
                         
                          [h.sprite setTextureRect:CGRectMake(xp * 176.0f,2 * 161.0f, 176.0f, 161.0f) rotated:false untrimmedSize:CGRectMake(xp * 176.0f,2 * 161.0f, 176.0f, 161.0f).size];
                         
-                         //h.timetomove = SystemClock.uptimeMillis() + 150;
+                         h.timetomove = [[NSDate date] timeIntervalSince1970]*1000+ 150;
                         
                         if (h.state == 3) {
                             [h.sprite stopAction :h.strelba_action];
-                            //h.timetopula = SystemClock.uptimeMillis() + 8000 + random.nextInt(10000);
+                            h.timetopula = [[NSDate date] timeIntervalSince1970]*1000 + 8000 + random()%10000;
                          }
                          h.state = 1;
                         // h.lives--;
@@ -1369,18 +1595,32 @@ static GameLayer *m_gameLayer;
                             
                               h.state = -1; // killed state
                             
-                            //  h.killedtime = SystemClock.uptimeMillis()    + 1000 + random.nextInt(6000);
-                           //     h.timetomove = SystemClock.uptimeMillis() + 1000;
+                              h.killedtime = [[NSDate date] timeIntervalSince1970]*1000   + 1000 + random()%6000;
+                              h.timetomove =[[NSDate date] timeIntervalSince1970]*1000+ 1000;
                                                     
                               m_NumberHunters--;
                           
                             [h.sprite runAction: [CCFadeOut actionWithDuration:0.7f]];
                                                     
                             [m_huntkillSprite setPosition: CGPointMake( [h.sprite position].x,[h.sprite position].y)];
-                            if (m_huntkillAction == nil)
-                                m_huntkillAction = [CCAnimate actionWithAnimation:m_huntkillAnimation];
                             
-                            [m_huntkillSprite runAction :m_huntkillAction];
+                            NSMutableArray *frames = [[NSMutableArray alloc]init];
+                            for(int i = 1; i <6  ; i++) {
+                                [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"hunt_kill%d.png",i]]];
+                            }
+                            m_huntkillAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+                            
+                            m_huntkillAction = [CCAnimate actionWithAnimation:m_huntkillAnimation];
+                            if (m_huntkillAction == nil){
+                               m_huntkillAction = [CCAnimate actionWithAnimation:m_huntkillAnimation];
+                            }
+                            
+                            CCCallFuncN* actionForTargetMoveDidFinish5 = [CCCallFuncN actionWithTarget:self selector:@selector(targetHuntKillActionFinished)];
+                            _ishunterkillActionDone =false;
+                            [m_huntkillSprite runAction:[CCSequence actions:m_huntkillAction,actionForTargetMoveDidFinish5,nil]];
+                            
+      //                      [m_huntkillSprite runAction :m_huntkillAction];
+                            
                             [m_huntkillSprite setVisible:true];
                         } else {
                             
@@ -1388,18 +1628,21 @@ static GameLayer *m_gameLayer;
                             
                             [h.spriteApple runAction:[CCSequence actions:                                                                                     [CCFadeIn actionWithDuration:0.7f], [CCFadeOut actionWithDuration:1.5f],nil]];
                             
-                         }
-                      }
-                    }
-                 }
-             }
-    }
+                        }
+                   }
+               }
+         }
+     }
+ }
          
--(void) updateBombs :(ccTime) dt
+-(void) updateBombs :(float) dt
 {
+   // static
     int first_free = -1;
     
-
+    [self Init_Animation];
+    
+    
     for (int i = 0; i < m_bombs.count; i++) {
         if ([m_bombs[i] type] == 0) {
                 first_free = i;
@@ -1407,7 +1650,7 @@ static GameLayer *m_gameLayer;
          }
     }
     
-    long curTicks = 1000;//SystemClock.uptimeMillis();
+    long long curTicks =[[NSDate date] timeIntervalSince1970]*1000;
     
     if (first_free != -1 && curTicks > m_BombaTime) {
         
@@ -1428,7 +1671,7 @@ static GameLayer *m_gameLayer;
           }
         
           freeBomb.m_BombaState = 1;
-        //  m_BombaTime = SystemClock.uptimeMillis() + m_CurLevel.m_MinDelayBomb + random.nextInt(m_CurLevel.m_MaxAddDelayBomb);
+          m_BombaTime = [[NSDate date] timeIntervalSince1970]*1000+ m_CurLevel.m_MinDelayBomb + random()%(m_CurLevel.m_MaxAddDelayBomb);
    }
    CGRect rcDuck = [m_duckSprite boundingBox];
    for (Bomb *b in m_bombs) {
@@ -1441,19 +1684,25 @@ static GameLayer *m_gameLayer;
               rcBomb = [b.bombtype2.sprite boundingBox];
           
           if(CGRectIntersectsRect(rcDuck, rcBomb)){
-                if (m_duckStrelAction != nil && [m_duckStrelAction isDone]) {
+                if (m_duckStrelAction != nil && _isduckActionEnd) {
                     
                     m_duckStrelAction = [CCAnimate actionWithAnimation:m_duckDyn2];
                     
-                    [m_duckSprite runAction: m_duckStrelAction];
+                    CCCallFuncN* actionForTargetMoveDidFinish = [CCCallFuncN actionWithTarget:self selector:@selector(targetMoveFinished)];
+                    _isduckActionEnd =false;
+                    [m_duckSprite runAction:[CCSequence actions:m_duckStrelAction,actionForTargetMoveDidFinish,nil]];
+
+           
                 } else {
                     m_duckStrelAction = [CCAnimate actionWithAnimation:m_duckDyn1];
                     
-                    [m_duckSprite runAction :m_duckStrelAction];
+                    CCCallFuncN* actionForTargetMoveDidFinish = [CCCallFuncN actionWithTarget:self selector:@selector(targetMoveFinished)];
+                    _isduckActionEnd =false;
+                    [m_duckSprite runAction:[CCSequence actions:m_duckStrelAction,actionForTargetMoveDidFinish,nil]];
                     
                 }
                          
-                // vibrator.vibrate(150);
+//----------------------bomb action --------------------------------------
                          
                 if (b.type == 1)
                     [b.bombtype1.sprite runAction :b.bombtype1.action];
@@ -1478,7 +1727,7 @@ static GameLayer *m_gameLayer;
                 b.m_BombaState = 0;
                 b.type = 0;
                if (first_free == -1) {
-           //         m_BombaTime = SystemClock.uptimeMillis() + m_CurLevel.m_MinDelayBomb + random.nextInt(m_CurLevel.m_MaxAddDelayBomb);
+                    m_BombaTime =[[NSDate date] timeIntervalSince1970]*1000 + m_CurLevel.m_MinDelayBomb + random()% m_CurLevel.m_MaxAddDelayBomb;
                 }
            }
       }
@@ -1495,14 +1744,14 @@ static GameLayer *m_gameLayer;
                 b.m_BombaState = 0;
                 b.type = 0;
                 if (first_free == -1) {
-                     // m_BombaTime = SystemClock.uptimeMillis() + m_CurLevel.m_MinDelayBomb + random.nextInt(m_CurLevel.m_MaxAddDelayBomb);
+                      m_BombaTime = [[NSDate date] timeIntervalSince1970]*1000 + m_CurLevel.m_MinDelayBomb + random()% m_CurLevel.m_MaxAddDelayBomb;
                 }
            }
        }
    }
 }
          
--(void) updateBonuses :(ccTime)dt
+-(void) updateBonuses :(float)dt
 {
    int first_free = -1;
    int i = 0;
@@ -1524,9 +1773,9 @@ static GameLayer *m_gameLayer;
        first_free = temp.m_ind;
    }
              
-    long curTicks =1000; //SystemClock.uptimeMillis();
+    long long curTicks =[[NSDate date] timeIntervalSince1970]*1000;
    if (cnt_bonuses >= m_CurLevel.m_MaxBonus) {
-       m_BonusTime = curTicks;//m_CurLevel.m_MinDelayBonus + random.nextInt(m_CurLevel.m_MaxAddDelayBonus);
+       m_BonusTime = m_CurLevel.m_MinDelayBonus + random()%(m_CurLevel.m_MaxAddDelayBonus);
        
    } else if (first_free != -1 && curTicks > m_BonusTime) {
        BonusBox *temp =m_bonuses[first_free];
@@ -1538,7 +1787,7 @@ static GameLayer *m_gameLayer;
        [temp.bonus_shoot.sprite setVisible:true];
        temp.m_BonusState = 1;
        
-//       m_BonusTime = curTicks + m_CurLevel.m_MinDelayBonus + random.nextInt(m_CurLevel.m_MaxAddDelayBonus);
+       m_BonusTime = curTicks + m_CurLevel.m_MinDelayBonus + random()%(m_CurLevel.m_MaxAddDelayBonus);
    }
    i = 0;
    cnt_bonuses = 0;
@@ -1561,7 +1810,7 @@ static GameLayer *m_gameLayer;
    }
              
    if (cnt_bonuses >= m_CurLevel.m_MaxLives) {
-          //m_LiveTime = SystemClock.uptimeMillis() + m_CurLevel.m_MinDelayLives + random.nextInt(m_CurLevel.m_MaxAddDelayLives);
+         m_LiveTime = [[NSDate date] timeIntervalSince1970]*1000 + m_CurLevel.m_MinDelayLives + random()%(m_CurLevel.m_MaxAddDelayLives);
     } else if (first_free != -1 && curTicks > m_LiveTime) {
         BonusBox *temp =m_bonuses[first_free];
      
@@ -1570,35 +1819,54 @@ static GameLayer *m_gameLayer;
         
         [temp.bonus_live.sprite setVisible:true];
          temp.m_BonusState = 1;
-//          m_LiveTime = curTicks + m_CurLevel.m_MinDelayLives + random.nextInt(m_CurLevel.m_MaxAddDelayLives);
+         m_LiveTime = curTicks + m_CurLevel.m_MinDelayLives + random()%(m_CurLevel.m_MaxAddDelayLives);
     }
              
     for (BonusBox *bb in m_bonuses) {
         // Bonus already exists and animated finish
         if (bb.m_BonusState == 2) {
              if (bb.m_type == 1) {
-                 if ([bb.bonus_live.action isDone]) {
-                     [bb.bonus_live.action stop];
-                     [bb.bonus_live.sprite setVisible:true];
+               //  if ([bb.bonus_live.action isDone]) {
+                   if (_isBonusLiveActionDone) {
+                       
+                       
+                       NSMutableArray *frames = [[NSMutableArray alloc]init];
+                       for(int i = 2; i <4  ; i++) {
+                           [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"box%d.png",i]]];
+                       }
+                       CCAnimation *BonusAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
+                       bonusLiveaction = [CCAnimate actionWithAnimation:BonusAnimation];
+
+                     [bonusLiveaction stop];
+                     [bb.bonus_live.sprite setVisible:false];
                      [self KillOrLiveDuck:1];
                      
                       bb.m_BonusState = 0;
                       bb.m_type = 0;
                      if (curTicks > m_BonusTime){
-                         //                           m_BonusTime = SystemClock.uptimeMillis()+ m_CurLevel.m_MinDelayBonus + random.nextInt(m_CurLevel.m_MaxAddDelayBonus);
+                        m_BonusTime = [[NSDate date] timeIntervalSince1970]*1000+ m_CurLevel.m_MinDelayBonus + random()%(m_CurLevel.m_MaxAddDelayBonus);
                          
                      }
                  }
               } else if (bb.m_type == 2) {
-                      if ([bb.bonus_shoot.action isDone]) {
-                          [bb.bonus_shoot.action stop];
+                     if (_isBonusActionDone) {
+                     // if ([bb.bonus_shoot onActionEnd]) {
+                         NSMutableArray *frames = [[NSMutableArray alloc]init];
+                         CCAnimation *BonusAnimation =[[CCAnimation alloc]init];
+                         for(int i = 1; i <4  ; i++) {
+                             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"bonus%d.png",i]]];
+                         }
+                         BonusAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
+                         bonusaction = [CCAnimate actionWithAnimation:BonusAnimation];
+
+                          [bonusaction stop];
                           [bb.bonus_shoot.sprite setVisible:false];
                           bb.m_BonusState = 0;
                           bb.m_type = 0;
                          
                           if (curTicks > m_LiveTime)
                           {
-                              //   m_LiveTime = SystemClock.uptimeMillis() + m_CurLevel.m_MinDelayLives                                 + random.nextInt(m_CurLevel.m_MaxAddDelayLives);
+                            m_LiveTime = [[NSDate date] timeIntervalSince1970]*1000 + m_CurLevel.m_MinDelayLives+ random()%(m_CurLevel.m_MaxAddDelayLives);
                           }
                           
                      }
@@ -1619,132 +1887,151 @@ static GameLayer *m_gameLayer;
     for (Hunter *h in m_hunters) {
         if (h.state == -1) // killed hunter
          {                                           //SystemClock.uptimeMillis()
-           if (m_NumberHunters > num_live_hunters  && (1000 > h.killedtime)) {
-                 int rx = random()% (int) h.hi.width;
-                 [h.sprite setPosition: ccp(h.hi.x + OriginX * SkyScaleX + rx,
-                                              -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale
-                                              / 2)];
+           if (m_NumberHunters > num_live_hunters  && ([[NSDate date] timeIntervalSince1970]*1000  > h.killedtime)) {
+                 int rx = random()% ((int) h.hi.width);
+               
+                 float temp_x, temp_y;
+                 temp_x =(h.hi.x + OriginX * SkyScaleX + rx)*g_fx;
+                 temp_y = (-(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)*g_fy;
+
+                 [h.sprite setPosition: ccp(temp_x,temp_y)];
                          
                  
-                h.state = 0; // walking state
-                [h SetLives :m_CurLevel.m_HunterLives];// hi.lives;
-        //        h.timetostay = SystemClock.uptimeMillis()+ MIN_INTERVAL_STAY + random.nextInt(MAX_DELAY_STAY);
-      //            h.timetopula = SystemClock.uptimeMillis() + 8000 + random.nextInt(10000);
+                 h.state = 0; // walking state
+                 [h SetLives :m_CurLevel.m_HunterLives];// hi.lives;
+                 h.timetostay = [[NSDate date] timeIntervalSince1970]*1000+ MIN_INTERVAL_STAY + random()%MAX_DELAY_STAY;
+                 h.timetopula = [[NSDate date] timeIntervalSince1970]*1000 + 8000 + random()%10000;
                   
                   
-                h.timetomove = 0;
-               [h.sprite runAction:[CCFadeIn actionWithDuration:0.7f]];
-               [h.numLives runAction:[CCFadeIn actionWithDuration:0.7f]];
-               [h.spriteApple runAction:[CCFadeIn actionWithDuration:0.7f]];
-               [h.sprite runAction:h.repeat];
-                  
-                  
-                  [h.numLives runAction:[CCSequence actions:                                                                                     [CCFadeIn actionWithDuration:0.7f], [CCFadeOut actionWithDuration:1.5f],nil]];
-                  
-                  [h.spriteApple runAction:[CCSequence actions:                                                                                     [CCFadeIn actionWithDuration:0.7f], [CCFadeOut actionWithDuration:1.5f],nil]];
-                  
-                  
-                  
-                  [h.move_action setDuration :(h.hi.width / HUNTER_SPEED)];
+                 h.timetomove = 0;
+                 [h.sprite runAction:[CCFadeIn actionWithDuration:0.7f]];
+                 [h.numLives runAction:[CCFadeIn actionWithDuration:0.7f]];
+                 [h.spriteApple runAction:[CCFadeIn actionWithDuration:0.7f]];
+                 [h.sprite runAction:h.repeat];
+               
+                 [h.numLives runAction:[CCSequence actions:[CCFadeIn actionWithDuration:0.7f], [CCFadeOut actionWithDuration:1.5f],nil]];
+                 [h.spriteApple runAction:[CCSequence actions:[CCFadeIn actionWithDuration:0.7f], [CCFadeOut actionWithDuration:1.5f],nil]];
+               
+                 [h.move_action setDuration :(h.hi.width / HUNTER_SPEED)];
                          
-                  if (random()%2 == 0) {
+               if (random()%2 == 0) {
                       [h.move_action setTag:1];
                       [h.sprite setFlipX:false];
                       
-                      if ((h.hi.width - rx) != 0)
-                          [h.move_action setDuration: ((h.hi.width - rx)/ HUNTER_SPEED)];
+                      if ((h.hi.width - rx) != 0){
+                          [h.move_action initWithDuration:((h.hi.width - rx)/ HUNTER_SPEED) position:ccp(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y) + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
+                      } else
+                           [h.move_action initWithDuration:(h.hi.width / HUNTER_SPEED) position:ccp(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y)                                                                                                 + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
                       
-                      [h.move_action setEndPosition: ccp(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y)
-                                                                      + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
+                     
                       
-                  } else {
+              } else {
                       [h.sprite setFlipX:true];
                       [h.move_action setTag:0];
-                      if (rx != 0)
-                          [h.move_action setDuration:(rx / HUNTER_SPEED)];
+                      if (rx != 0){
+                          [h.move_action initWithDuration:(rx / HUNTER_SPEED) position:ccp(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY                                                                                           + HUNTER_HEIGHT * h.hi.scale / 2)];
+                      }else
+                          [h.move_action initWithDuration:(h.hi.width / HUNTER_SPEED) position:ccp(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY                                                                                           + HUNTER_HEIGHT * h.hi.scale / 2)];
                       
-                      [h.move_action setEndPosition: ccp(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY
-                                                                      + HUNTER_HEIGHT * h.hi.scale / 2)];
-                  }
                       
-                  [h.sprite runAction:h.move_action];
-            } else {
-                 continue;
-            }
-         }
+                      
+             }
+               
+             CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetHunterActionFinished)];
+             _isHunterActionDone =false;
+             [h.sprite  runAction:[CCSequence actions:h.move_action,actionForTargetMoveDidFinish2,nil]];
+               
+        } else {
+            continue;
+        }
+      }
                  
-         if (h.state == 0) {
-            if ([h.move_action isDone]) {
+      if (h.state == 0) {
+            if (_isHunterActionDone) {
                 if ([h.move_action tag] == 1) {
                     [h.sprite setFlipX:true];
-                    [h.move_action setDuration:(h.hi.width / HUNTER_SPEED)];
-                    [h.move_action setEndPosition: ccp(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY
-                                                                      + HUNTER_HEIGHT * h.hi.scale / 2)];
+                    
+                    [h.move_action initWithDuration:(h.hi.width / HUNTER_SPEED) position:ccp(h.hi.x + OriginX * SkyScaleX, -(h.hi.y) + OriginY                                                                                            + HUNTER_HEIGHT * h.hi.scale / 2)];
+                    
                     [h.move_action setTag:0];
-                    [h.sprite runAction :h.move_action];
+                    
+                    CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetHunterActionFinished)];
+                    _isHunterActionDone =false;
+                    [h.sprite  runAction:[CCSequence actions:h.move_action,actionForTargetMoveDidFinish2,nil]];
+
+
                     
                 }else {
                     [h.sprite setFlipX:false];
-                    [h.move_action setDuration: (h.hi.width / HUNTER_SPEED)];
-                    [h.move_action setEndPosition: ccp(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y)
-                                                                      + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
+                    [h.move_action initWithDuration:(h.hi.width / HUNTER_SPEED) position:ccp(h.hi.x + OriginX * SkyScaleX + h.hi.width, -(h.hi.y)                                                                                            + OriginY + HUNTER_HEIGHT * h.hi.scale / 2)];
+                    
                     [h.move_action setTag:1];
-                    [h.sprite runAction:h.move_action];
+                    
+                    CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetHunterActionFinished)];
+                    _isHunterActionDone =false;
+                    [h.sprite  runAction:[CCSequence actions:h.move_action,actionForTargetMoveDidFinish2,nil]];
+
+
                 }
-            }
+           }
                      
-             long curTicks = 1000;//SystemClock.uptimeMillis();
-            if (curTicks > h.timetostay) {
+           long long curTicks = [[NSDate date] timeIntervalSince1970]*1000;
+           if (curTicks > h.timetostay) {
                 [h.sprite stopAction: h.move_action];
                 [h.sprite stopAction:h.repeat];
-                [h.sprite setTextureRect:CGRectMake(0 * 176.0f, 3 * 161.0f, 176.0f, 161.0f) rotated:false untrimmedSize:CGRectMake(0 * 176.0f, 3 * 161.0f, 176.0f, 161.0f).size];
+                [h.sprite setTextureRect:CGRectMake(0 * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) rotated:false untrimmedSize:CGRectMake(0 * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1).size];
                  
                  h.state = 2; // stay state
-               //  h.timetomove = SystemClock.uptimeMillis() + 2000 + random()%8000;
+                 h.timetomove = [[NSDate date] timeIntervalSince1970]*1000 + 2000 + random()%8000;
               
                 
             }
-                     
-            if (curTicks > h.timetopula) {
+          
+           if (curTicks > h.timetopula) {
                 [h.sprite stopAction:h.move_action];
                 [h.sprite stopAction:h.repeat];
-                [h.sprite setTextureRect:CGRectMake(0 * 176.0f, 3 * 161.0f, 176.0f, 161.0f) rotated:false untrimmedSize:CGRectMake(0 * 176.0f, 3 * 161.0f, 176.0f, 161.0f).size];
+                [h.sprite setTextureRect:CGRectMake(0 * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) rotated:false untrimmedSize:CGRectMake(0 * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1).size];
                 h.state = 3;
                 [h.sprite runAction:h.strelba_action];
-             }
-        } // stay state
+           }
+       } // stay state
         else if (h.state == 2) {
              
-            long curTicks =1000;// SystemClock.uptimeMillis();
-              if (curTicks > h.timetomove) {
+            long long curTicks =[[NSDate date] timeIntervalSince1970]*1000;
+            if (curTicks > h.timetomove) {
                     if ([h.move_action tag] == 0)
-                        [h.move_action setDuration:(([h.sprite position].x - (h.hi.x + OriginX
-                                                                       * SkyScaleX))
-                                          / HUNTER_SPEED)];
+                        [h.move_action setDuration:(([h.sprite position].x - (h.hi.x + OriginX* SkyScaleX))  / HUNTER_SPEED)];
                   
                      else if ([h.move_action tag] == 1)
-                         [h.move_action setDuration:((h.hi.x + OriginX * SkyScaleX
-                                                        + h.hi.width - [h.sprite position].x)
-                                                       / HUNTER_SPEED)];
-                         
-                      [h.sprite runAction:h.move_action];
-                      [h.sprite runAction:h.repeat];
+                         [h.move_action setDuration:((h.hi.x + OriginX * SkyScaleX + h.hi.width - [h.sprite position].x)/ HUNTER_SPEED)];
+                  
+                     CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetHunterActionFinished)];
+                     _isHunterActionDone =false;
+                     [h.sprite  runAction:[CCSequence actions:h.move_action,actionForTargetMoveDidFinish2,nil]];
+                     [h.sprite runAction:h.repeat];
                       h.state = 0; // stay state
-                     // h.timetostay = SystemClock.uptimeMillis() + MIN_INTERVAL_STAY + random.nextInt(MAX_DELAY_STAY);
-               }
+                      h.timetostay = [[NSDate date] timeIntervalSince1970]*1000 + MIN_INTERVAL_STAY + random() % MAX_DELAY_STAY;
+            }
              
-               if (curTicks > h.timetopula) {
+            if (curTicks > h.timetopula) {
                 
                    [h.sprite stopAction: h.move_action];
                    [h.sprite stopAction: h.repeat];
-                   [h.sprite setTextureRect:CGRectMake(0 * 176.0f, 3 * 161.0f, 176.0f, 161.0f) rotated:false untrimmedSize:CGRectMake(0 * 176.0f, 3 * 161.0f, 176.0f, 161.0f).size];
+                   [h.sprite setTextureRect:CGRectMake(0 * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1) rotated:false untrimmedSize:CGRectMake(0 * 176.0f/g_fx1, 3 * 161.0f/g_fy1, 176.0f/g_fx1, 161.0f/g_fy1).size];
+                   
+                  
                    h.state = 3;
-                   [h.sprite runAction:h.strelba_action];
-                }
+                
+                   CCCallFuncN* actionForTargetMoveDidFinish3 = [CCCallFuncN actionWithTarget:self selector:@selector(targetStrelbaActionFinished)];
+                   _isStrelbaActionDone =false;
+                   [h.sprite  runAction:[CCSequence actions:h.strelba_action,actionForTargetMoveDidFinish3,nil]];
+
+                   //[h.sprite runAction:h.strelba_action];
+            }
              
        } else if (h.state == 3) {
                 // first pula
-               if ([h.strelba_action isDone]) {
+               if (_isStrelbaActionDone) {
                    
                    Hunter *temp = h.m_pules[0];
                    
@@ -1762,39 +2049,44 @@ static GameLayer *m_gameLayer;
                          
                    [temp.pulaSprite setFlipX: [h.sprite position].x >m_duckPos.x];
                    
-                   [temp.pula_action setEndPosition :ccp(m_duckPos.x + p.x
-                                                     * 1000, m_duckPos.y + p.y * 1000)];
+                   [temp.pula_action  initWithDuration:dist_puli/ (float) m_CurLevel.m_PulaSpeed position:ccp(m_duckPos.x + p.x
+                                                                                                              * 1000, m_duckPos.y + p.y * 1000)];
+                  
                    
-                 
-                   [temp.pula_action setDuration :dist_puli/ (float) m_CurLevel.m_PulaSpeed];
                    
-                   [temp.pulaSprite runAction :temp.pula_action];
+                   CCCallFuncN* actionForTargetMoveDidFinish = [CCCallFuncN actionWithTarget:self selector:@selector(targetPulaActionFinished)];
+                   _isPulaActionDone =false;
+                   [temp.pulaSprite  runAction:[CCSequence actions:temp.pula_action,actionForTargetMoveDidFinish,nil]];
                    
                    [temp.pulaSprite setVisible:true];
                          
-                   h.timetopula = 300;//SystemClock.uptimeMillis() + 300;
+                   h.timetopula = [[NSDate date] timeIntervalSince1970]*1000  + 300;
                    if (m_CurLevel.m_HunterPulaCnt > 1) {
                            h.state = 4;
                    } else {
-                     if ([h.move_action getTag] == 0)
+                     if ([h.move_action tag] == 0)
                          [h.move_action setDuration:(([h.sprite position].x - (h.hi.x + OriginX                                                                           * SkyScaleX))/ HUNTER_SPEED)];
                        
-                      else if ([h.move_action Tag] == 1)
+                      else if ([h.move_action tag] == 1)
                           [h.move_action setDuration:((h.hi.x + OriginX * SkyScaleX + h.hi.width - [h.sprite position].x                                                          ) / HUNTER_SPEED)];
                              
-                       h.timetopula =8000;// SystemClock.uptimeMillis() + 8000                       + random.nextInt(10000);
+                       h.timetopula =[[NSDate date] timeIntervalSince1970]*1000  + 8000 + random()%10000;
                        
-                       [h.sprite runAction: h.move_action];
+                       
+                       
+                       CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetHunterActionFinished)];
+                       _isHunterActionDone =false;
+                       [h.sprite  runAction:[CCSequence actions:h.move_action,actionForTargetMoveDidFinish2,nil]];
                        [h.sprite runAction:  h.repeat];
                        h.state = 0;
                   }
                }
                      
-    }// second pula
-    else if (h.state == 4) {
-        long curTicks = 1000;//SystemClock.uptimeMillis();
+        }// second pula
+        else if (h.state == 4) {
+          long long curTicks = [[NSDate date] timeIntervalSince1970]*1000 ;//SystemClock.uptimeMillis();
         
-        if (curTicks > h.timetopula) {
+          if (curTicks > h.timetopula) {
             Hunter *temp =h.m_pules[1];
             [temp.pulaSprite setPosition :[h.sprite position]];
             
@@ -1803,103 +2095,122 @@ static GameLayer *m_gameLayer;
             
             CGPoint end_point = ccp(m_duckPos.x + p.x * 1000, m_duckPos.y + p.y * 1000);
             
-           float dist_puli =ccpDistance([h.sprite position], end_point);
-                         // h.pula_action = CCMoveTo.action(dist_puli / PULA_SPEED,
-                         // CGPoint.ccp(duck_pos.x+p.x*1000, duck_pos.y+p.y*1000));
-                         
+            float dist_puli =ccpDistance([h.sprite position], end_point);
             [temp.pulaSprite setFlipX:([h.sprite position].x > m_duckPos.x)];
-                         
-            [temp.pula_action setEndPosition: ccp(m_duckPos.x + p.x * 1000, m_duckPos.y + p.y * 1000)];
-             
-            [temp.pula_action setDuration:(dist_puli / (float) m_CurLevel.m_PulaSpeed)];
+              
+            [temp.pula_action  initWithDuration:(dist_puli / (float) m_CurLevel.m_PulaSpeed) position:ccp(m_duckPos.x + p.x * 1000, m_duckPos.y + p.y * 1000)];
             
             [temp.pulaSprite runAction : temp.pula_action];
+            
             [temp.pulaSprite setVisible:true];
                          
-            if ([h.move_action getTag] == 0)
-                [h.move_action setDuration:(([h.sprite position].x - (h.hi.x + OriginX                                                                       * SkyScaleX))     / HUNTER_SPEED)];
-            else if ([h.move_action Tag] == 1)
-                [h.move_action setDuration:((h.hi.x + OriginX * SkyScaleX + h.hi.width - [h.sprite position].x)                                                       / HUNTER_SPEED)];
+            if ([h.move_action tag] == 0)
+                [h.move_action setDuration:(([h.sprite position].x - (h.hi.x + OriginX* SkyScaleX)) / HUNTER_SPEED)];
+            else if ([h.move_action tag] == 1)
+                [h.move_action setDuration:((h.hi.x + OriginX * SkyScaleX + h.hi.width - [h.sprite position].x) / HUNTER_SPEED)];
             
-//             h.timetopula = SystemClock.uptimeMillis() + 8000 + random.nextInt(10000);
-             h.timetopula =  8000 + random()%10000;
+
+             h.timetopula =  [[NSDate date] timeIntervalSince1970]*1000 +8000 + random()%10000;
             
-             [h.sprite runAction:h.move_action];
-             [h.sprite runAction:h.repeat];
-                h.state = 0;
-           }
-    } else if (h.state == 1) {
-        long curTicks =1000;// SystemClock.uptimeMillis();
-          if (curTicks > h.timetomove) {
-               if ([h.move_action Tag] == 0)
-                   [h.move_action setDuration:(([h.sprite position].x - (h.hi.x +OriginX                                                                     * SkyScaleX))/ HUNTER_SPEED)];
+            
+            CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetHunterActionFinished)];
+            _isHunterActionDone =false;
+            [h.sprite  runAction:[CCSequence actions:h.move_action,actionForTargetMoveDidFinish2,nil]];
+            [h.sprite runAction:h.repeat];
+             h.state = 0;
+          }
+       } else if (h.state == 1) {
+           long long curTicks =[[NSDate date] timeIntervalSince1970]*1000 ;// SystemClock.uptimeMillis();
+           if (curTicks > h.timetomove) {
+               if ([h.move_action tag] == 0)
+                   [h.move_action setDuration:(([h.sprite position].x - (h.hi.x +OriginX * SkyScaleX))/ HUNTER_SPEED)];
               
-               else if ([h.move_action Tag] == 1)
-                   [h.move_action setDuration:((h.hi.x + OriginX * SkyScaleX
-                                                        + h.hi.width - [h.sprite position].x)
-                                                       / HUNTER_SPEED)];
-                         
-              [h.sprite runAction:h.move_action];
+               else if ([h.move_action tag] == 1)
+                   [h.move_action setDuration:((h.hi.x + OriginX * SkyScaleX+ h.hi.width - [h.sprite position].x) / HUNTER_SPEED)];
+              
+              CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetHunterActionFinished)];
+              _isHunterActionDone =false;
+              [h.sprite  runAction:[CCSequence actions:h.move_action,actionForTargetMoveDidFinish2,nil]];
               [h.sprite runAction:h.repeat];
               h.state = 0; // stay state
-//              h.timetostay = SystemClock.uptimeMillis()+ MIN_INTERVAL_STAY + random.nextInt(MAX_DELAY_STAY);
+              h.timetostay = [[NSDate date] timeIntervalSince1970]*1000 + MIN_INTERVAL_STAY + random()%MAX_DELAY_STAY;
             }
-          }
+     }
                  
                  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-   for (int p = 0; p < m_CurLevel.m_HunterPulaCnt; p++) {
-       Hunter *temp =h.m_pules[p];
+     for (int p = 0; p < m_CurLevel.m_HunterPulaCnt; p++) {
+          Hunter *temp =h.m_pules[p];
        
-       if (![temp.pula_action isDone] && [temp.pulaSprite getVisible]) {
-           
+         // if (![temp.pula_action isDone] && [temp.pulaSprite visible]) {
+         if (!_isPulaActionDone && [temp.pulaSprite visible]) {
              CGPoint pt = [temp.pulaSprite position];
-                         
-           [temp.pulaSprite setScale:(768 - pt.y) * 0.002f];
+             [temp.pulaSprite setScale:(768 - pt.y) * 0.002f];
+             
+              CGRect rc = CGRectMake(m_duckPos.x - 35,(768.0f - m_duckPos.y) - 50, 70, 100);
            
-           
-                         
-            CGRect rc = CGRectMake(m_duckPos.x - 35,(768.0f - m_duckPos.y) - 50, 70, 100);
-           
-           if (CGRectContainsPoint(rc, CGPointMake(pt.x, 768.0f - pt.y))) {
-               [temp.pulaSprite  stopAction: temp.pula_action];
+              if (CGRectContainsPoint(rc, CGPointMake(pt.x, 768.0f - pt.y))) {
                
-               [temp.pulaSprite setVisible :false];
-
-                [self KillOrLiveDuck :-1];
+                   [temp.pulaSprite  stopAction: temp.pula_action];
+                   [temp.pulaSprite setVisible :false];
+                   [self KillOrLiveDuck :-1];
+                   if (m_duckStrelAction != nil && _isduckActionEnd) {
+                    
+                        [m_duckSprite runAction:m_duckKill2Action];
+                        m_duckStrelAction = m_duckKill2Action;
+                    
+                   } else {
+                       [m_duckSprite runAction:m_duckKill1Action];
+                       m_duckStrelAction = m_duckKill1Action;
+                   }
                              
-                if (m_duckStrelAction != nil && [m_duckStrelAction isDone]) {
-                    [m_duckSprite runAction:m_duckKill2Action];
-                    m_duckStrelAction = m_duckKill2Action;
-                } else {
-                                // m_duckStrelAction =
-                                // CCAnimate.action(m_duckKill1);
-                    [m_duckSprite runAction:m_duckKill1Action];
-                    m_duckStrelAction = m_duckKill1Action;
-                }
-                             
-            }
+               }
                          // Ð¿Ñ€Ð¸ Ð²Ñ‹Ñ…Ð¾Ð´Ðµ Ð¿ÑƒÐ»Ð¸ Ð·Ð° Ð³Ñ€Ð°Ð½Ð¸Ñ†Ñ‹
                          // Ñ�ÐºÑ€Ð°Ð½Ð° - ÑƒÐ±Ð¸Ñ€Ð°ÐµÐ¼ ÐµÐµ
-        if ((pt.x + offx_s) < -300) {
-                [temp.pulaSprite stopAction : temp.pula_action ];
+               if ((pt.x + offx_s) < -300) {
+                   [temp.pulaSprite stopAction : temp.pula_action ];
             
-            [temp.pulaSprite setVisible:false];
+                   [temp.pulaSprite setVisible:false];
             
-        } else if ((pt.x + offx_s) > (1024 + 350)) {
-             [temp.pulaSprite stopAction : temp.pula_action ];
-             [temp.pulaSprite setVisible:false];
+                } else if ((pt.x + offx_s) > (1024 + 350)) {
+                   [temp.pulaSprite stopAction : temp.pula_action ];
+                   [temp.pulaSprite setVisible:false];
             
-        } else if ((pt.y) > (768+ 100)) {
-              [temp.pulaSprite stopAction : temp.pula_action ];
-              [temp.pulaSprite setVisible:false];
-        } else if ((pt.y) < (-100)) {
-            [temp.pulaSprite stopAction : temp.pula_action ];
-            [temp.pulaSprite setVisible:false];        }
+                } else if ((pt.y) > (768+ 100)) {
+                   [temp.pulaSprite stopAction : temp.pula_action ];
+                   [temp.pulaSprite setVisible:false];
+                } else if ((pt.y) < (-100)) {
+                   [temp.pulaSprite stopAction : temp.pula_action ];
+                   [temp.pulaSprite setVisible:false];
+                }
         }
-      }
+     }
    }
  }
+-(void)targetHuntKillActionFinished
+{
+    _ishunterkillActionDone =true;
+}
+-(void) targetBonusLiveFinished
+{
+    _isBonusLiveActionDone =true;
+}
+-(void) targetBonusFinished
+{
+    _isBonusActionDone =true;
+}
+-(void)targetStrelbaActionFinished{
+    _isStrelbaActionDone =true;
+    
+}
+-(void)targetHunterActionFinished
+{
+    _isHunterActionDone =true;
+}
+-(void)targetPulaActionFinished
+{
+    _isPulaActionDone =true;
+}
          
 -(void)  KillOrLiveDuck :(int) inc
 {
@@ -1932,6 +2243,7 @@ static GameLayer *m_gameLayer;
     x =location.x/g_fx;
     y =location.y/g_fy;
     
+   [self Init_Animation];
     
     // Exit
     if ((x > 0) && (x < 100) && y > 650)
@@ -1964,12 +2276,12 @@ static GameLayer *m_gameLayer;
     }
     
     if (m_duckStrelAction != nil)
-        if (![m_duckStrelAction isDone])
+        if (!_isduckActionEnd)
             return;
     
     for (Apple_Object *apple in m_apples) {
         if ([apple.m_appleActionMove tag] == 1
-            && ![apple.m_appleActionMove isDone])
+            && !([apple.m_appleActionMove elapsed]>=apple.m_appleActionMove.duration ))
             return;
     }
     
@@ -1979,11 +2291,16 @@ static GameLayer *m_gameLayer;
         else
             m_duckStrelAction = m_duckStrelActionUp;
         
-        [m_duckSprite runAction :m_duckStrelAction ];
+        
+        CCCallFuncN* actionForTargetMoveDidFinish = [CCCallFuncN actionWithTarget:self selector:@selector(targetMoveFinished)];
+        _isduckActionEnd =false;
+        [m_duckSprite runAction:[CCSequence actions:m_duckStrelAction,actionForTargetMoveDidFinish,nil]];
+
+        //[m_duckSprite runAction :m_duckStrelAction ];
         
         int i = 0;
         for (Apple_Object *apple in m_apples) {
-            [apple.m_appleSprite setPosition: CGPointMake(m_duckPos.x,
+            [apple.m_appleSprite setPosition: ccp(m_duckPos.x,
                                                         m_duckPos.y)];
             
             float rotation = 0;
@@ -2007,18 +2324,18 @@ static GameLayer *m_gameLayer;
             pt2.y *= 1800.0f;
             
             if (m_iAttack == 3) {
-                [apple.m_appleSprite setScale:1.3f];
+                [apple.m_appleSprite setScale:1.3f*g_fx1];
             } else {
-                [apple.m_appleSprite setScale:1.0f];
+                [apple.m_appleSprite setScale:1.0f*g_fx1];
             }
             
             if (m_iAttack == 2) {
              
-                [apple.m_appleActionMove initWithDuration:1.0f position:CGPointMake(m_duckPos.x
+                [apple.m_appleActionMove initWithDuration:1.0f position:ccp(m_duckPos.x
                                                                                     + pt2.x, m_duckPos.y + pt2.y)];
                 
             } else {
-                [apple.m_appleActionMove initWithDuration:2.0f position:CGPointMake(m_duckPos.x
+                [apple.m_appleActionMove initWithDuration:2.0f position:ccp(m_duckPos.x
                                                                                     + pt2.x, m_duckPos.y + pt2.y)];
                 
 
@@ -2042,10 +2359,12 @@ static GameLayer *m_gameLayer;
         else
             m_duckStrelAction = m_duckStrelActionVbok;
         
-        [m_duckSprite runAction:m_duckStrelAction];
+        CCCallFuncN* actionForTargetMoveDidFinish = [CCCallFuncN actionWithTarget:self selector:@selector(targetMoveFinished)];
+        _isduckActionEnd =false;
+        [m_duckSprite runAction:[CCSequence actions:m_duckStrelAction,actionForTargetMoveDidFinish,nil]];
         
         for (Apple_Object *apple in m_apples) {
-            [apple.m_appleSprite setPosition :CGPointMake(m_duckPos.x,
+            [apple.m_appleSprite setPosition :ccp(m_duckPos.x,
                                                         m_duckPos.y)];
             
             float rotation;
@@ -2066,17 +2385,17 @@ static GameLayer *m_gameLayer;
             pt2.y *= 1800.0f;
             
             if (m_iAttack == 3) {
-                [apple.m_appleSprite setScale :1.3f];
+                [apple.m_appleSprite setScale :1.3f*g_fx1];
             } else {
-                [apple.m_appleSprite setScale :1.0f];
+                [apple.m_appleSprite setScale :1.0f*g_fx1];
             }
             
             if (m_iAttack == 2) {
-                [apple.m_appleActionMove initWithDuration:1.0f position:CGPointMake(m_duckPos.x
+                [apple.m_appleActionMove initWithDuration:1.0f position:ccp(m_duckPos.x
                                                                                     + pt2.x, m_duckPos.y + pt2.y)];
                
             } else {
-                [apple.m_appleActionMove initWithDuration:2.0f position:CGPointMake(m_duckPos.x
+                [apple.m_appleActionMove initWithDuration:2.0f position:ccp(m_duckPos.x
                                                                                     + pt2.x, m_duckPos.y + pt2.y)];
 
             }
@@ -2088,7 +2407,186 @@ static GameLayer *m_gameLayer;
         }
     }
 
-   }
+}
+-(void)targetMoveFinished
+{
+    _isduckActionEnd =true;
+}
+
+-(void) canonicalOrientationToScreenOrientation:(int) displayRotation
+{
+    int axisSwap[4][4] = {
+        {  1,  -1,  0,  1  },     // ROTATION_0
+        {-1,  -1,  1,  0  },     // ROTATION_90
+        {-1,    1,  0,  1  },     // ROTATION_180
+        {  1,    1,  1,  0  }  }; // ROTATION_270
+    
+    
+    
+    
+    screenVec[0]  =  (float) axisSwap[displayRotation][0] * canVec[ axisSwap[displayRotation][2] ];
+    screenVec[1]  =  (float) axisSwap[displayRotation][1] * canVec[ axisSwap[displayRotation][3] ];
+    screenVec[2]  =  canVec[2];
+}
+
+-(void) accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+{
+    
+    
+    float accelX;
+    float accelY;
+    float accelZ;
+    
+//    static Boolean first_flag =false;
+//    if(!first_flag){
+//        first_flag =true;
+//        [self Init_Animation];
+//    }
+// 
+    if (bExit)
+    {
+        return;
+    }
+    
+    
+    if (lastTicks == 0 )
+    {
+        lastTicks = [[NSDate date] timeIntervalSince1970]*1000;
+        return;
+    }
+    long long  dt = [[NSDate date] timeIntervalSince1970]*1000 - lastTicks;
+    
+    if (dt < 20)
+        return;
+    
+    lastTicks =[[NSDate date] timeIntervalSince1970]*1000;
+    
+    
+    double kef = (double)dt / 10.0;
+    // double kef =25.8f;
+    
+    canVec[0] = acceleration.x;
+    canVec[1] = acceleration.y;
+    canVec[2] = acceleration.z;
+    
+    
+    [self canonicalOrientationToScreenOrientation:1];
+    
+    // MySettings.getInstance().canonicalOrientationToScreenOrientation(MySettings.getInstance().rotationIndex, canVec, screenVec);
+    
+    accelX =screenVec[0];
+    accelY =screenVec[1];
+    accelZ= screenVec[2];
+    
+    
+    
+    
+    //    acceleration.x = screenVec[0];
+    //    acceleration.y = screenVec[1];
+    //    acceleration.z = screenVec[2];
+    
+	//	else
+    //	return;
+    
+    // change duck position
+    
+    CGPoint p = m_duckPos;
+    
+	//	p.y -= accelX*1.5f; // ï¿½ ï¿½ï¿½ï¿½ï¿½
+    
+    accelY = -accelY;
+   // if (accelY < 0)
+   //     accelY = 0;
+   // accelY =accelY - 5;
+    
+    //p.y -= (accelY + (MySettings.getInstance().UpDownKef - 50.0) / 25.0)
+    //				* 1.0f * kef; // ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//	p.x -= (accelX - (MySettings.getInstance().LeftRightKef - 50.0) / 50.0)
+    //		* 1.5f * kef;
+    
+    
+    p.y -= (accelY) *1.0f*kef * LeftRightKef/ 25.0f;
+    p.x -= (accelX) *1.5f*kef *  LeftRightKef/ 25.0f;
+    
+    if (accelX < -0.3f) {
+        if (m_duckStrelAction != nil) {
+            if (_isduckActionEnd ) {
+              
+                [m_duckSprite setTextureRect:rcDuckMove rotated:rotatedDuckMove untrimmedSize:rcDuckMove.size];
+                // m_duckSprite.setTextureRect(CGRect.make(4*119.0f,
+                // 3*113.5f, 119.0f, 113.5f), false);
+                [m_duckSprite setFlipX :false];
+            }
+        } else {
+
+            [m_duckSprite setTextureRect:rcDuckMove rotated:rotatedDuckMove untrimmedSize:rcDuckMove.size];
+            // m_duckSprite.setTextureRect(CGRect.make(4*119.0f, 3*113.5f,
+            // 119.0f, 113.5f), false);
+            [m_duckSprite setFlipX :false];
+        }
+    } else if (accelX > 0.3f) {
+        // p.x += accelY*1.5f*kef;
+            if (m_duckStrelAction != nil) {
+              if (_isduckActionEnd) {
+          
+               
+                [m_duckSprite setTextureRect:rcDuckMove rotated:rotatedDuckMove untrimmedSize:rcDuckMove.size];
+                // m_duckSprite.setTextureRect(CGRect.make(4*119.0f, 3*113.5f,
+                // 119.0f, 113.5f), false);
+                [m_duckSprite setFlipX :true];
+              }
+            
+            } else {
+            
+               [m_duckSprite setTextureRect:rcDuckMove rotated:rotatedDuckMove untrimmedSize:rcDuckMove.size];
+                // m_duckSprite.setTextureRect(CGRect.make(4*119.0f, 3*113.5f,
+               // 119.0f, 113.5f), false);
+               [m_duckSprite setFlipX :true];
+            }
+        
+    }else if( abs(accelX) < 0.3f) {
+        // p.x += accelY*2.5f;
+           if (m_duckStrelAction != nil) {
+            
+//                if([m_duckStrelAction isDone]){
+               if(_isduckActionEnd){
+                   [m_duckSprite setTextureRect:rcDuckStay rotated:rotatedDuckStay untrimmedSize:rcDuckStay.size];
+                
+                }
+           
+            } else {
+               [m_duckSprite setTextureRect:rcDuckStay rotated:rotatedDuckStay untrimmedSize:rcDuckStay.size];
+            // m_duckSprite.setTextureRect(CGRect.make(3*119.0f, 3*113.5f,
+            // 119.0f, 113.5f), false);
+           }
+       
+        
+    }
+
+   
+
+    [self SetDuckPosX :p.x PosY:p.y];
+    
+  
+}
+
+-(void) SetDuckPosX :(float) x PosY:(float) y
+
+{
+    m_duckPos.x = x;
+    m_duckPos.y = y;
+    
+    if (m_duckPos.y > m_YMax)
+        m_duckPos.y = m_YMax;
+    if (m_duckPos.y < m_YMin)
+        m_duckPos.y = m_YMin;
+    
+    
+    if (m_duckPos.x < 60)
+        m_duckPos.x = 60;
+    if (m_duckPos.x > 1024*3-20)
+        m_duckPos.x = 1024*3-20;
+}
 
 
 @end

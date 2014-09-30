@@ -22,11 +22,11 @@
 @property (nonatomic,retain) CCAnimate *strelba_action;
 @property int state;
 @property int lives;
-@property long timetostay;
-@property long timetomove;
+@property long long timetostay;
+@property long long timetomove;
 
-@property long timetopula;
-@property long killedtime;
+@property long long timetopula;
+@property long long  killedtime;
 @property (nonatomic,retain) NSMutableArray *m_pules;
 @property (nonatomic,retain) CCSprite *spriteApple;
 @property (nonatomic,retain) CCSprite *numLives;

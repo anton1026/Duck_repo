@@ -17,18 +17,36 @@
         _sprite = [CCSprite spriteWithSpriteFrame:cframe];
         
         NSMutableArray *frames = [[NSMutableArray alloc]init];
-        for(int i = 2; i <4  ; i++) {
+        BonusAnimation =[[CCAnimation alloc]init];
+        for(int i = 1; i <4  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"bonus%d.png",i]]];
         }
-        CCAnimation *BonusAnimation = [CCAnimation animationWithFrames:frames delay:0.1f];
-        
-        //    _sprite addAnimation(BonusAnimation);
-        
+        BonusAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
         _action = [CCAnimate actionWithAnimation:BonusAnimation];
+       
+        
         [rootNode addChild :_sprite z: zi];
         [_sprite setVisible:false];
     }
     return self;
 }
+-(void) runShootAction
+{
+    NSMutableArray *frames = [[NSMutableArray alloc]init];
+    BonusAnimation =[[CCAnimation alloc]init];
+    for(int i = 1; i <4  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"bonus%d.png",i]]];
+    }
+    BonusAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
+    _action = [CCAnimate actionWithAnimation:BonusAnimation];
 
+    [_sprite runAction:_action];
+}
+-(Boolean) onActionEnd
+{
+    if([_action isDone])
+        return true;
+    else
+        return false;
+}
 @end

@@ -1,3 +1,6 @@
+
+
+
 //
 //  COrel.m
 //  Duck
@@ -7,6 +10,7 @@
 //
 
 #import "COrel.h"
+#import "Global.h"
 
 @implementation COrel
 {
@@ -14,92 +18,55 @@
 }
 -(id) initWithNode : (CCNode *) rootNode
 {
-    m_rootNode =rootNode;
+    if(self =[super init]){
+        m_rootNode =rootNode;
 
 //    m_random = random;
     
-    _anim_action = nil;
-    _b_attack = false;
-    _b_attack_anim = false;
+        _anim_action = nil;
+        _b_attack = false;
+        _b_attack_anim = false;
+        _isActionEnd =true;
+        _isAtackEnd=true;
+        
+    }
+    return self;
 }
 -(void) initOrel
 {
     
-    CCAnimation *OrelAnimation =[[CCAnimation alloc]init];
+    OrelAnimation =[[CCAnimation alloc]init];
+    NSMutableArray *frames = [[NSMutableArray alloc]init];
+    OrelAnimation =[[CCAnimation alloc]init];
+    for(int i = 0; i <9  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"pt_00%d.png",i]]];
+    }
+    OrelAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
     
-    CCSpriteFrame *frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_000.png"];
+   
     
-    [OrelAnimation  addSpriteFrame:frame];
+    [frames removeAllObjects];
+    AttackAnimation =[[CCAnimation alloc]init];
+    for(int i = 2; i <6  ; i++) {
+        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"aa_00%d.png",i]]];
+    }
     
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_001.png"];
-    [OrelAnimation  addSpriteFrame:frame];
+    AttackAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.07f];
     
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_002.png"];
-    [OrelAnimation  addSpriteFrame:frame];
-    
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_003.png"];
-    [OrelAnimation  addSpriteFrame:frame];
-    
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_004.png"];
-    [OrelAnimation  addSpriteFrame:frame];
-    
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_005.png"];
-    [OrelAnimation  addSpriteFrame:frame];
-    
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_006.png"];
-    [OrelAnimation  addSpriteFrame:frame];
-    
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_007.png"];
-    [OrelAnimation  addSpriteFrame:frame];
-    
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_008.png"];
-    [OrelAnimation  addSpriteFrame:frame];
-    
-    
-    [OrelAnimation setDelayPerUnit:0.15f];
+    _anim_attack = [CCAnimate actionWithAnimation:AttackAnimation];
 
     
-    CCAnimation *AttackAnimation = [[CCAnimation alloc]init];
-    //.animation("orel_attack", 0.07f);
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"aa_002.png"];
-    [AttackAnimation  addSpriteFrame:frame];
-
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"aa_003.png"];
-    [AttackAnimation  addSpriteFrame:frame];
-
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"aa_004.png"];
-    [AttackAnimation  addSpriteFrame:frame];
-
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"aa_005.png"];
-    [AttackAnimation  addSpriteFrame:frame];
-
-    
-    _anim_attack =[CCAnimate actionWithAnimation:AttackAnimation];
-    
-    
-    frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_000.png"];
-    _sprite = [CCSprite spriteWithSpriteFrame:frame];
-    
+    _sprite = [CCSprite spriteWithSpriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_000.png"]];
     [m_rootNode addChild :_sprite z: 500];
     
     
-//    CCRepeatForever *repeat_action = [CCRepeatForever actionWithAction:anim_action];
-//    [sprite runAction:repeat_action];
-//    
-//    CCMoveTo *move_act =  [CCMoveTo actionWithDuration:1.0f position:ccp(1.0f,1.0f)];
-//    [move_actions addObject:move_act];
-
-   //------------------------------------------------
-      //sprite.addAnimation(OrelAnimation);
-      //sprite.addAnimation(AttackAnimation);
     
-    
-    [_sprite setScale:0.9f];
+    [_sprite setScale:0.9f*g_fx1];
     
     _anim_action = [CCAnimate actionWithAnimation:OrelAnimation];
-    
     repeat_action = [CCRepeatForever actionWithAction:_anim_action];
     [_sprite runAction:repeat_action];
+    
     
     _move_action =  [CCMoveTo actionWithDuration:1.0f position: ccp(1.0f, 1.0f)];
    
@@ -110,10 +77,36 @@
 {
     if ( _b_attack_anim )
     {
-        if ( [_anim_attack isDone] )
+        if(_isAtackEnd )
+//        if ( [_anim_attack isDone] )
         {
-            [_sprite stopAction:_anim_attack];
-            [_sprite runAction :repeat_action];
+           
+            OrelAnimation =[[CCAnimation alloc]init];
+            NSMutableArray *frames = [[NSMutableArray alloc]init];
+            OrelAnimation =[[CCAnimation alloc]init];
+            for(int i = 0; i <9  ; i++) {
+                [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"pt_00%d.png",i]]];
+            }
+            OrelAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+            
+            
+            
+            [frames removeAllObjects];
+            AttackAnimation =[[CCAnimation alloc]init];
+            for(int i = 2; i <6  ; i++) {
+                [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"aa_00%d.png",i]]];
+            }
+            
+            AttackAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.07f];
+            
+            _anim_attack = [CCAnimate actionWithAnimation:AttackAnimation];
+
+            
+            _anim_action = [CCAnimate actionWithAnimation:OrelAnimation];
+            repeat_action = [CCRepeatForever actionWithAction:_anim_action];
+            
+            [_sprite stopAction : _anim_attack];
+            [_sprite runAction  : repeat_action];
             
             _b_attack = false;
             _b_attack_anim = false;
@@ -123,11 +116,24 @@
     }
     else
     {
-        if ([_move_action isDone])
+        if (_isActionEnd)
         {
             if ( _b_attack )
             {
-                [_sprite runAction :_anim_attack];
+                NSMutableArray *frames = [[NSMutableArray alloc]init];
+                AttackAnimation =[[CCAnimation alloc]init];
+                for(int i = 2; i <6  ; i++) {
+                    [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"aa_00%d.png",i]]];
+                }
+                
+                AttackAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.07f];
+                _anim_attack =[CCAnimate actionWithAnimation:AttackAnimation];
+                
+                CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetAttackFinished)];
+                _isAtackEnd =false;
+                [_sprite runAction:[CCSequence actions:_anim_attack,actionForTargetMoveDidFinish2,nil]];
+
+//                [_sprite runAction :_anim_attack];
                 _b_attack_anim = true;
             }
             else
@@ -135,6 +141,10 @@
         }
     }
     
+}
+-(void) targetAttackFinished
+{
+      _isAtackEnd =true;
 }
 
 -(void) SetInitState
@@ -168,14 +178,25 @@
     
     float bird_dist = ccpDistance([_sprite position], end_point);
     
+    _move_action =[CCMoveTo actionWithDuration:(bird_dist / 120.0f) position:end_point];
     
-    [_move_action setDuration : (bird_dist / 120.0f)];
-    [_move_action setEndPoint :end_point];
-    [_sprite runAction:_move_action];
+    
+  
+    
+    CCCallFuncN* actionForTargetMoveDidFinish = [CCCallFuncN actionWithTarget:self selector:@selector(targetMoveFinished)];
+    _isActionEnd =false;
+    [_sprite runAction:[CCSequence actions:_move_action,actionForTargetMoveDidFinish,nil]];
+
+    
+ //   [_sprite runAction:_move_action];
    
 
 }
-
+-(void)targetMoveFinished
+{
+    _isActionEnd=true;
+    
+}
 -(CGPoint) GetPos
 {
     return [_sprite position];
@@ -201,27 +222,93 @@
     CGPoint end_point = CGPointMake(duckPos.x + sdvig_x, duckPos.y + sdvig_y);
     
     float bird_dist = ccpDistance([_sprite position],  end_point);
-
+    
     [_sprite stopAction:repeat_action];
     [_sprite stopAction:_move_action];
+    
     CCSpriteFrame *tempFrame = [[CCSpriteFrameCache sharedSpriteFrameCache ] spriteFrameByName:@"aa_002.png"];
 
     [_sprite setTextureRect:[tempFrame rect]  rotated:[tempFrame rotated] untrimmedSize:[tempFrame rect].size];
     
+    _move_action =[CCMoveTo actionWithDuration:(bird_dist / 500.0f) position:end_point];
     
-    
-    [_move_action setDuration :(bird_dist / 500.0f)];
-    [_move_action setEndPoint:end_point];
-    [_sprite runAction :_move_action];
+   
+     CCCallFuncN* actionForTargetMoveDidFinish = [CCCallFuncN actionWithTarget:self selector:@selector(targetMoveFinished)];
+    _isActionEnd =false;
+    [_sprite runAction:[CCSequence actions:_move_action,actionForTargetMoveDidFinish,nil]];
+
+    //[_sprite runAction :_move_action];
     _b_attack = true;
+ 
 }
 
 -(void) Fire
 {
+   
     if ( _b_attack )
     {
         [_sprite stopAction:_move_action];
-        [_sprite runAction :_anim_attack];
+        
+        OrelAnimation =[[CCAnimation alloc]init];
+        NSMutableArray *frames = [[NSMutableArray alloc]init];
+        OrelAnimation =[[CCAnimation alloc]init];
+        for(int i = 0; i <9  ; i++) {
+            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"pt_00%d.png",i]]];
+        }
+        OrelAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+
+//        
+//        CCAnimation *OrelAnimation =[[CCAnimation alloc]init];
+//        
+//        CCSpriteFrame *frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_000.png"];
+//        
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_001.png"];
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_002.png"];
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_003.png"];
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_004.png"];
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_005.png"];
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_006.png"];
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_007.png"];
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        frame =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"pt_008.png"];
+//        [OrelAnimation  addSpriteFrame:frame];
+//        
+//        
+//        [OrelAnimation setDelayPerUnit:0.15f];
+       
+        
+        
+        [frames removeAllObjects];
+        AttackAnimation =[[CCAnimation alloc]init];
+        for(int i = 2; i <6  ; i++) {
+            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"aa_00%d.png",i]]];
+        }
+        
+        AttackAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.07f];
+        _anim_attack =[CCAnimate actionWithAnimation:AttackAnimation];
+        
+        
+        CCCallFuncN* actionForTargetMoveDidFinish2 = [CCCallFuncN actionWithTarget:self selector:@selector(targetAttackFinished)];
+        _isAtackEnd =false;
+        [_sprite runAction:[CCSequence actions:_anim_attack,actionForTargetMoveDidFinish2,nil]];
+        
+        
+      //  [_sprite runAction :_anim_attack];
         _b_attack_anim = true;
     }
 }

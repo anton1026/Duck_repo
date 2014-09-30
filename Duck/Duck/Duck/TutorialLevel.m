@@ -10,10 +10,13 @@
 #import "SimpleAudioEngine.h"
 #import "MenuLayer.h"
 #define OriginY 384
+
+
 @implementation TutorialLevel
 {
     
 }
+
 float g_fx,g_fy,g_fx1,g_fy1;
 bool flag_retain=false;
 
@@ -36,135 +39,220 @@ bool flag_retain=false;
         [self setTouchEnabled:true];
 		// ask director for the window size
  		CGSize size = [[CCDirector sharedDirector] winSize];
+        WIN_SIZE_X =size.width;
+        WIN_SIZE_Y =size.height;
      	//CCSprite *background;
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"play.mp3"];
+        
+  //--------------------------test module -----------------------------------------------------------
+//        
+//        NSMutableArray *frames =[NSMutableArray array];
+////          NSMutableArray *frames =[[NSMutableArray alloc]init];
+//        m_duckStrelAnimationVbok = [[CCAnimation alloc] init];
+//        
+//        for (int i = 1; i < 19; i++) {
+//
+//                  NSString *strFilename;
+//                  strFilename = [NSString stringWithFormat:@"strelaet_pramo%d.png", i];
+//            CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+//            [frames addObject:frame];
+////                  [m_duckStrelAnimationVbok addSpriteFrameWithFilename:strFilename];
+//         }
+//        m_duckStrelAnimationVbok = [CCAnimation  animationWithSpriteFrames:frames delay:0.05f];
+////         [m_duckStrelAnimationVbok setDelayPerUnit:1.0f];
+//        
+//        [self setScaleX:g_fx];
+//        [self setScaleY:g_fy];
+//        
+//        CCSpriteFrame *cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"];
+//        CCSprite *test = [CCSprite spriteWithSpriteFrame:cframe];
+//        [test setPosition:ccp(512*g_fx,384*g_fy)];
+//        
+//        [self addChild: test];
+//       
+//        CCAnimate *animate = [CCAnimate actionWithAnimation:m_duckStrelAnimationVbok];
+//        CCRepeatForever *repeat = [CCRepeatForever actionWithAction:animate];
+//        [test runAction: animate];
+  //---------------------------------------------------------------------------------------------------------
         
         
         m_iLoadedHunter = -1;
 		m_cmd = -1;
-		[self setTouchEnabled:true];
+	    [self setTouchEnabled:true];
         [self setAccelerometerEnabled:true];
-        
         [[UIAccelerometer sharedAccelerometer]setDelegate: self];
         
 		m_bEnd = false;
         
 		m_lblTitle = nil;
 		m_lblTitle2 = nil;
-		//m_thumbLeftRight = new Thumb();
-		//m_thumbLeftRight.m_Val = 50;
-		//m_thumbUpDown = new Thumb();
-		//m_thumbUpDown.m_Val = 50;
-		
 		m_hunterSheet1 = nil;
 		m_hunterAnimation1 = nil;
         
 		m_backgrounds = [[NSMutableArray alloc]init];
-		
-//		m_duckPos = CGPoint al;
+        m_duckPos = CGPointZero;
+        
 		
 		m_rootNode = [CCNode node];
-        
-		[self setScale :g_fx*g_fy];
-
-        [self setPosition: CGPointMake(-(1024 - size.width) / 2.0f* g_fx, -(768 - size.height) / 2.0f* g_fx)];
-      //    [self setPosition: CGPointMake(0,0)];
-		 [self addChild:m_rootNode];
+ 
+        [self setScaleX:g_fx];
+        [self setScaleY:g_fy];
+        [self setPosition: ccp(-(1024-size.width)/2.0f*g_fx , -(768-size.height)/2.0f*g_fy )];
+  	    [self addChild:m_rootNode];
         
 		// duck sheet
         
         CCSpriteFrame *cframe = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"];
-     	m_duckSheet = [CCSprite spriteWithTexture: [cframe texture]]  ;
-    	[m_rootNode addChild:m_duckSheet z:7];
+      	m_duckSheet = [CCSpriteBatchNode batchNodeWithTexture:[cframe texture]];
         
+      //  m_duckSheet =[CCSpriteBatchNode  batchNodeWithFile:@"duck_stay.png"];
+        [m_rootNode addChild:m_duckSheet z:7];
+        
+        
+        // create the animation
+        
+        
+        NSMutableArray *frames =[NSMutableArray array];
+        m_duckStrelAnimationUp = [[CCAnimation alloc] init];
+        for (int i = 1; i < 19; i++) {
+            
+            NSString *strFilename;
+            strFilename = [NSString stringWithFormat:@"duck_strel%d.png", i];
+            CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+            [frames addObject:frame];
+        }
+        m_duckStrelAnimationUp = [CCAnimation  animationWithSpriteFrames:frames delay:0.05f];
 
-		
-		// create the animation
-        NSMutableArray *frames = [[NSMutableArray alloc]init];
-        for(int i = 1; i <19  ; i++) {
-            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_strel%d.png",i]]];
-        }
-        m_duckStrelAnimationUp  = [CCAnimation animationWithFrames:frames delay:0.05f];
         
-        for(int i = 1; i <19  ; i++) {
-            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"strelaet_pramo%d.png",i]]];
-        }
-        m_duckStrelAnimationVbok  = [CCAnimation animationWithFrames:frames delay:0.05f];
-		
-        // apple sheet
+       [frames removeAllObjects];
+        m_duckStrelAnimationVbok = [[CCAnimation alloc] init];
         
-        cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"];
+        for (int i = 1; i < 19; i++) {
+            NSString *strFilename;
+            strFilename = [NSString stringWithFormat:@"strelaet_pramo%d.png", i];
+            CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+            [frames addObject:frame];
+            
+        }
+        m_duckStrelAnimationVbok = [CCAnimation  animationWithSpriteFrames:frames delay:0.05f];
+        
+       
+        m_duckStrelActionUp =   [CCAnimate actionWithAnimation:m_duckStrelAnimationUp];
+		m_duckStrelActionVbok = [CCAnimate actionWithAnimation:m_duckStrelAnimationVbok];
+        
+        
+        cframe  =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"];
         m_appleSheet = [CCSpriteBatchNode batchNodeWithTexture: [cframe texture]];
 		[m_rootNode addChild:m_appleSheet z:7];
 		
 		// create the animation
-        for(int i = 2; i <6  ; i++) {
-            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"apple%d.png",i]]];
-        }
-        m_appleAnimation = [CCAnimation animationWithFrames:frames delay:0.1f];
         
+        [frames removeAllObjects];
+         m_appleAnimation = [[CCAnimation alloc] init];
+        for(int i = 2; i <6  ; i++) {
+            NSString *strFilename;
+            strFilename = [NSString stringWithFormat:@"apple%d.png", i];
+            CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+            [frames addObject:frame];
+        }
+        m_appleAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
         
        m_appleActionAnim = [CCAnimate actionWithAnimation:m_appleAnimation];
        [m_appleActionAnim setTag :0];
-       m_appleActionMove = [CCMoveTo actionWithDuration:2.0f position: CGPointMake(1.0f, 1.0f)];
+       m_appleActionMove = [CCMoveTo actionWithDuration:2.0f position: ccp(1.0f, 1.0f)];
         
         
-		m_duckStrelActionUp = [CCAnimate actionWithAnimation:m_duckStrelAnimationUp];
-		m_duckStrelActionVbok = [CCAnimate actionWithAnimation:m_duckStrelAnimationVbok];
-        
+       [frames removeAllObjects];
+         m_duckDyn1 = [[CCAnimation alloc] init];
         for(int i = 1; i <4  ; i++) {
-            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_dyn1_%d.png",i]]];
+            NSString *strFilename;
+            strFilename = [NSString stringWithFormat:@"duck_dyn1_%d.png", i];
+            CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+            [frames addObject:frame];
+           
         }
-        m_duckDyn1 = [CCAnimation animationWithFrames:frames delay:0.25f];
+        m_duckDyn1 = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
         
         
+        
+        [frames removeAllObjects];
+         m_duckDyn2 = [[CCAnimation alloc] init];
         for(int i = 1; i <4  ; i++) {
-            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_dyn2_%d.png",i]]];
+            NSString *strFilename;
+            strFilename = [NSString stringWithFormat:@"duck_dyn2_%d.png", i];
+            CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+            [frames addObject:frame];
+            
         }
-        m_duckDyn2 = [CCAnimation animationWithFrames:frames delay:0.25f];
+        m_duckDyn2 = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
         
+        
+        [frames removeAllObjects];
+         m_duckKill1 = [[CCAnimation alloc] init];
         for(int i = 0; i <4  ; i++) {
-            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_kill1_%d.png",i % 2+1]]];
+            NSString *strFilename;
+            strFilename = [NSString stringWithFormat:@"duck_kill1_%d.png", i%2+1];
+            CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+            [frames addObject:frame];
+            
         }
-        m_duckKill1 = [CCAnimation animationWithFrames:frames delay:0.15f];
+        m_duckKill1 = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
         
+        
+        [frames removeAllObjects];
+        m_duckKill2 = [[CCAnimation alloc] init];
         for(int i = 0; i <4  ; i++) {
-            [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"duck_kill2_%d.png",i % 2+1]]];
+            NSString *strFilename;
+            strFilename = [NSString stringWithFormat:@"duck_kill2_%d.png", i%2+1];
+            CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+            [frames addObject:frame];
+       
         }
-        m_duckKill2 = [CCAnimation animationWithFrames:frames delay:0.15f];
+        m_duckKill2 = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
         
         
+
+
+     
+        m_duckSprite =  [CCSprite spriteWithTexture: [m_duckSheet texture] rect: CGRectMake(3*119.0f, 3*113.5f, 119.0f, 113.5f)];
+        [m_duckSprite setScale:g_fx1];
         
-		m_duckSprite = [CCSprite spriteWithTexture: [m_duckSheet texture] rect: CGRectMake(3*119.0f, 3*113.5f, 119.0f, 113.5f)];
-                        
-		[m_duckSheet addChild:m_duckSprite z: 5];
-		[self SetDuckPosX :1024.0f * 3.0f / 2.0f PosY: 768.0f/2.0f/2.0f];
+        [m_duckSheet addChild:m_duckSprite z:5];
+    
+      
+        
+     	[self SetDuckPosX :1024.0f*3.0f/ 2.0f PosY: 768.0f/2.0f/2.0f];
+	    
+        
 		
-		
+        
 		cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"apple1.png"];
      	m_appleSprite = [CCSprite spriteWithSpriteFrame:cframe];
      	[m_appleSheet addChild:m_appleSprite z: 5];
 		[m_appleSprite setVisible:false];
+     
+        
+        
         
         
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"shoot1.png"];
         m_shootSprite = [CCSprite spriteWithSpriteFrame:cframe];
-        if(density >1.1)
-           [m_shootSprite setScale:2];
-        else
-           [m_shootSprite setScale:1.5f];
+        
+//        if(density >1.1)
+//           [m_shootSprite setScale:2];
+//        else
+           [m_shootSprite setScale:1.5f*g_fx1];
         
         
 		[m_shootSprite setOpacity:160];
-		[m_rootNode addChild :m_shootSprite z:155];
-		[m_shootSprite setVisible:true];
-		m_whereShoot = 0;
+  		[m_rootNode addChild :m_shootSprite z:155];
+        [m_shootSprite setVisible:true];
+      	m_whereShoot = 0;
         
 		
 	    cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"ok.png"];
         m_Ok = [CCSprite spriteWithSpriteFrame:cframe];
 		[m_rootNode addChild:m_Ok z:100];
-        
         [m_Ok setScale:0.8f];
         [m_Ok setOpacity:180];
         [m_Ok setVisible:false];
@@ -173,16 +261,14 @@ bool flag_retain=false;
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"menu.png"];
         m_Cancel = [CCSprite spriteWithSpriteFrame:cframe];
 		[m_rootNode addChild:m_Cancel z:100];
-        
-        [m_Cancel setScale:0.4f];
+        [m_Cancel setScale:0.4f*g_fx1];
         [m_Cancel setOpacity:180];
-        
+
         
         cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"yellow.png"];
         m_yellowSprite = [CCSprite spriteWithSpriteFrame:cframe];
-		[m_rootNode addChild:m_yellowSprite z:99];
-        
-        [m_yellowSprite setScale:6.0f];
+    	[m_rootNode addChild:m_yellowSprite z:99];
+        [m_yellowSprite setScale:6.0f*g_fx1];
         [m_yellowSprite setOpacity:200];
 
 			
@@ -194,32 +280,18 @@ bool flag_retain=false;
 //			m_labelWait = CCLabelTTF makeLabel("Ïîäîæäèòå...", "Arial", 64);
 		else
             m_labelWait =[CCLabelTTF labelWithString:@"Please Wait..."
-                                          dimensions: CGSizeMake(200,200)
+                                          dimensions: [m_rootNode boundingBox].size
                                           hAlignment:UITextAlignmentCenter
                                        lineBreakMode:UILineBreakModeWordWrap
                                             fontName:@"Arial"
-                                            fontSize:64];
+                                            fontSize:50*g_fy];
 
-        [m_labelWait setPosition :CGPointMake(1024 / 2 + 20, 768 / 2 + 70)];
+        [m_labelWait setPosition :CGPointMake((1024 / 2 + 20)*g_fx, (768 / 2 + 70)*g_fy)];
 		[self addChild :m_labelWait z:200];
 		[m_labelWait setVisible:false];
 
 		
-		if (_isRus)
-        {
-            
-        }
-	//		m_labelWait = CCLabel.makeLabel("Ïîäîæäèòå...", "Arial", 64);
-		else
-            m_labelWait =[CCLabelTTF labelWithString:@"Please Wait..."
-                                          dimensions: CGSizeMake(200,200)
-                                          hAlignment:UITextAlignmentCenter
-                                       lineBreakMode:UILineBreakModeWordWrap
-                                            fontName:@"Arial"
-                                            fontSize:64];
-
-		
-        
+	       
 	    
 		if (_isRus)
         {
@@ -227,27 +299,27 @@ bool flag_retain=false;
         }
 			
 		else
-            m_lblTitle =[CCLabelTTF labelWithString:@"Please Wait..."
-                                          dimensions: CGSizeMake(200,200)
+            m_lblTitle =[CCLabelTTF labelWithString:@"Turn the phone to the left"
+                                          dimensions: [m_rootNode boundingBox].size
                                           hAlignment:UITextAlignmentCenter
                                        lineBreakMode:UILineBreakModeWordWrap
                                             fontName:@"Arial"
-                                            fontSize:64];
+                                            fontSize:40];
         
         
 
 		
 		[m_lblTitle setColor: ccBLACK];
-		[m_rootNode addChild: m_lblTitle z: 401];
+        [m_rootNode addChild: m_lblTitle z: 401];
 		[m_lblTitle setVisible:true];
 		
         
         m_lblTitleSh =[CCLabelTTF labelWithString:@"Íàêëîíèòå òåëåôîí âëåâî"
-                                     dimensions: CGSizeMake(200,200)
+                                     dimensions:  [m_rootNode boundingBox].size
                                      hAlignment:UITextAlignmentCenter
                                   lineBreakMode:UILineBreakModeWordWrap
                                        fontName:@"Courier"
-                                       fontSize:54];
+                                       fontSize:40];
 
 
         [m_lblTitleSh setColor: ccBLACK];
@@ -261,11 +333,11 @@ bool flag_retain=false;
         }
 		else
             m_lblTitle2 =[CCLabelTTF labelWithString:@"to duck moved to the left"
-                                         dimensions: CGSizeMake(200,200)
+                                         dimensions:  [m_rootNode boundingBox].size
                                          hAlignment:UITextAlignmentCenter
                                       lineBreakMode:UILineBreakModeWordWrap
                                            fontName:@"Courier"
-                                           fontSize:54];
+                                           fontSize:40];
 
         [m_lblTitle2 setColor: ccBLACK];
 		[m_rootNode addChild: m_lblTitle2 z: 401];
@@ -273,11 +345,11 @@ bool flag_retain=false;
 		
         
         m_lblTitle2Sh =[CCLabelTTF labelWithString:@"äëÿ äâèæåíèÿ óòêè âëåâî"
-                                       dimensions: CGSizeMake(200,200)
+                                       dimensions:  [m_rootNode boundingBox].size
                                        hAlignment:UITextAlignmentCenter
                                     lineBreakMode:UILineBreakModeWordWrap
                                          fontName:@"Courier"
-                                         fontSize:54];
+                                         fontSize:40];
         
         
         [m_lblTitle2Sh setColor: ccBLACK];
@@ -285,21 +357,128 @@ bool flag_retain=false;
 		[m_lblTitle2Sh setVisible:false];
         
         
-		m_TutorialState = 0;
+		
+        m_TutorialState = 0;
+        lastTicks =0;
+        
+        
 		m_Bool = false;
-		m_Time = 1000;//SystemClock.uptimeMillis();
-		m_shootTime =1000;// SystemClock.uptimeMillis();
+        
+
+        
+		m_Time = [[NSDate date] timeIntervalSince1970]*1000;//SystemClock.uptimeMillis();
+		m_shootTime =[[NSDate date] timeIntervalSince1970]*1000;// SystemClock.uptimeMillis();
 		
 		m_visibleWidth = (float)size.width / g_fx;
-        
-		[self ChangeLevel:1];
-        //[self schedule:@selector(animalAction:) interval:0.1f*m_musicspped[slide_state]];
+       
+	  
+        [self ChangeLevel:1];
+ 
         [self scheduleUpdate];
-    //    [self schedule:@selector("update")];
+   
         
    }
 	
 	return self;
+}
+
+-(void) Init_sprite
+{
+    
+    NSMutableArray *frames =[NSMutableArray array];
+    m_duckStrelAnimationUp = [[CCAnimation alloc] init];
+    for (int i = 1; i < 19; i++) {
+        
+        NSString *strFilename;
+        strFilename = [NSString stringWithFormat:@"duck_strel%d.png", i];
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+        [frames addObject:frame];
+    }
+    m_duckStrelAnimationUp = [CCAnimation  animationWithSpriteFrames:frames delay:0.05f];
+    
+    
+    [frames removeAllObjects];
+    m_duckStrelAnimationVbok = [[CCAnimation alloc] init];
+    
+    for (int i = 1; i < 19; i++) {
+        NSString *strFilename;
+        strFilename = [NSString stringWithFormat:@"strelaet_pramo%d.png", i];
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+        [frames addObject:frame];
+        
+    }
+    m_duckStrelAnimationVbok = [CCAnimation  animationWithSpriteFrames:frames delay:0.05f];
+    
+    
+    m_duckStrelActionUp =   [CCAnimate actionWithAnimation:m_duckStrelAnimationUp];
+    m_duckStrelActionVbok = [CCAnimate actionWithAnimation:m_duckStrelAnimationVbok];
+    
+    
+    // create the animation
+    
+    [frames removeAllObjects];
+    m_appleAnimation = [[CCAnimation alloc] init];
+    for(int i = 2; i <6  ; i++) {
+        NSString *strFilename;
+        strFilename = [NSString stringWithFormat:@"apple%d.png", i];
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+        [frames addObject:frame];
+    }
+    
+    m_appleAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
+    m_appleActionAnim = [CCAnimate actionWithAnimation:m_appleAnimation];
+    [m_appleActionAnim setTag :0];
+    m_appleActionMove = [CCMoveTo actionWithDuration:2.0f position: ccp(1.0f, 1.0f)];
+    
+    
+    [frames removeAllObjects];
+    m_duckDyn1 = [[CCAnimation alloc] init];
+    for(int i = 1; i <4  ; i++) {
+        NSString *strFilename;
+        strFilename = [NSString stringWithFormat:@"duck_dyn1_%d.png", i];
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+        [frames addObject:frame];
+        
+    }
+    m_duckDyn1 = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
+    
+    
+    
+    [frames removeAllObjects];
+    m_duckDyn2 = [[CCAnimation alloc] init];
+    for(int i = 1; i <4  ; i++) {
+        NSString *strFilename;
+        strFilename = [NSString stringWithFormat:@"duck_dyn2_%d.png", i];
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+        [frames addObject:frame];
+        
+    }
+    m_duckDyn2 = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
+    
+    
+    [frames removeAllObjects];
+    m_duckKill1 = [[CCAnimation alloc] init];
+    for(int i = 0; i <4  ; i++) {
+        NSString *strFilename;
+        strFilename = [NSString stringWithFormat:@"duck_kill1_%d.png", i%2+1];
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+        [frames addObject:frame];
+        
+    }
+    m_duckKill1 = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+    
+    
+    [frames removeAllObjects];
+    m_duckKill2 = [[CCAnimation alloc] init];
+    for(int i = 0; i <4  ; i++) {
+        NSString *strFilename;
+        strFilename = [NSString stringWithFormat:@"duck_kill2_%d.png", i%2+1];
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+        [frames addObject:frame];
+        
+    }
+    m_duckKill2 = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
+    
 }
 
 -(void) UpdateTitles
@@ -353,7 +532,7 @@ bool flag_retain=false;
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level10_2.plist"];
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level10_3.plist"];
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"level10_4.plist"];
-    [self LoadHunterData:1];
+ //   [self LoadHunterData:1];
     [self BuildWorld];
     
     [self SetDuckPosX :1024.0f * 3.0f / 2.0f PosY: 768.0f/2.0f/2.0f];
@@ -401,18 +580,26 @@ bool flag_retain=false;
     m_hunterHead = [CCSprite  spriteWithSpriteFrame: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strHunter]];
     [m_hunterHead setTextureRect: CGRectMake(0 * 176.0f, 0 * 161.0f, 176.0f,
                                              161.0f)];
-    [m_hunterHead setScale :0.4f];
+    [m_hunterHead setScale :0.4f*g_fx1];
     [m_hunterHead setVisible :true];
     [m_rootNode addChild :m_hunterHead z:100];
     
 
     
     // hunter kill sprite and animation
+    
     NSMutableArray *frames = [[NSMutableArray alloc]init];
+    [frames removeAllObjects];
+    m_huntkillAnimation = [[CCAnimation alloc] init];
+
     for(int i = 1; i <6  ; i++) {
-        [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"hunt_kill%d.png",i]]];
+        NSString *strFilename;
+        strFilename = [NSString stringWithFormat:@"hunt_kill%d.png", i];
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+        [frames addObject:frame];
+
     }
-    m_huntkillAnimation  = [CCAnimation animationWithFrames:frames delay:0.15f];
+    m_huntkillAnimation  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
     
     m_huntkillSprite = [CCSprite spriteWithSpriteFrame:    [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"hunt_kill1.png"]];
     [m_rootNode addChild :m_huntkillSprite z: 500];
@@ -424,22 +611,28 @@ bool flag_retain=false;
     [[m_hunterSheet1 texture] setTexParameters: &params];
     
     [m_rootNode addChild :m_hunterSheet1  z:6];
-    
+   
     // create the hunters animation
+    [frames removeAllObjects];
+    m_hunterAnimation1 = [[CCAnimation alloc] init];
+    
     for (int y = 0; y < 2; y++) {
         for (int x = 0; x < 5; x++) {
+            
             CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f, y * 161.0f, 176.0f, 161.0f) ];
             [frames addObject: frame];
         }
     }
-    m_hunterAnimation1  = [CCAnimation animationWithFrames:frames delay:0.15f];
+    m_hunterAnimation1  = [CCAnimation animationWithSpriteFrames:frames delay:0.15f];
     
+    [frames removeAllObjects];
+    m_hunterPulaAnimation1 = [[CCAnimation alloc] init];
     for (int x = 0; x < 5; x++) {
         
         CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:[m_hunterSheet1 texture] rect:CGRectMake(x * 176.0f, 3 * 161.0f, 176.0f, 161.0f) ];
         [frames addObject: frame];
     }
-    m_hunterPulaAnimation1  = [CCAnimation animationWithFrames:frames delay:0.25f];
+    m_hunterPulaAnimation1  = [CCAnimation animationWithSpriteFrames:frames delay:0.25f];
     
 
     
@@ -452,7 +645,7 @@ bool flag_retain=false;
       Background *b = [[Background alloc]init];
     
     if (bi.isSkyBox == 1) {
-        b.sprite  = [CCSprite spriteWithTexture:bi.texture_name];
+        b.sprite  = [CCSprite spriteWithFile:bi.texture_name];  ///---------------------------------checking------------
     } else {
         
         CCSpriteFrame  *cframe = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:bi.texture_name];
@@ -474,16 +667,18 @@ bool flag_retain=false;
         
         if ( bi.isSkyBox != 1) {
             
-            [b.sprite setPosition : CGPointMake(bi.x + 1536, -(bi.y) + OriginY)];
+            [b.sprite setPosition : ccp(bi.x + 1536, -(bi.y) + OriginY)];
             
-            [b.sprite setScaleX :bi.scale_x ];
-            [b.sprite setScaleY :bi.scale_y ];
+            [b.sprite setScaleX :bi.scale_x*g_fx1 ];
+            [b.sprite setScaleY :bi.scale_y*g_fy1 ];
             
             
         } else {
-            [b.sprite setPosition:CGPointMake(bi.x + 1536, -(bi.y) +OriginY)];
+            [b.sprite setPosition:ccp(bi.x + 1536, -(bi.y) +OriginY)];
             
-            [b.sprite setScaleX : (WIN_SIZE_X/g_fx/1024)];
+            //[b.sprite setScaleX : (WIN_SIZE_X/g_fx/1024)*g_fx1];
+            [b.sprite setScaleX : g_fx1];
+            [b.sprite setScaleX : g_fy1];
         }
         
         [m_backgrounds addObject:b];
@@ -514,10 +709,17 @@ bool flag_retain=false;
     if (m_duckPos.x > 1024*3-20)
         m_duckPos.x = 1024*3-20;
 }
--(void) update:(ccTime)delta
+-(void) update:(ccTime) dt
 {
+    if(!init_flag){
+        init_flag =true;
+        
+        [self Init_sprite];
+    }
     [m_duckSprite setPosition:m_duckPos];
-    
+  
+   
+
     
     float x = 1024 / 2 - m_duckPos.x;
     float add = (m_visibleWidth - 1024) / 2;
@@ -528,8 +730,8 @@ bool flag_retain=false;
         x = -(1024 * 3 - (1024 + add));
     [m_rootNode setPosition: ccp(x, 0)];
 
-    [m_Cancel  setPosition :CGPointMake(-x + 35 - add, 730)];
-    [m_yellowSprite  setPosition :CGPointMake(-x+600-add, 685)];
+    [m_Cancel  setPosition :ccp(-x + 35 - add, 730)];
+    [m_yellowSprite  setPosition :ccp(-x+600-add, 685)];
     
     if ( m_whereShoot == 1 )
     {
@@ -538,7 +740,7 @@ bool flag_retain=false;
     }
     else if ( m_whereShoot == 2 )
     {
-        [m_shootSprite setPosition :ccp(-x + 1190 - add, 40)];
+        [m_shootSprite setPosition :ccp(-x + 890 - add, 130)];
 
        
     }
@@ -547,19 +749,19 @@ bool flag_retain=false;
     {
         if ( [m_shootSprite visible] )
         {
-            //if ( (SystemClock.uptimeMillis() - m_shootTime) > 700 )
+           if ( ([[NSDate date] timeIntervalSince1970]*1000 - m_shootTime) > 700 )
          
             {
                 [m_shootSprite setVisible:false];
-             //   m_shootTime = SystemClock.uptimeMillis();
+                m_shootTime = [[NSDate date] timeIntervalSince1970]*1000;
             }
         }
         else
         {
-           // if ( (SystemClock.uptimeMillis() - m_shootTime) > 700 )
+            if (([[NSDate date] timeIntervalSince1970]*1000- m_shootTime) > 700 )
             {
                 [m_shootSprite setVisible:true];
-               // m_shootTime = SystemClock.uptimeMillis();
+                m_shootTime = [[NSDate date] timeIntervalSince1970]*1000;
             }
 			
         }
@@ -574,11 +776,7 @@ bool flag_retain=false;
     
     
     
-    //m_thumbLeftRight.setPosition(-x+300-add, 400);
-    //m_thumbUpDown.setPosition(-x+950-add, 400);
-    
-    //m_lblLeftRight.setPosition(-x+300-add, 500);
-    //m_lblUpDown.setPosition(-x+950-add, 500);
+
     if ( [m_lblTitle2 visible])
     {
         [ m_lblTitle setPosition :CGPointMake(-x+650-add, 700+20)];
@@ -622,10 +820,10 @@ bool flag_retain=false;
     
     if ( m_TutorialState == 1 )
     {
-      //  if ((SystemClock.uptimeMillis() - m_Time) > 2000)
+        if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 2000)
         {
             m_TutorialState = 2;
-      //      m_Time = SystemClock.uptimeMillis();
+            m_Time = [[NSDate date] timeIntervalSince1970]*1000;
             m_Bool = false;
             if (_isRus)
 
@@ -637,10 +835,10 @@ bool flag_retain=false;
     }
     else if ( m_TutorialState == 3 )
     {
-       // if ((SystemClock.uptimeMillis() - m_Time) > 2000)
+        if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 2000)
         {
             m_TutorialState = 4;
-      //      m_Time = SystemClock.uptimeMillis();
+            m_Time = [[NSDate date] timeIntervalSince1970]*1000;
             m_Bool = false;
             if (_isRus)
                 [self SetTitle: @"Íàêëîíèòå òåëåôîí îò ñåáÿ" str2: @"äëÿ äâèæåíèÿ óòêè ââåðõ"];
@@ -651,10 +849,10 @@ bool flag_retain=false;
     }
     else if ( m_TutorialState == 5 )
     {
-      //  if ((SystemClock.uptimeMillis() - m_Time) > 2000)
-        {
+      if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 2000)
+       {
             m_TutorialState = 6;
-        //    m_Time = SystemClock.uptimeMillis();
+            m_Time = [[NSDate date] timeIntervalSince1970]*1000;
             m_Bool = false;
             if (_isRus)
 
@@ -666,10 +864,10 @@ bool flag_retain=false;
     }
     else if ( m_TutorialState == 7 )
     {
-  //      if ((SystemClock.uptimeMillis() - m_Time) > 2000)
+       if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 2000)
         {
             m_TutorialState = 8;
-    //        m_Time = SystemClock.uptimeMillis();
+            m_Time = [[NSDate date] timeIntervalSince1970]*1000;
             m_Bool = false;
             
             if (_isRus)
@@ -679,16 +877,17 @@ bool flag_retain=false;
          
 
             m_whereShoot = 1;
-           // m_shootTime = SystemClock.uptimeMillis();
+            m_shootTime = [[NSDate date] timeIntervalSince1970]*1000;
+           
             [m_Ok setVisible:false];
         }
     }
     else if ( m_TutorialState == 9 )
     {
-      //  if ((SystemClock.uptimeMillis() - m_Time) > 2000)
+        if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 2000)
         {
             m_TutorialState = 10;
-      //      m_Time = SystemClock.uptimeMillis();
+            m_Time = [[NSDate date] timeIntervalSince1970]*1000;
             m_Bool = false;
             
             if (_isRus)
@@ -698,17 +897,17 @@ bool flag_retain=false;
             
             
             m_whereShoot = 2;
-            // m_shootTime = SystemClock.uptimeMillis();
+            m_shootTime = [[NSDate date] timeIntervalSince1970]*1000;
             [m_Ok setVisible:false];
         }
    
     }
     else if ( m_TutorialState == 11 )
     {
-       // if ((SystemClock.uptimeMillis() - m_Time) > 2000)
+        if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 2000)
         {
             m_TutorialState = 12;
-      //      m_Time = SystemClock.uptimeMillis();
+            m_Time = [[NSDate date] timeIntervalSince1970]*1000;
             m_Bool = false;
             
             if (_isRus)
@@ -729,7 +928,7 @@ bool flag_retain=false;
     
     if (m_skyBox != nil)
     {
-        [m_skyBox.sprite setPosition: CGPointMake(-x+1024/2, 768 / 2)];
+        [m_skyBox.sprite setPosition: ccp(-x+1024/2, 768 / 2)];
     }
     
     if (m_bEnd)
@@ -753,27 +952,63 @@ bool flag_retain=false;
 {
      UITouch *touch = [touches anyObject];
      CGPoint location = [[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]];
-                
+    
+    
      float x,y;
      x =location.x/g_fx;
      y =location.y/g_fy;
     
     if ((x > 0) && (x < 100) && y > 650)
     {
+        
         m_cmd = 0;
         [m_labelWait setVisible:true];
+        return;
     }
 
-    
-    if (m_duckStrelAction != nil)
-        if (![m_duckStrelAction isDone] )
-            return;
+
+    if(!init_flag1){
+        init_flag1 =true;
+        [self Init_sprite];
+    }
+
+    //if (m_duckStrelAction != nil)
+    //    if (![m_duckStrelAction isDone] )
+    //        return;
+   
     
     if ( m_TutorialState >= 10 )
 		if ((x > 512) && (x < 1024))
 		{
-			m_duckStrelAction = m_duckStrelActionUp;
+           
+            NSMutableArray *frames =[NSMutableArray array];
+            m_duckStrelAnimationUp = [[CCAnimation alloc] init];
+            for (int i = 1; i < 19; i++) {
+                
+                NSString *strFilename;
+                strFilename = [NSString stringWithFormat:@"duck_strel%d.png", i];
+                CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+                [frames addObject:frame];
+            }
+            m_duckStrelAnimationUp = [CCAnimation  animationWithSpriteFrames:frames delay:0.05f];
+            
+			m_duckStrelActionUp =[CCAnimate actionWithAnimation:m_duckStrelAnimationUp];
+            
+            m_duckStrelAction = m_duckStrelActionUp;
 			[m_duckSprite runAction:m_duckStrelAction];
+            
+            
+            for(int i = 2; i <6  ; i++) {
+                NSString *strFilename;
+                strFilename = [NSString stringWithFormat:@"apple%d.png", i];
+                CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:strFilename];
+                [frames addObject:frame];
+            }
+            
+            m_appleAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
+            m_appleActionAnim = [CCAnimate actionWithAnimation:m_appleAnimation];
+            [m_appleActionAnim setTag :0];
+            m_appleActionMove = [CCMoveTo actionWithDuration:2.0f position: ccp(1.0f, 1.0f)];
 			
 			[m_appleSprite setPosition: m_duckPos];
             
@@ -786,6 +1021,8 @@ bool flag_retain=false;
 			pt2.x *= 1800.0f;
 			pt2.y *= 1800.0f;
             
+            
+            
 		    [ m_appleActionMove initWithDuration:2.0f position:CGPointMake(m_duckPos.x+pt2.x, m_duckPos.y+pt2.y)];
             
 			[m_appleSprite runAction :m_appleActionMove];
@@ -794,7 +1031,7 @@ bool flag_retain=false;
 			if ( m_TutorialState == 10 )
 			{
 				m_TutorialState = 11;
-			//	m_Time = SystemClock.uptimeMillis();
+			    m_Time = [[NSDate date] timeIntervalSince1970]*1000;
 				
 				if (_isRus)
 					[self SetTitle:@"Îòëè÷íî!" str2: @""];
@@ -808,10 +1045,11 @@ bool flag_retain=false;
 		if ((x > 0) && (x < 512))
 		{
 			
+            
 			m_duckStrelAction = m_duckStrelActionVbok;
 			[m_duckSprite runAction :m_duckStrelAction];
 			
-			[m_appleSprite setPosition: CGPointMake(m_duckPos.x, m_duckPos.y)];
+			[m_appleSprite setPosition: m_duckPos];
             
 			float rotation;
 			
@@ -829,7 +1067,7 @@ bool flag_retain=false;
 			pt2.y *= 1800.0f;
             
 		    
-            [ m_appleActionMove initWithDuration:2.0f position:CGPointMake(m_duckPos.x+pt2.x, m_duckPos.y+pt2.y)];
+            [ m_appleActionMove initWithDuration:2.0f position:ccp(m_duckPos.x+pt2.x, m_duckPos.y+pt2.y)];
              
 			[m_appleSprite runAction :m_appleActionMove];
 			[m_appleSprite setVisible:true];
@@ -837,7 +1075,7 @@ bool flag_retain=false;
 			if ( m_TutorialState == 8 )
 			{
 				m_TutorialState = 9;
-	//			m_Time = SystemClock.uptimeMillis();
+				m_Time = [[NSDate date] timeIntervalSince1970]*1000;
 				
 				if (_isRus)
 					[self SetTitle:@"Îòëè÷íî!" str2: @""];
@@ -850,7 +1088,7 @@ bool flag_retain=false;
    
 }
 
--(void) canonicalOrientationToScreenOrientation:(int*) displayRotation
+-(void) canonicalOrientationToScreenOrientation:(int) displayRotation
 {
    int axisSwap[4][4] = {
         {  1,  -1,  0,  1  },     // ROTATION_0
@@ -858,16 +1096,19 @@ bool flag_retain=false;
         {-1,    1,  0,  1  },     // ROTATION_180
         {  1,    1,  1,  0  }  }; // ROTATION_270
     
- 
     
-//    screenVec[0]  =  (float) axisSwap[displayRotation][0];// * canVec[ axisSwap[displayRotation][2] ];
-//    screenVec[1]  =  (float)axisSwap[displayRotation][1];// * canVec[ axisSwap[displayRotation][3] ];
+    
+    
+    screenVec[0]  =  (float) axisSwap[displayRotation][0] * canVec[ axisSwap[displayRotation][2] ];
+    screenVec[1]  =  (float) axisSwap[displayRotation][1] * canVec[ axisSwap[displayRotation][3] ];
     screenVec[2]  =  canVec[2];
 } 
 
 
 -(void) accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
+    
+    
     float accelX;
     float accelY;
     float accelZ;
@@ -877,61 +1118,72 @@ bool flag_retain=false;
         return;
     }
     
-    if (lastTicks == 0)
+    
+    if (lastTicks == 0 )
     {
-       // lastTicks = SystemClock.uptimeMillis();
+        lastTicks = [[NSDate date] timeIntervalSince1970]*1000;
         return;
     }
-    long dt = 9000;//SystemClock.uptimeMillis() - lastTicks;
+    long long  dt = [[NSDate date] timeIntervalSince1970]*1000 - lastTicks;
     
-   // if ((SystemClock.uptimeMillis() - lastTicks) < 20)
-     //   return;
+    if (dt < 20)
+        return;
     
-   // lastTicks = SystemClock.uptimeMillis();
+    lastTicks =[[NSDate date] timeIntervalSince1970]*1000;
     
     
     double kef = (double)dt / 10.0;
+    // double kef =25.8f;
     
     canVec[0] = acceleration.x;
     canVec[1] = acceleration.y;
     canVec[2] = acceleration.z;
-
-  ;
-   // self canonicalOrientationToScreenOrientation:rotation
     
-   // MySettings.getInstance().canonicalOrientationToScreenOrientation(MySettings.getInstance().rotationIndex, canVec, screenVec);
     
-   accelX =screenVec[0];
-   accelY =screenVec[0];
-   accelZ= screenVec[0];
+    [self canonicalOrientationToScreenOrientation:1];
     
-//    acceleration.x = screenVec[0];
-//    acceleration.y = screenVec[1];
-//    acceleration.z = screenVec[2];
-
+    // MySettings.getInstance().canonicalOrientationToScreenOrientation(MySettings.getInstance().rotationIndex, canVec, screenVec);
+    
+    accelX =screenVec[0];
+    accelY =screenVec[1];
+    accelZ= screenVec[2];
+    
+    
+    
+    
+    //    acceleration.x = screenVec[0];
+    //    acceleration.y = screenVec[1];
+    //    acceleration.z = screenVec[2];
+    
 	//	else
     //	return;
     
     // change duck position
+    
     CGPoint p = m_duckPos;
     
 	//	p.y -= accelX*1.5f; // ï¿½ ï¿½ï¿½ï¿½ï¿½
-    accelY = -accelY;
-    if (accelY < 0)
-        accelY = 0;
-    accelY -= 5;
+    
+//    accelY = -accelY;
+//    if (accelY < 0)
+//        accelY = 0;
+//        accelY =accelY - 5;
     
     //p.y -= (accelY + (MySettings.getInstance().UpDownKef - 50.0) / 25.0)
     //				* 1.0f * kef; // ï¿½ ï¿½ï¿½ï¿½ï¿½
 	//	p.x -= (accelX - (MySettings.getInstance().LeftRightKef - 50.0) / 50.0)
-    //		* 1.5f * kef;
+    
+    if(!init_flag2 ){
+        init_flag2 =true;
+        [self Init_sprite];
+    }
     
     
-    p.y -= (accelY) *1.0f*kef * LeftRightKef/ 50.0f;
-    p.x -= (accelX)*1.5f*kef *  LeftRightKef/ 50.0f;
+    p.y -= (accelY) *1.0f*kef * LeftRightKef/ 25.0f;
+    p.x -= (accelX) *1.5f*kef *  LeftRightKef/ 25.0f;
+   
     
-    
-    if (accelY > 0.5f)
+    if (accelY > 0.3f)
     {
         if ( m_TutorialState == 4)
         {
@@ -941,42 +1193,42 @@ bool flag_retain=false;
         {
             if ( m_Bool == false)
             {
-          //      m_Time = SystemClock.uptimeMillis();
+                m_Time = [[NSDate date] timeIntervalSince1970]*1000;
                 m_Bool = true;
             }
             else
             {
-            //    if ((SystemClock.uptimeMillis() - m_Time) > 1000)
+                if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 1000)
                 {
                     m_TutorialState = 7;
-              //      m_Time = SystemClock.uptimeMillis();
+                    m_Time = [[NSDate date] timeIntervalSince1970]*1000;
                     
                     if (_isRus)
                         [self SetTitle: @"Îòëè÷íî!" str2:@""];
                     else
                         [self SetTitle: @"Fine!" str2:@""];
-
+                    
                     [m_Ok setVisible :true];
                 }
             }
         }
 		
     }
-    else if (accelY < -0.5f)
+    else if (accelY < -0.3f)
     {
         if ( m_TutorialState == 4)
         {
             if ( m_Bool == false)
             {
-         //       m_Time = SystemClock.uptimeMillis();
+                m_Time = [[NSDate date] timeIntervalSince1970]*1000;
                 m_Bool = true;
             }
             else
             {
-       //         if ((SystemClock.uptimeMillis() - m_Time) > 1000)
+                if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 1000)
                 {
                     m_TutorialState = 5;
-      //              m_Time = SystemClock.uptimeMillis();
+                    m_Time = [[NSDate date] timeIntervalSince1970]*1000;
                     
                     if (_isRus)
                         [self SetTitle: @"Îòëè÷íî!" str2:@""];
@@ -1005,7 +1257,7 @@ bool flag_retain=false;
         }
     }
     
-    if (accelX < -0.5f)
+    if (accelX < -0.3f)
     {
         if ( m_TutorialState == 0)
         {
@@ -1015,15 +1267,15 @@ bool flag_retain=false;
         {
             if ( m_Bool == false)
             {
-         //       m_Time = SystemClock.uptimeMillis();
+                m_Time = [[NSDate date] timeIntervalSince1970]*1000;
                 m_Bool = true;
             }
             else
             {
- //               if ((SystemClock.uptimeMillis() - m_Time) > 1000)
+                if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 1000)
                 {
                     m_TutorialState = 3;
-       //             m_Time = SystemClock.uptimeMillis();
+                    m_Time = [[NSDate date] timeIntervalSince1970]*1000;
                     
                     if (_isRus)
                         [self SetTitle:@"Îòëè÷íî!" str2:@""];
@@ -1036,7 +1288,7 @@ bool flag_retain=false;
         
         if (m_duckStrelAction != nil)
         {
-            if ([m_duckStrelAction isDone])
+      //      if ([m_duckStrelAction isDone])
             {
                 [m_duckSprite setTextureRect: [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rect].size];
                 
@@ -1048,24 +1300,24 @@ bool flag_retain=false;
             [m_duckSprite setTextureRect: [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rect].size];
             
             [m_duckSprite setFlipX:false];
-
+            
         }
     }
-    else if (accelX > 0.5f)
+    else if (accelX > 0.3f)
     {
         if ( m_TutorialState == 0)
         {
             if ( m_Bool == false)
             {
-        //        m_Time = SystemClock.uptimeMillis();
+                m_Time = [[NSDate date] timeIntervalSince1970]*1000;
                 m_Bool = true;
             }
             else
             {
-    //            if ((SystemClock.uptimeMillis() - m_Time) > 1000)
+                if (([[NSDate date] timeIntervalSince1970]*1000 - m_Time) > 1000)
                 {
                     m_TutorialState = 1;
-      //              m_Time = SystemClock.uptimeMillis();
+                    m_Time = [[NSDate date] timeIntervalSince1970]*1000;
                     
                     if (_isRus)
                         [self SetTitle:@"Îòëè÷íî!" str2:@""];
@@ -1084,12 +1336,12 @@ bool flag_retain=false;
         
         if (m_duckStrelAction != nil)
         {
-            if ([m_duckStrelAction isDone])
+           // if ([m_duckStrelAction isDone])
             {
                 [m_duckSprite setTextureRect: [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_move.png"] rect].size];
                 
                 [m_duckSprite setFlipX:true];
-           
+                
             }
         }
         else
@@ -1099,7 +1351,7 @@ bool flag_retain=false;
             [m_duckSprite setFlipX:true];
         }
     }
-    else if (abs(accelX) < 0.5f)
+    else if (abs(accelX) < 0.3f)
     {
         if ( m_TutorialState == 0)
         {
@@ -1113,22 +1365,24 @@ bool flag_retain=false;
         //p.x += accelY*2.5f;
         if (m_duckStrelAction != nil)
         {
-            if ([m_duckStrelAction isDone])
-                          [m_duckSprite setTextureRect: [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rect].size];
+      //      if ([m_duckStrelAction isDone] )
+                [m_duckSprite setTextureRect: [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rect].size];
             
         }
         else
         {
             [m_duckSprite setTextureRect: [[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rect] rotated:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rotated] untrimmedSize:[[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"duck_stay.png"] rect].size];
-
+            
         }
     }
     
+   
     [self SetDuckPosX :p.x PosY:p.y];
     
     
-
+    
 }
+
 
 
 @end

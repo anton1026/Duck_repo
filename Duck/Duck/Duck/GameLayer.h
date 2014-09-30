@@ -16,18 +16,11 @@
 #import "Numbers.h"
 #import "Global.h"
 
-#define  HUNTER_HEIGHT  162
-#define  HUNTER_SPEED   100
-#define  MIN_INTERVAL_STAY  7000
-#define  MAX_DELAY_STAY     7000
-#define  OriginX  512
-#define  OriginY  384
-#define  SkyScaleX  3
-#define  SkyScaleY  1
+
 
 //----------------------------------------------------------------//
 
-@interface GameLayer : CCLayer
+@interface GameLayer : CCLayer<UIAccelerometerDelegate>
 {
     
   
@@ -39,7 +32,7 @@
   	CCNode *m_rootNode;
 	float m_visibleWidth;
     
-	CCSprite *m_duckSheet;
+	CCSpriteBatchNode *m_duckSheet;
   
     
 	CCAnimation *m_duckStrelAnimationUp, *m_duckStrelAnimationVbok;
@@ -70,7 +63,10 @@
     
     CCSprite *m_huntkillSprite;
 	CCAnimation *m_huntkillAnimation;
-	CCAction *m_huntkillAction;
+	CCAnimate *m_huntkillAction;
+    
+    CCAnimate *hunterAction;
+
     
 	CCSpriteBatchNode *m_hunterSheet1;
 
@@ -86,9 +82,9 @@
     NSMutableArray *m_bonuses;
     NSMutableArray *m_freeInd;
     
-	long startgametime;
-    long m_BonusTime, m_BombaTime;
-	long m_LiveTime;
+	long long startgametime;
+    long long m_BonusTime, m_BombaTime;
+	long long m_LiveTime;
 	
     NSMutableArray *m_hunters;
     NSMutableArray *m_backgrounds;
@@ -103,6 +99,12 @@
 	CCAnimate *m_duckStrelActionVbok;
 	CCAnimate *m_duckStrelActionUpFast;
 	CCAnimate *m_duckStrelActionVbokFast;
+    
+//   	CCAction *m_duckStrelAction;
+//   	CCAction *m_duckStrelActionUp;
+//   	CCAction *m_duckStrelActionVbok;
+//   	CCAction *m_duckStrelActionUpFast;
+//   	CCAnimate *m_duckStrelActionVbokFast;
     
 	CCSpriteBatchNode *m_BackgroundSprites;
   
@@ -130,11 +132,11 @@
     
 	CCLabelTTF *m_labelWait;
     
-	long m_OrelWaitAttack;
+	long long m_OrelWaitAttack;
     
 	int m_iAttack; // 0 - basic, 1 - multiattack, 2 - fastattack, 3 -
     // powerattack
-	long m_AttackTime;
+	long long m_AttackTime;
     
 	int m_NumberHunters;
 	
@@ -144,8 +146,19 @@
     
     CGRect rcDuckStay, rcDuckMove;
     Boolean rotatedDuckStay, rotatedDuckMove;
+    
+    long long lastTicks;
 
-
+    Boolean _isduckActionEnd;
+    
+    Boolean  _isPulaActionDone;
+    Boolean _isHunterActionDone;
+    Boolean _isStrelbaActionDone;
+    Boolean _isBonusActionDone;
+    Boolean _isBonusLiveActionDone;
+    Boolean _ishunterkillActionDone;
+    CCAnimate *bonusaction;
+    CCAnimate *bonusLiveaction;
 }
 +(CCScene *) scene;
 +(GameLayer*) getInstance;
@@ -154,6 +167,21 @@
 -(void) ChangeLevel:(int) level;
 -(void) BuildWorld;
 -(void) LoadHunterData :(int) type;
--(void) SetDuckPos :(float) x posY:(float) y;
 
+
+-(void) updateApples :(float)dt;
+-(void) updateBombs :(float) dt;
+-(void) updateBonuses :(float)dt;
+-(void) updateFlowers :(float)dt;
+-(void) updateHunters :(float)dt offx:(float) offx_s;
+
+-(void) canonicalOrientationToScreenOrientation:(int) displayRotation;
+-(void) SetDuckPosX :(float) x PosY:(float) y;
+-(void) targetMoveFinished;
+-(void) targetPulaActionFinished;
+-(void) targetHunterActionFinished;
+-(void) targetStrelbaActionFinished;
+-(void) targetBonusFinished;
+-(void) targetBonusLiveFinished;
+-(void)targetHuntKillActionFinished;
 @end

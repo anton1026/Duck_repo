@@ -8,10 +8,14 @@
 
 #import "cocos2d.h"
 
-@interface Thumb : CCNode{
-    CCSprite *m_spriteLine, *m_spriteThumb;
-    int m_Value;
+@interface Thumb : CCNode
+{
+  
     
 }
+@property (nonatomic,retain) CCSprite *m_spriteLine;
+@property (nonatomic,retain) CCSprite *m_spriteThumb;
+
+@property int m_Value;
 -(void) update;
 @end

@@ -20,10 +20,7 @@
         for(int i = 2; i <4  ; i++) {
             [frames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"box%d.png",i]]];
         }
-        CCAnimation *BonusAnimation = [CCAnimation animationWithFrames:frames delay:0.1f];
-        
-        //    _sprite addAnimation(BonusAnimation);
-        
+        CCAnimation *BonusAnimation = [CCAnimation animationWithSpriteFrames:frames delay:0.1f];
         _action = [CCAnimate actionWithAnimation:BonusAnimation];
         [rootNode addChild :_sprite z: zi];
         [_sprite setVisible:false];

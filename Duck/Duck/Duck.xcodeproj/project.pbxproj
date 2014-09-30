@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F99AF8219D91F1200967C79 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F99AF8119D91F1200967C79 /* CoreMotion.framework */; };
 		6B3DBFEF19C9FF6500BA7632 /* BackgroundItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3DBFEE19C9FF6500BA7632 /* BackgroundItem.m */; };
 		6B3DBFF219C9FFB300BA7632 /* HunterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3DBFF119C9FFB300BA7632 /* HunterItem.m */; };
 		6B3DBFF519CA001F00BA7632 /* BonusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3DBFF419CA001F00BA7632 /* BonusItem.m */; };
@@ -310,6 +311,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F99AF8119D91F1200967C79 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		6B3DBFED19C9FF6500BA7632 /* BackgroundItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundItem.h; sourceTree = "<group>"; };
 		6B3DBFEE19C9FF6500BA7632 /* BackgroundItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundItem.m; sourceTree = "<group>"; };
 		6B3DBFF019C9FFB300BA7632 /* HunterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HunterItem.h; sourceTree = "<group>"; };
@@ -793,6 +795,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F99AF8219D91F1200967C79 /* CoreMotion.framework in Frameworks */,
 				6BAB9DE719C29F7500376BB6 /* OpenAL.framework in Frameworks */,
 				6BAB9DED19C29F7500376BB6 /* UIKit.framework in Frameworks */,
 				6BAB9DE319C29F7500376BB6 /* QuartzCore.framework in Frameworks */,
@@ -875,6 +878,7 @@
 		6BAB9DE119C29F7500376BB6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5F99AF8119D91F1200967C79 /* CoreMotion.framework */,
 				6BAB9DE219C29F7500376BB6 /* QuartzCore.framework */,
 				6BAB9DE419C29F7500376BB6 /* OpenGLES.framework */,
 				6BAB9DE619C29F7500376BB6 /* OpenAL.framework */,
@@ -1900,7 +1904,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Steve Sopoci (8GCT828W6Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Steve Sopoci (8GCT828W6Z)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1911,7 +1916,8 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "30fe5f84-fbfc-4c3e-bc57-7c4d869c782f";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1921,7 +1927,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Steve Sopoci (8GCT828W6Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Steve Sopoci (8GCT828W6Z)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -1930,7 +1937,8 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "30fe5f84-fbfc-4c3e-bc57-7c4d869c782f";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1942,6 +1950,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Steve Sopoci (8GCT828W6Z)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1951,6 +1960,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = Duck/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -1964,6 +1974,8 @@
 					"-lxml2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "30fe5f84-fbfc-4c3e-bc57-7c4d869c782f";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1974,6 +1986,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Steve Sopoci (8GCT828W6Z)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Duck/Prefix.pch;
@@ -1982,6 +1995,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = Duck/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -1989,6 +2003,8 @@
 					"-lxml2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "30fe5f84-fbfc-4c3e-bc57-7c4d869c782f";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

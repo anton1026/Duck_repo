@@ -44,3 +44,4 @@ float WIN_SIZE_X;
 float WIN_SIZE_Y;
 Boolean bExit;
 int LeftRightKef;
+int UpDownKef;

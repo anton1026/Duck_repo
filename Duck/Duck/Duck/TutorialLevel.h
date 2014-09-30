@@ -13,12 +13,15 @@
 {
     
     //GameWorld m_gameWorld;
-
-	
+     Boolean init_flag;
+	 Boolean init_flag1;
+     Boolean init_flag2;
+    
 	CCNode *m_rootNode;
 	float m_visibleWidth;
     
 	CCSpriteBatchNode  *m_duckSheet;
+    
     CCAnimation  *m_duckStrelAnimationUp,  *m_duckStrelAnimationVbok;
 	CCAnimation  *m_duckDyn1,  *m_duckDyn2;
 	CCAnimation  *m_duckKill1,  *m_duckKill2;
@@ -31,6 +34,7 @@
 	CCAnimation *m_huntkillAnimation;
 	
     CCSpriteBatchNode *m_hunterSheet1;
+    
     CCAnimation *m_hunterAnimation1;
     CCAnimation *m_hunterPulaAnimation1;
     
@@ -47,6 +51,7 @@
     CCMoveTo *m_appleActionMove;
     
     CCSpriteBatchNode *m_appleSheet;
+    
     CCSprite *m_appleSprite;
 	CCAnimation *m_appleAnimation;
     
@@ -72,10 +77,10 @@
     
 	int 	m_TutorialState;
 	Boolean m_Bool;
-	long    m_Time;
+	long long   m_Time;
 	
 	int     m_whereShoot;
-	long	m_shootTime;
+	long long	m_shootTime;
 	
 	int m_iLoadedHunter;
 	int m_cmd;
@@ -84,17 +89,18 @@
     float screenVec[3];
     float canVec[3];
 
-    long lastTicks;
+    long long lastTicks;
     
 }
 
 //@property(nonatomic,retain) GameLayer *m_layer;
 
 +(CCScene *) scene;
+
 -(void) UpdateTitles;
 -(void) SetTitle: (NSString*)str1 str2:(NSString*)str2;
 -(void) ChangeLevel:(int) level;
 -(void) SetDuckPosX :(float) x PosY:(float) y;
--(void) canonicalOrientationToScreenOrientation:(int*) displayRotation;
-
+-(void) canonicalOrientationToScreenOrientation:(int) displayRotation;
+-(void) UpdateTitles;
 @end

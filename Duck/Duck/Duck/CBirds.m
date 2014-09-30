@@ -7,7 +7,7 @@
 //
 
 #import "CBirds.h"
-
+#import "Global.h"
 @implementation CBirds
 
 
@@ -53,7 +53,7 @@
         
         CCSprite *sprite =[CCSprite spriteWithSpriteFrame:frame1];
         
-        
+        [sprite setScale: g_fx1];
         
         [_sprites addObject:sprite];
         
@@ -135,10 +135,9 @@
         
 
 //        --------------------------------------------------
-        [[_move_actions objectAtIndex:i] setDuration: (bird_dist/100.0f)];
         
         
-        [[_move_actions objectAtIndex:i] setEndPoint:end_point];
+        [[_move_actions objectAtIndex:i] initWithDuration:(bird_dist/100.0f) position:end_point];
         
         [[_sprites objectAtIndex:i] runAction: [_move_actions objectAtIndex:i]];
 

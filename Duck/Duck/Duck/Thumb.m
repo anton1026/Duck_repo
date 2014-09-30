@@ -17,17 +17,17 @@
 {
     if( (self=[super init])) {
       
-        CCSpriteFrame *cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"ThumbLine.png"];
-        m_spriteLine = [CCSprite spriteWithSpriteFrame:cframe];
-        [self addChild:m_spriteLine z:5];
-        [m_spriteLine setPosition: ccp(0*g_fx,0*g_fy)];
+        CCSpriteFrame *cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"thumbline.png"];
+        _m_spriteLine = [CCSprite spriteWithSpriteFrame:cframe];
+        [self addChild:_m_spriteLine z:5];
+        [_m_spriteLine setPosition: ccp(0*g_fx,0*g_fy)];
         
-        cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Thumb.png"];
-        m_spriteThumb = [CCSprite spriteWithSpriteFrame:cframe];
-        [self addChild: m_spriteThumb z:6];
-        [m_spriteThumb setPosition: ccp(0*g_fx,0*g_fy)];
+        cframe =[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"thumb.png"];
+        _m_spriteThumb = [CCSprite spriteWithSpriteFrame:cframe];
+        [self addChild: _m_spriteThumb z:6];
+        [_m_spriteThumb setPosition: ccp(0*g_fx,0*g_fy)];
         
-        m_Value =50;
+        _m_Value =50;
                                     
     }
 	
@@ -36,8 +36,8 @@
 }
 -(void) update
 {
-    if(m_Value <0)
-        m_Value =0;
-    [m_spriteThumb setPosition: ccp(380.0f* m_Value / 100.0f*g_fx - 190*g_fx, 0*g_fy)];
+    if(_m_Value <0)
+        _m_Value =0;
+    [_m_spriteThumb setPosition: ccp(380.0f* _m_Value / 100.0f*g_fx - 190*g_fx, 0*g_fy)];
 }
 @end

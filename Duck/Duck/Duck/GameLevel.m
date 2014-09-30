@@ -188,7 +188,7 @@
                         h_item.z_order =cc.stringValue.intValue;
                         
                         cc = [sub_item childAtIndex:1];
-                        h_item.scale =cc.stringValue.intValue;
+                        h_item.scale =cc.stringValue.floatValue;
                         
                         cc = [sub_item childAtIndex:2];
                         h_item.type =cc.stringValue.intValue;

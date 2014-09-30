@@ -606,11 +606,11 @@
                         <Y>-99</Y>
                     </Position>
                     <CustomProperties>
-                        <Property Name="Scale" Type="string" Description="">
-                            <string>0,8</string>
-                        </Property>
                         <Property Name="Zorder" Type="string" Description="">
                             <string>1</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>0.8</string>
                         </Property>
                         <Property Name="Type" Type="string" Description="">
                             <string>1</string>
@@ -635,11 +635,11 @@
                         <Y>-71</Y>
                     </Position>
                     <CustomProperties>
-                        <Property Name="Scale" Type="string" Description="">
-                            <string>0,8</string>
-                        </Property>
                         <Property Name="Zorder" Type="string" Description="">
                             <string>1</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>0.8</string>
                         </Property>
                         <Property Name="Type" Type="string" Description="">
                             <string>2</string>
@@ -661,11 +661,11 @@
                         <Y>96</Y>
                     </Position>
                     <CustomProperties>
-                        <Property Name="Scale" Type="string" Description="">
-                            <string>1</string>
-                        </Property>
                         <Property Name="Zorder" Type="string" Description="">
                             <string>3</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>1</string>
                         </Property>
                         <Property Name="Type" Type="string" Description="">
                             <string>2</string>
@@ -748,11 +748,11 @@
                         <Y>-100</Y>
                     </Position>
                     <CustomProperties>
-                        <Property Name="Scale" Type="string" Description="">
-                            <string>0.8</string>
-                        </Property>
                         <Property Name="Zorder" Type="string" Description="">
                             <string>1</string>
+                        </Property>
+                        <Property Name="Scale" Type="string" Description="">
+                            <string>0.8</string>
                         </Property>
                         <Property Name="Type" Type="string" Description="">
                             <string>2</string>

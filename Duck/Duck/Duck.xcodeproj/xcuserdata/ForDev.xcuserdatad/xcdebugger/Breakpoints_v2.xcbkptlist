@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetupLayer.m"
@@ -38,7 +38,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetupLayer.m"
@@ -49,160 +49,6 @@
             endingLineNumber = "63"
             landmarkName = "-init"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Duck/SetupLayer.m"
-            timestampString = "432317988.355788"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "-BuildWorld"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Duck/SelectLayer.m"
-            timestampString = "432340767.626467"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "-init"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Duck/SelectLayer.m"
-            timestampString = "432340767.626467"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "-init"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Duck/COrel.m"
-            timestampString = "432418654.216568"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
-            landmarkName = "-SetInitState"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Duck/COrel.m"
-            timestampString = "432418654.216568"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
-            landmarkName = "-Attack:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Duck/GameLayer.m"
-            timestampString = "432744688.494874"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1094"
-            endingLineNumber = "1094"
-            landmarkName = "-update:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GameLayer update:]"
-                  moduleName = "Duck"
-                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
-                  timestampString = "432758049.314994"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1096"
-                  endingLineNumber = "1096"
-                  offsetFromSymbolStart = "4222">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GameLayer update:]"
-                  moduleName = "Duck"
-                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
-                  timestampString = "432758049.315263"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1096"
-                  endingLineNumber = "1096"
-                  offsetFromSymbolStart = "5562">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GameLayer update:]"
-                  moduleName = "Duck"
-                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
-                  timestampString = "432758053.66764"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1096"
-                  endingLineNumber = "1096"
-                  offsetFromSymbolStart = "4220">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[GameLayer update:]"
-                  moduleName = "Duck"
-                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
-                  timestampString = "432758053.667945"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1096"
-                  endingLineNumber = "1096"
-                  offsetFromSymbolStart = "5568">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -224,17 +70,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Duck/main.m"
-            timestampString = "432720059.56913"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "main()"
-            landmarkType = "7">
+            startingLineNumber = "2067"
+            endingLineNumber = "2067"
+            landmarkName = "-ccTouchesBegan:withEvent:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -244,11 +90,57 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Duck/GameLayer.m"
-            timestampString = "432744688.494874"
+            timestampString = "433523296.31029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1939"
-            endingLineNumber = "1939"
+            startingLineNumber = "2075"
+            endingLineNumber = "2075"
+            landmarkName = "-ccTouchesBegan:withEvent:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer ccTouchesBegan:withEvent:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433149617.958476"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1969"
+                  endingLineNumber = "1969"
+                  offsetFromSymbolStart = "804">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer ccTouchesBegan:withEvent:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433149624.179078"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1969"
+                  endingLineNumber = "1969"
+                  offsetFromSymbolStart = "810">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/SelectLayer.m"
+            timestampString = "433049099.62824"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "-ccTouchesBegan:withEvent:"
             landmarkType = "5">
          </BreakpointContent>
@@ -256,45 +148,415 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/SelectLayer.m"
+            timestampString = "433049099.62824"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-ccTouchesBegan:withEvent:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/TutorialLevel.m"
+            timestampString = "433186198.083604"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "823"
+            endingLineNumber = "823"
+            landmarkName = "-update:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[TutorialLevel update:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/TutorialLevel.m"
+                  timestampString = "432907537.468574"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "618"
+                  endingLineNumber = "618"
+                  offsetFromSymbolStart = "4460">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[TutorialLevel update:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/TutorialLevel.m"
+                  timestampString = "432907541.60184"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "618"
+                  endingLineNumber = "618"
+                  offsetFromSymbolStart = "4478">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/SetupLayer.m"
+            timestampString = "433086385.878828"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "439"
+            endingLineNumber = "439"
+            landmarkName = "-update:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/TutorialLevel.m"
+            timestampString = "433188418.557015"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1188"
+            endingLineNumber = "1188"
+            landmarkName = "-accelerometer:didAccelerate:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/TutorialLevel.m"
+            timestampString = "433188418.557015"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1228"
+            endingLineNumber = "1228"
+            landmarkName = "-accelerometer:didAccelerate:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/TutorialLevel.m"
+            timestampString = "433188418.557015"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1219"
+            endingLineNumber = "1219"
+            landmarkName = "-accelerometer:didAccelerate:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[TutorialLevel accelerometer:didAccelerate:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/TutorialLevel.m"
+                  timestampString = "433139047.853084"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "975"
+                  endingLineNumber = "975"
+                  offsetFromSymbolStart = "1820">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[TutorialLevel accelerometer:didAccelerate:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/TutorialLevel.m"
+                  timestampString = "433139052.158595"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "975"
+                  endingLineNumber = "975"
+                  offsetFromSymbolStart = "1818">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Duck/GameLayer.m"
-            timestampString = "432744688.494874"
+            timestampString = "433523296.31029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1946"
-            endingLineNumber = "1946"
+            startingLineNumber = "1283"
+            endingLineNumber = "1283"
+            landmarkName = "-updateFlowers:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateFlowers:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433416422.801027"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1268"
+                  endingLineNumber = "1268"
+                  offsetFromSymbolStart = "766">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateFlowers:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433416427.805317"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1268"
+                  endingLineNumber = "1268"
+                  offsetFromSymbolStart = "768">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1077"
+            endingLineNumber = "1077"
+            landmarkName = "-update:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433504728.409498"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
+            landmarkName = "-init"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer init]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433397664.583026"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "237"
+                  endingLineNumber = "237"
+                  offsetFromSymbolStart = "8520">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer init]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433397664.583199"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "237"
+                  endingLineNumber = "237"
+                  offsetFromSymbolStart = "9422">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer init]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433397669.284907"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "237"
+                  endingLineNumber = "237"
+                  offsetFromSymbolStart = "8500">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer init]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433397669.285109"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "237"
+                  endingLineNumber = "237"
+                  offsetFromSymbolStart = "9402">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2188"
+            endingLineNumber = "2188"
             landmarkName = "-ccTouchesBegan:withEvent:"
             landmarkType = "5">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "-[GameLayer ccTouchesBegan:withEvent:]"
                   moduleName = "Duck"
                   urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
-                  timestampString = "432758049.315459"
+                  timestampString = "433416422.801426"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1946"
-                  endingLineNumber = "1946"
-                  offsetFromSymbolStart = "1176">
+                  startingLineNumber = "2160"
+                  endingLineNumber = "2160"
+                  offsetFromSymbolStart = "5830">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "-[GameLayer ccTouchesBegan:withEvent:]"
                   moduleName = "Duck"
                   urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
-                  timestampString = "432758053.668362"
+                  timestampString = "433416427.806726"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1946"
-                  endingLineNumber = "1946"
-                  offsetFromSymbolStart = "1182">
+                  startingLineNumber = "2160"
+                  endingLineNumber = "2160"
+                  offsetFromSymbolStart = "5810">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2237"
+            endingLineNumber = "2237"
+            landmarkName = "-targetMoveFinished"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2121"
+            endingLineNumber = "2121"
+            landmarkName = "-ccTouchesBegan:withEvent:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1141"
+            endingLineNumber = "1141"
+            landmarkName = "-update:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer update:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433440011.386144"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1121"
+                  endingLineNumber = "1121"
+                  offsetFromSymbolStart = "3710">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer update:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433440015.336037"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1121"
+                  endingLineNumber = "1121"
+                  offsetFromSymbolStart = "3714">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -306,12 +568,426 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Duck/GameLayer.m"
-            timestampString = "432744670.767043"
+            timestampString = "433523296.31029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1164"
-            endingLineNumber = "1164"
-            landmarkName = "-updateFlowers:"
+            startingLineNumber = "1263"
+            endingLineNumber = "1263"
+            landmarkName = "-update:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer update:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523296.406811"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1263"
+                  endingLineNumber = "1263"
+                  offsetFromSymbolStart = "6628">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer update:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523300.394213"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1263"
+                  endingLineNumber = "1263"
+                  offsetFromSymbolStart = "6634">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2107"
+            endingLineNumber = "2107"
+            landmarkName = "-ccTouchesBegan:withEvent:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer ccTouchesBegan:withEvent:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433416186.421225"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2079"
+                  endingLineNumber = "2079"
+                  offsetFromSymbolStart = "2962">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer ccTouchesBegan:withEvent:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433416191.169638"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2079"
+                  endingLineNumber = "2079"
+                  offsetFromSymbolStart = "2966">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1147"
+            endingLineNumber = "1147"
+            landmarkName = "-update:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer update:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433440011.38653"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1134"
+                  endingLineNumber = "1134"
+                  offsetFromSymbolStart = "3934">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer update:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433440015.336399"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1134"
+                  endingLineNumber = "1134"
+                  offsetFromSymbolStart = "3938">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1596"
+            endingLineNumber = "1596"
+            landmarkName = "-updateBombs:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateBombs:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523296.407548"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1596"
+                  endingLineNumber = "1596"
+                  offsetFromSymbolStart = "4238">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateBombs:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523300.395663"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1596"
+                  endingLineNumber = "1596"
+                  offsetFromSymbolStart = "4230">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1614"
+            endingLineNumber = "1614"
+            landmarkName = "-updateBombs:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateBombs:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523296.408237"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1614"
+                  endingLineNumber = "1614"
+                  offsetFromSymbolStart = "4968">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateBombs:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523300.427046"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1614"
+                  endingLineNumber = "1614"
+                  offsetFromSymbolStart = "4960">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1359"
+            endingLineNumber = "1359"
+            landmarkName = "-updateApples:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateApples:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523296.40894"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1359"
+                  endingLineNumber = "1359"
+                  offsetFromSymbolStart = "4096">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateApples:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523300.427296"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1359"
+                  endingLineNumber = "1359"
+                  offsetFromSymbolStart = "4086">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1580"
+            endingLineNumber = "1580"
+            landmarkName = "-updateBombs:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateBombs:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523296.409534"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1580"
+                  endingLineNumber = "1580"
+                  offsetFromSymbolStart = "3688">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateBombs:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523300.427514"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1580"
+                  endingLineNumber = "1580"
+                  offsetFromSymbolStart = "3680">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1895"
+            endingLineNumber = "1895"
+            landmarkName = "-updateHunters:offx:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateHunters:offx:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433456868.629241"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1871"
+                  endingLineNumber = "1871"
+                  offsetFromSymbolStart = "14338">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateHunters:offx:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433456872.360536"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1871"
+                  endingLineNumber = "1871"
+                  offsetFromSymbolStart = "14326">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1944"
+            endingLineNumber = "1944"
+            landmarkName = "-updateHunters:offx:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateHunters:offx:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523296.410162"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1944"
+                  endingLineNumber = "1944"
+                  offsetFromSymbolStart = "18796">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer updateHunters:offx:]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523300.427786"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1944"
+                  endingLineNumber = "1944"
+                  offsetFromSymbolStart = "18784">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523296.31029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2036"
+            endingLineNumber = "2036"
+            landmarkName = "-targetPulaActionFinished"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -321,14 +997,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Duck/TutorialLevel.h"
-            timestampString = "432753107.332907"
+            filePath = "Duck/GameLayer.m"
+            timestampString = "433523275.911827"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "@interface TutorialLevel"
-            landmarkType = "2">
+            startingLineNumber = "895"
+            endingLineNumber = "895"
+            landmarkName = "-BuildWorld"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer BuildWorld]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523296.412314"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "895"
+                  endingLineNumber = "895"
+                  offsetFromSymbolStart = "5506">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GameLayer BuildWorld]"
+                  moduleName = "Duck"
+                  urlString = "file:///Users/ForDev/Documents/Duck_Game/Duck/Duck/GameLayer.m"
+                  timestampString = "433523300.428359"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "895"
+                  endingLineNumber = "895"
+                  offsetFromSymbolStart = "5508">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

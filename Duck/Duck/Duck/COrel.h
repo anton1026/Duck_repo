@@ -15,8 +15,11 @@
     
 //	private Random 	m_random;
     
-	
+	Boolean _isActionEnd;
+    Boolean _isAtackEnd;
 	CCRepeatForever *repeat_action;
+    CCAnimation *OrelAnimation;
+    CCAnimation *AttackAnimation;
     
 }
 @property (nonatomic, retain) CCSprite *sprite;
@@ -35,4 +38,7 @@
 -(void) Attack :(CGPoint) duckPos;
 -(void) Fire;
 -(CGRect) GetRect;
+-(void)targetMoveFinished;
+-(void) targetAttackFinished;
+
 @end

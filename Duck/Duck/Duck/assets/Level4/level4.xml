@@ -325,11 +325,11 @@
                         <Property Name="Zorder" Type="string" Description="">
                             <string>2</string>
                         </Property>
-                        <Property Name="Type" Type="string" Description="">
-                            <string>0</string>
-                        </Property>
                         <Property Name="Scale" Type="string" Description="">
                             <string>1</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
                         </Property>
                         <Property Name="Lives" Type="string" Description="">
                             <string>4</string>

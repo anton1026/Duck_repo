@@ -423,11 +423,11 @@
                         <Property Name="Zorder" Type="string" Description="">
                             <string>3</string>
                         </Property>
-                        <Property Name="Type" Type="string" Description="">
-                            <string>0</string>
-                        </Property>
                         <Property Name="Scale" Type="string" Description="">
                             <string>1</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
                         </Property>
                         <Property Name="Lives" Type="string" Description="">
                             <string>6</string>
@@ -452,11 +452,11 @@
                         <Property Name="Zorder" Type="string" Description="">
                             <string>3</string>
                         </Property>
-                        <Property Name="Type" Type="string" Description="">
-                            <string>0</string>
-                        </Property>
                         <Property Name="Scale" Type="string" Description="">
                             <string>1</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
                         </Property>
                         <Property Name="Lives" Type="string" Description="">
                             <string>4</string>
@@ -536,11 +536,11 @@
                         <Property Name="Zorder" Type="string" Description="">
                             <string>2</string>
                         </Property>
-                        <Property Name="Type" Type="string" Description="">
-                            <string>0</string>
-                        </Property>
                         <Property Name="Scale" Type="string" Description="">
                             <string>0.95</string>
+                        </Property>
+                        <Property Name="Type" Type="string" Description="">
+                            <string>0</string>
                         </Property>
                     </CustomProperties>
                     <Width>324</Width>

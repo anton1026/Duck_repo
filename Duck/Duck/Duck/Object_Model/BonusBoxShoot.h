@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 @interface BonusBoxShoot : NSObject
+{
+    CCAnimation *BonusAnimation;
+}
 
 @property(nonatomic,retain) CCSprite  *sprite;
 @property(nonatomic,retain) CCAnimate *action;
 -(id) initWithNode :(CCNode *)rootNode zorder:(int) zi;
-
+-(void) runShootAction;
+-(Boolean) onActionEnd;
 @end

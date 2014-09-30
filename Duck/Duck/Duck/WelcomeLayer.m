@@ -42,7 +42,7 @@
         
 		CGSize size = [[CCDirector sharedDirector] winSize];
         WIN_SIZE_X =size.width;
-        WIN_SIZE_X =size.height;
+        WIN_SIZE_Y =size.height;
         
         g_fx = size.width/1024.0f;
         g_fy = size.height/768.0f;
@@ -80,15 +80,16 @@
         [self addChild: background];
         
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"basic.plist"];
-       //  CCSpriteBatchNode *basicSpriteSheet1  = [CCSpriteBatchNode batchNodeWithFile:@"basic.png"];
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"basic2.plist"];
         
       
-       //  CCSpriteBatchNode *basicSpriteSheet2  = [CCSpriteBatchNode batchNodeWithFile:@"basic.png"];
+       
 
         bFirst =true;
-        current_level =5;
+        current_level =1;
+        openLevels =1;
         LeftRightKef =50;
+        UpDownKef =50;
         ShowButtons =1;
         [self schedule:@selector(ontime:) interval:1.0f/20.0f];
 
@@ -110,7 +111,7 @@
     
     if(bFirst)
     {
-        long time = 1000;//SystemClock.uptimeMillis();
+   //     long time = 1000;//SystemClock.uptimeMillis();
     
         GameLevel *level1 =[[GameLevel alloc] initWithXMLFile:@"level1" Src:@"Amazonka"];
         GameLevel *level2 =[[GameLevel alloc] initWithXMLFile:@"level2" Src:@"Level2"];
